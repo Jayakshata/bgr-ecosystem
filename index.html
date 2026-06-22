@@ -607,6 +607,23 @@ window.__cinema={
     if(scId==='close') gsap.to('.endreveal',{opacity:1,y:0,duration:.6,stagger:.1}); },
   end:finish };
 
+/* ===== BGM-LIVE-START — music bed (BGM_choice1), ducks 66% under narration, tied to the sound toggle ===== */
+(function(){
+  const BASE=0.14, DUCKED=BASE*(1-0.66);
+  const bgm=new Audio('assets/audio/BGM_choice1.mp3'); bgm.loop=true; bgm.preload='auto';
+  let ducked=false, unduckT=null, fadeT=null, kicked=false;
+  const ramp=(t,d)=>gsap.to(bgm,{volume:Math.max(0,Math.min(1,t)),duration:d||0.5,overwrite:true});
+  const tgt=()=>ducked?DUCKED:BASE;
+  function go(){ kicked=true; if(bgm.paused){ bgm.volume=0; bgm.play().then(()=>ramp(tgt(),0.8)).catch(()=>{}); } }
+  vo.addEventListener('play',()=>{ clearTimeout(unduckT); clearTimeout(fadeT); go(); ducked=true; ramp(tgt()); });
+  vo.addEventListener('ended',()=>{ clearTimeout(unduckT);
+    unduckT=setTimeout(()=>{ ducked=false; ramp(tgt(),1.2); fadeT=setTimeout(()=>ramp(0,5),2600); },1200); });
+  const bb=document.getElementById('beginBtn'); bb&&bb.addEventListener('click',()=>setTimeout(go,160));
+  const rp=document.getElementById('replay'); rp&&rp.addEventListener('click',()=>{ bgm.currentTime=0; ducked=false; go(); });
+  const sb=document.getElementById('sound'); sb&&sb.addEventListener('click',()=>{ bgm.muted=vo.muted; if(!vo.muted&&kicked&&bgm.paused) go(); });
+})();
+/* ===== BGM-LIVE-END ===== */
+
 /* ===================== ambient particle field ===================== */
 (function fx(){
   const c=document.getElementById('fx'), x=c.getContext('2d'); let w,h,parts;

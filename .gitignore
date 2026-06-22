@@ -36,8 +36,7 @@ render_vo.py
 content_extracted/
 assets/fonts/KIONA.png
 
-# --- BGM audition (local test only; never goes live) ---
+# --- BGM audition tooling (local only; BGM_choice1.mp3 now SHIPS with the live site) ---
 test-bgm.html
 _build_test_bgm.py
-assets/audio/BGM_choice1.mp3
 assets/audio/bgm/
