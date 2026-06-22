@@ -40,3 +40,7 @@ assets/fonts/KIONA.png
 test-bgm.html
 _build_test_bgm.py
 assets/audio/bgm/
+
+# --- local reference / WIP assets (never publish) ---
+assets/images/COMPANYINSPO/
+assets/images/logos/*.jpg
