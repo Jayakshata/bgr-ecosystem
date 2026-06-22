@@ -83,7 +83,8 @@ img{display:block;max-width:100%}
 .bigtitle{font-family:var(--font-display);font-weight:500;text-transform:uppercase;
   font-size:clamp(2.2rem,6.2vw,5.4rem);line-height:1;letter-spacing:.1em;padding:0 .1em;
   background:linear-gradient(180deg,#fff,#b8c4d0 60%,#7d8a98);-webkit-background-clip:text;background-clip:text;color:transparent}
-.banner-sub{margin-top:1.8rem;font-family:var(--font-mono);font-size:clamp(.7rem,1.5vw,.95rem);
+.banner-lead{margin-top:1.6rem;font-size:clamp(1.05rem,2.3vw,1.75rem);font-weight:300;color:var(--ink);letter-spacing:.005em;line-height:1.35}
+.banner-sub{margin-top:1rem;font-family:var(--font-mono);font-size:clamp(.7rem,1.5vw,.95rem);
   letter-spacing:.3em;text-transform:uppercase;color:var(--ink-dim);line-height:2}
 
 /* ---- problem ---- */
@@ -232,7 +233,8 @@ img{display:block;max-width:100%}
     <div class="bg grey vign"><img src="assets/images/film/K1.jpg" alt="" /></div>
     <div class="inner">
       <h1 class="bigtitle" data-seg="seg01">The BGR Ecosystem</h1>
-      <div class="banner-sub" data-seg="seg02">From the land that makes the Products<br/>— to the land that makes the Makers —</div>
+      <div class="banner-lead" data-seg="seg02">Building factories from bare land — made easy, in one stop.</div>
+      <div class="banner-sub" data-seg="seg02">From the land that makes the Products — to the land that makes the Makers</div>
     </div>
   </section>
 
@@ -244,7 +246,7 @@ img{display:block;max-width:100%}
       <div class="line" data-seg="seg04">And the world needs more of them than ever.</div>
       <div class="req-intro" data-seg="seg05">But every factory requires —</div>
       <div class="req-grid">
-        <span data-seg="seg06">Land</span><span data-seg="seg07">Design</span><span data-seg="seg08">Water</span>
+        <span data-seg="seg06">Land</span><span data-seg="seg07">Factory&nbsp;Design</span><span data-seg="seg08">Water</span>
         <span data-seg="seg09">Cooling</span><span data-seg="seg10">Steel</span><span data-seg="seg11">Power</span>
         <span data-seg="seg12">Machines</span>
       </div>
@@ -300,7 +302,7 @@ img{display:block;max-width:100%}
         </svg>
         <div class="pcenter" data-seg="seg19"></div>
         <div class="pnode" style="left:20%;top:23%" data-seg="seg19"><div class="lg"><img src="assets/images/logos/ANITA.png" alt="ANITA"/></div><div class="nm">ANITA</div><div class="rl">Design · Digital Twin</div></div>
-        <div class="pnode" style="left:80%;top:23%" data-seg="seg19"><div class="lg"><img src="assets/images/logos/NIKITHA.png" alt="NIKITHA"/></div><div class="nm">NIKITHA</div><div class="rl">Build · Steel</div></div>
+        <div class="pnode" style="left:80%;top:23%" data-seg="seg19"><div class="lg"><img src="assets/images/logos/NIKITHA.png" alt="NIKITHA"/></div><div class="nm">NIKITHA</div><div class="rl">Design · Build</div></div>
         <div class="pnode" style="left:20%;top:77%" data-seg="seg19"><div class="lg"><img src="assets/images/logos/ENEXIO.png" alt="ENEXIO"/></div><div class="nm">ENEXIO</div><div class="rl">Power · Cooling</div></div>
         <div class="pnode" style="left:80%;top:77%" data-seg="seg19"><div class="lg"><img src="assets/images/logos/BGRNEO.png" alt="BGR NEO"/></div><div class="nm">BGR&nbsp;NEO</div><div class="rl">Automation</div></div>
       </div>
@@ -320,11 +322,13 @@ img{display:block;max-width:100%}
           <div class="tag" data-seg="seg20">Born in Light</div>
         </div>
         <div class="right">
-          <p class="purpose" data-seg="seg21">The factory is <b>born first in light</b> — designed, simulated and virtually
-            commissioned as a living <b>digital twin</b>, before a single beam is raised.</p>
+          <p class="purpose" data-seg="seg21">The factory is <b>born first in light</b> — our in-house physical-AI team
+            designs, simulates and <b>virtually commissions</b> the entire plant as a living <b>digital twin</b> on
+            NVIDIA Omniverse: layout, robot motion and material flow solved before a single beam is raised.</p>
           <div class="chips" data-seg="seg21">
-            <span class="chip on">NVIDIA Omniverse</span><span class="chip">Physics-accurate simulation</span>
-            <span class="chip">Robot fleets in-sim</span><span class="chip">Ref: Ola "Future Factory" · ~8 months</span>
+            <span class="chip on">NVIDIA Omniverse</span><span class="chip">Digital twin &amp; simulation</span>
+            <span class="chip">Virtual commissioning</span><span class="chip">Robot fleets in-sim</span>
+            <span class="chip">Ref: Ola "Future Factory" · ~8 months</span>
           </div>
         </div>
       </div>
@@ -338,21 +342,23 @@ img{display:block;max-width:100%}
       <div class="dd">
         <div class="left">
           <div class="logo" data-seg="seg22"><img src="assets/images/logos/NIKITHA.png" alt="NIKITHA"/></div>
-          <div class="role" data-seg="seg22">02 · Build — PEB · Civil · Structural Steel</div>
+          <div class="role" data-seg="seg22">02 · Design &amp; Build — Civil · Steel · PEB</div>
           <div class="name" data-seg="seg22">NIKITHA</div>
-          <div class="tag" data-seg="seg22">It Rises in Steel</div>
+          <div class="tag" data-seg="seg22">Designed &amp; Built in Steel</div>
         </div>
         <div class="right">
-          <p class="purpose" data-seg="seg23">Then it <b>rises in steel</b> — the structure that holds the factory,
-            engineered and erected end to end.</p>
+          <p class="purpose" data-seg="seg23">Nikitha doesn't just supply steel — it <b>designs and builds the factory</b> itself.
+            In-house engineering (<b>Tekla + STAAD</b>), civil works, structural steel and pre-engineered buildings —
+            through to MEP, electrical and utilities in the turnkey model. One stop: design → fabrication → erection → handover.</p>
           <div class="ddstats" data-seg="seg23">
             <div class="st"><div class="n" data-count="31" data-suffix="+"></div><div class="c">Years · since 1994</div></div>
             <div class="st"><div class="n" data-count="24000" data-suffix=" MT/yr"></div><div class="c">Fabrication capacity</div></div>
-            <div class="st"><div class="n" data-count="20000" data-suffix=" m²"></div><div class="c">Plant footprint</div></div>
+            <div class="st"><div class="n">₹215<span class="u">Cr</span></div><div class="c">Turnover · FY24-25</div></div>
           </div>
           <div class="chips" data-seg="seg23">
-            <span class="chip">Samsung Sriperumbudur</span><span class="chip">Hyundai / Kia</span>
-            <span class="chip">Bengaluru Airport T2 · 4,000 MT</span><span class="chip">Tekla + STAAD</span>
+            <span class="chip on">Samsung Sriperumbudur · 5,300 MT</span><span class="chip on">Bengaluru Airport T2 · 4,000 MT</span>
+            <span class="chip">JJM Medical · G+8 · 6,500 MT</span><span class="chip">Indian Cane Power · 10,600 MT</span>
+            <span class="chip">Alstom · TVS · Hyundai/Kia</span><span class="chip">ISO 9001·14001·45001</span>
           </div>
         </div>
       </div>
@@ -368,17 +374,18 @@ img{display:block;max-width:100%}
           <div class="logo" data-seg="seg24"><img src="assets/images/logos/ENEXIO.png" alt="ENEXIO"/></div>
           <div class="role" data-seg="seg24">03 · Power & Cooling — ex-GEA</div>
           <div class="name" data-seg="seg24">ENEXIO</div>
-          <div class="tag" data-seg="seg24">Cooling Without Water</div>
+          <div class="tag" data-seg="seg24">Dry &amp; Wet Cooling</div>
         </div>
         <div class="right">
-          <p class="purpose" data-seg="seg25">Then it <b>breathes</b> — powered and cooled. Tamil Nadu is water-scarce?
-            <b style="color:var(--teal)">No matter — ENEXIO cools without water.</b></p>
+          <p class="purpose" data-seg="seg25">Then it <b>breathes</b> — powered and cooled. ENEXIO masters <b>both dry and wet cooling</b> —
+            air-cooled condensers, cooling towers and heat exchangers. Its <b style="color:var(--teal)">dry-cooling systems
+            slash the water</b> a plant draws — the decisive edge for a water-scarce Tamil Nadu.</p>
           <div class="ddstats" data-seg="seg25">
             <div class="st"><div class="n" data-count="500" data-suffix="+"></div><div class="c">Cooling systems</div></div>
             <div class="st"><div class="n" data-count="100" data-suffix="+"></div><div class="c">In India</div></div>
             <div class="st"><div class="n" data-count="50" data-suffix="+"></div><div class="c">Countries</div></div>
           </div>
-          <div class="chips" data-seg="seg25"><span class="chip on">Air-cooled condensers</span><span class="chip">Dry cooling</span><span class="chip">Chennai HQ</span></div>
+          <div class="chips" data-seg="seg25"><span class="chip on">Air-cooled condensers</span><span class="chip on">Cooling towers</span><span class="chip">Heat exchangers</span><span class="chip">Dry &amp; wet cooling</span><span class="chip">ex-GEA · Chennai HQ</span></div>
         </div>
       </div>
     </div>
@@ -396,12 +403,12 @@ img{display:block;max-width:100%}
           <div class="tag" data-seg="seg26">It Comes Alive</div>
         </div>
         <div class="right">
-          <p class="purpose" data-seg="seg27">And then it <b>comes alive</b> — robotics, automation and intelligence,
-            built into the factory from the ground up.</p>
+          <p class="purpose" data-seg="seg27">And then it <b>comes alive</b> — BGR NEO builds the robots, the special-purpose machines
+            and the automation: assembly lines, machine-tending, palletizing, vision and PLC/SCADA, wired into one <b>Industry-4.0</b> plant.</p>
           <div class="chips" data-seg="seg27">
-            <span class="chip on">ABB</span><span class="chip on">Caterpillar</span><span class="chip on">Lockheed Martin · F-16</span>
-            <span class="chip">TVS</span><span class="chip">JSW</span><span class="chip">KONE</span>
-            <span class="chip">Schneider</span><span class="chip">Reliance</span><span class="chip">PLC / SCADA · Industry 4.0</span>
+            <span class="chip on">ABB · 13-robot line</span><span class="chip on">Caterpillar</span><span class="chip on">Lockheed Martin · F-16 wing drilling</span>
+            <span class="chip">JSW</span><span class="chip">KONE</span><span class="chip">Coca-Cola</span><span class="chip">Schneider</span>
+            <span class="chip">Reliance</span><span class="chip">Danfoss</span><span class="chip">Amara Raja</span><span class="chip">ISO 9001:2015</span>
           </div>
         </div>
       </div>
