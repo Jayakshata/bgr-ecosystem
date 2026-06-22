@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>The BGR Ecosystem — From the land that makes products, to the land that makes the makers</title>
+<meta name="description" content="A self-playing cinematic pitch: from bare greenfield land to a living, automated factory — one ecosystem. ANITA · NIKITHA · ENEXIO · BGR NEO." />
+<meta name="robots" content="noindex, nofollow" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+
+<style>
+/* KIONA — drop assets/fonts/KIONA.ttf and this activates automatically */
+@font-face{font-family:'KIONA';src:url('assets/fonts/KIONA.ttf') format('truetype'),url('assets/fonts/KIONA.otf') format('opentype');font-weight:400 700;font-display:swap}
+
+:root{
+  --bg:#05070A; --ink:#EAF0F6; --ink-dim:#8a96a4; --ink-faint:#4a5562;
+  --cyan:#19D3DA; --cyan-soft:#7fe9ee; --amber:#E8A24C; --green:#5CC15A;
+  --steel:#9fb0c2; --teal:#34b3a8;
+  --line:rgba(255,255,255,.10);
+  --font-display:'KIONA','Jost','Century Gothic','Futura',sans-serif;
+  --font-body:'Inter',system-ui,sans-serif;
+  --font-mono:'Space Mono',ui-monospace,monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow:hidden}
+body{background:#000;color:var(--ink);font-family:var(--font-body);font-weight:300;
+  -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+img{display:block;max-width:100%}
+::selection{background:var(--cyan);color:#04212a}
+
+/* ===================== STAGE ===================== */
+#stage{position:fixed;inset:0;overflow:hidden;background:var(--bg)}
+#tint{position:absolute;inset:0;z-index:0;
+  background:radial-gradient(120% 90% at 50% 38%,#0c0f13,#06080b 60%,#030406);
+  transition:background 1.2s ease}
+#fx{position:absolute;inset:0;z-index:1;pointer-events:none;opacity:.7}
+#grain{position:absolute;inset:0;z-index:40;pointer-events:none;opacity:.05;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.bar{position:absolute;left:0;right:0;height:5.2vh;background:#000;z-index:35;pointer-events:none}
+.bar.top{top:0}.bar.bot{bottom:0}
+
+/* ===================== SCENES ===================== */
+.scene{position:absolute;inset:0;z-index:5;display:flex;align-items:center;
+  padding:13vh 8vw;opacity:0;visibility:hidden;pointer-events:none}
+.scene.active{visibility:visible}
+.scene .inner{position:relative;z-index:6;width:100%;max-width:1240px;margin:0 auto}
+
+.bg{position:absolute;inset:0;z-index:0;overflow:hidden}
+.bg img,.bg video{width:100%;height:100%;object-fit:cover;transform:scale(1.06)}
+.bg::after{content:'';position:absolute;inset:0;
+  background:linear-gradient(180deg,rgba(5,7,10,.5),rgba(5,7,10,.15) 42%,rgba(5,7,10,.82))}
+.bg.grey img{filter:grayscale(1) contrast(1.05) brightness(.8)}
+.bg.vign::before{content:'';position:absolute;inset:0;z-index:1;
+  background:radial-gradient(120% 100% at 50% 50%,transparent 42%,rgba(0,0,0,.72))}
+/* ken-burns on the active scene */
+.scene.kb .bg img,.scene.kb .bg video{animation:kb 20s ease-out forwards}
+@keyframes kb{from{transform:scale(1.02) translate(0,0)}to{transform:scale(1.16) translate(-1.5%,-1.5%)}}
+
+.grid-bg{position:absolute;inset:0;z-index:1;opacity:.45;
+  background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);
+  background-size:84px 84px;mask-image:radial-gradient(120% 90% at 50% 45%,#000 28%,transparent 86%)}
+
+/* ===================== TYPE ===================== */
+[data-seg],.endreveal{opacity:0;transform:translateY(26px);will-change:opacity,transform}
+.kicker{font-family:var(--font-mono);font-size:.72rem;letter-spacing:.4em;text-transform:uppercase;
+  color:var(--cyan);margin-bottom:1.5rem;display:flex;align-items:center;gap:14px}
+.kicker::before{content:'';width:42px;height:1px;background:currentColor}
+.kicker.grey{color:var(--ink-dim)}
+
+.title{font-family:var(--font-display);font-weight:500;text-transform:uppercase;
+  font-size:clamp(2rem,5.6vw,4.6rem);line-height:1;letter-spacing:.04em;margin-bottom:1.2rem}
+.title .accent{color:var(--cyan)}
+.title .ghost{color:transparent;-webkit-text-stroke:1px var(--ink-faint)}
+.lead{font-size:clamp(1.05rem,1.9vw,1.55rem);font-weight:300;max-width:46ch;line-height:1.5}
+.lead.dim{color:var(--ink-dim)}
+.sub{font-size:.95rem;color:var(--ink-dim);max-width:54ch;margin-top:1rem;line-height:1.6}
+
+/* ---- banner ---- */
+#sc-banner .inner{text-align:center}
+.bigtitle{font-family:var(--font-display);font-weight:500;text-transform:uppercase;
+  font-size:clamp(2.2rem,6.2vw,5.4rem);line-height:1;letter-spacing:.1em;padding:0 .1em;
+  background:linear-gradient(180deg,#fff,#b8c4d0 60%,#7d8a98);-webkit-background-clip:text;background-clip:text;color:transparent}
+.banner-sub{margin-top:1.8rem;font-family:var(--font-mono);font-size:clamp(.7rem,1.5vw,.95rem);
+  letter-spacing:.3em;text-transform:uppercase;color:var(--ink-dim);line-height:2}
+
+/* ---- problem ---- */
+#sc-problem .line{font-size:clamp(1.3rem,3vw,2.4rem);font-weight:300;line-height:1.25;margin-bottom:.7rem;max-width:24ch}
+.req-intro{font-family:var(--font-mono);font-size:.8rem;letter-spacing:.3em;text-transform:uppercase;
+  color:var(--ink-dim);margin:2rem 0 1.2rem}
+.req-grid{display:flex;flex-wrap:wrap;gap:14px;max-width:60ch}
+.req-grid span{font-family:var(--font-display);text-transform:uppercase;letter-spacing:.12em;
+  font-size:clamp(1rem,2.4vw,1.9rem);color:var(--steel);
+  border:1px solid var(--line);padding:.35rem 1rem;border-radius:3px;background:rgba(8,10,14,.4)}
+.req-approvals{margin-top:1.4rem;font-size:clamp(1.1rem,2.4vw,1.8rem);color:var(--amber);
+  font-family:var(--font-display);text-transform:uppercase;letter-spacing:.06em}
+
+/* ---- question ---- */
+#sc-question .inner{text-align:center}
+.qbig{font-family:var(--font-display);font-weight:500;text-transform:uppercase;line-height:1.05;
+  font-size:clamp(2rem,6.5vw,5.6rem);letter-spacing:.04em}
+.qbig .accent{color:var(--cyan);text-shadow:0 0 50px rgba(25,211,218,.5)}
+.qbig span{display:inline-block;margin:0 .12em}
+
+/* ---- bloom ---- */
+#sc-bloom .inner{text-align:center}
+#bloom{position:absolute;left:50%;top:50%;width:12px;height:12px;border-radius:50%;transform:translate(-50%,-50%);
+  z-index:2;background:radial-gradient(circle,rgba(25,211,218,.95),rgba(25,211,218,.18) 40%,transparent 70%);filter:blur(10px)}
+.welcome{font-family:var(--font-display);font-weight:600;text-transform:uppercase;
+  font-size:clamp(2.1rem,6.4vw,5.6rem);line-height:1;letter-spacing:.07em;text-shadow:0 0 60px rgba(25,211,218,.45)}
+.welcome .accent{color:var(--cyan)}
+
+/* ---- one window ---- */
+#sc-onewindow .inner{text-align:center}
+.ow{font-family:var(--font-display);font-weight:500;text-transform:uppercase;
+  font-size:clamp(1.8rem,5.5vw,4.6rem);letter-spacing:.06em;line-height:1.1}
+.ow span{display:inline-block}
+.ow .dot{color:var(--cyan)}
+
+/* ---- partnership / constellation ---- */
+#sc-partnership .inner{text-align:center}
+.constellation{position:relative;width:100%;max-width:920px;height:46vh;margin:2.2rem auto 0}
+.constellation svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.pnode{position:absolute;transform:translate(-50%,-50%);text-align:center}
+.pnode .lg{width:clamp(70px,9vw,104px);height:clamp(50px,6vw,70px);margin:0 auto .55rem;border:1px solid rgba(255,255,255,.14);
+  border-radius:9px;display:flex;align-items:center;justify-content:center;background:rgba(245,248,251,.97);
+  padding:7px 10px;overflow:hidden;box-shadow:0 6px 22px rgba(0,0,0,.4)}
+.pnode .lg img{max-width:100%;max-height:100%;object-fit:contain}
+.pnode .nm{font-family:var(--font-display);text-transform:uppercase;letter-spacing:.12em;
+  font-size:clamp(.9rem,1.8vw,1.4rem);color:var(--ink)}
+.pnode .rl{font-family:var(--font-mono);font-size:.54rem;letter-spacing:.2em;color:var(--ink-dim);text-transform:uppercase}
+.pcenter{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:16px;height:16px;border-radius:50%;
+  background:var(--cyan);box-shadow:0 0 28px var(--cyan)}
+.backed{margin-top:1.4rem;font-family:var(--font-mono);font-size:.66rem;letter-spacing:.2em;color:var(--ink-dim);text-transform:uppercase}
+.backed b{color:var(--green)}
+
+/* ---- deep dive layout ---- */
+.dd{display:grid;grid-template-columns:0.95fr 1.05fr;gap:clamp(2rem,5vw,5rem);align-items:center}
+.dd .left{text-align:left}
+.dd .logo{width:fit-content;max-width:clamp(220px,30vw,380px);height:clamp(100px,12vw,150px);
+  border:1px solid rgba(255,255,255,.14);border-radius:14px;display:flex;align-items:center;justify-content:center;
+  margin-bottom:1.6rem;padding:16px 24px;background:rgba(245,248,251,.97);box-shadow:0 10px 40px rgba(0,0,0,.4)}
+.dd .logo img{max-width:100%;max-height:100%;object-fit:contain;display:block}
+.dd .role{font-family:var(--font-mono);font-size:.7rem;letter-spacing:.32em;text-transform:uppercase;color:var(--ink-dim);margin-bottom:.8rem}
+.dd .name{font-family:var(--font-display);font-weight:600;text-transform:uppercase;letter-spacing:.06em;
+  font-size:clamp(3rem,8vw,6.4rem);line-height:.9;margin-bottom:1rem}
+.dd .tag{font-family:var(--font-display);text-transform:uppercase;letter-spacing:.1em;
+  font-size:clamp(1.1rem,2.6vw,2rem);padding:.4rem 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);display:inline-block}
+.dd .purpose{font-size:clamp(1rem,1.7vw,1.35rem);font-weight:300;line-height:1.55;color:var(--ink);max-width:42ch;margin-bottom:1.6rem}
+.dd .purpose b{font-weight:500}
+.dd .ddstats{display:flex;flex-wrap:wrap;gap:1.6rem 2.4rem;margin-bottom:1.2rem}
+.dd .st .n{font-family:var(--font-display);font-weight:600;font-size:clamp(1.8rem,3.4vw,2.8rem);line-height:1}
+.dd .st .n .u{font-size:.42em;margin-left:.15em}
+.dd .st .c{font-family:var(--font-mono);font-size:.58rem;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-dim);margin-top:.5rem}
+.chips{display:flex;flex-wrap:wrap;gap:10px}
+.chip{font-family:var(--font-mono);font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-dim);
+  border:1px solid var(--line);border-radius:40px;padding:.45rem 1rem;background:rgba(255,255,255,.02)}
+.chip.on{color:var(--cyan);border-color:rgba(25,211,218,.5)}
+
+/* per-company accents */
+#sc-anita .name,#sc-anita .tag{color:var(--cyan)} #sc-anita .role{color:var(--cyan)}
+#sc-nikitha .name{color:#fff} #sc-nikitha .tag{color:var(--steel)}
+#sc-enexio .name,#sc-enexio .tag{color:var(--teal)} #sc-enexio .role{color:var(--teal)}
+#sc-bgrneo .name,#sc-bgrneo .tag{color:var(--green)} #sc-bgrneo .role{color:var(--green)}
+
+/* ---- close ---- */
+#sc-close{background:#000} #sc-close .inner{text-align:center}
+.lockup{display:flex;gap:clamp(1.2rem,4vw,3.4rem);justify-content:center;flex-wrap:wrap;
+  font-family:var(--font-display);text-transform:uppercase;letter-spacing:.18em;
+  font-size:clamp(.85rem,1.7vw,1.2rem);color:var(--ink-dim);margin-bottom:2.4rem}
+.lockup b{color:var(--ink)}
+.recap{font-size:clamp(1rem,2vw,1.4rem);color:var(--ink-dim);margin-bottom:2.6rem;font-weight:300}
+.closer{font-family:var(--font-display);font-weight:500;text-transform:uppercase;line-height:1.12;letter-spacing:.05em;
+  font-size:clamp(1.7rem,5vw,3.8rem);color:#e9eff5}
+.closer span[data-seg]{display:block}
+.closer .big{font-size:1.22em;color:var(--cyan);margin-top:.25em;text-shadow:0 0 50px rgba(25,211,218,.45)}
+.endtag{margin-top:2rem;font-size:clamp(1rem,2vw,1.35rem);color:var(--cyan);font-weight:300;letter-spacing:.02em}
+.contact{margin-top:3rem;font-family:var(--font-mono);font-size:.66rem;letter-spacing:.24em;color:var(--ink-dim);text-transform:uppercase;line-height:2.2}
+.contact b{color:var(--ink)}
+
+/* ===================== HUD ===================== */
+#brand{position:fixed;top:calc(5.2vh + 20px);left:32px;z-index:45;font-family:var(--font-mono);
+  font-size:.6rem;letter-spacing:.32em;color:var(--ink-dim);text-transform:uppercase;pointer-events:none}
+#brand b{color:var(--ink)}
+#progress{position:fixed;left:0;bottom:0;height:2px;width:0%;z-index:46;
+  background:linear-gradient(90deg,var(--cyan),var(--amber));box-shadow:0 0 12px var(--cyan);transition:width .5s linear}
+#sound{position:fixed;bottom:calc(5.2vh + 16px);left:32px;z-index:46;cursor:pointer;
+  font-family:var(--font-mono);font-size:.6rem;letter-spacing:.26em;color:var(--ink-dim);text-transform:uppercase;
+  display:flex;align-items:center;gap:9px;transition:color .3s}
+#sound:hover{color:var(--ink)}
+#sound .ico{display:flex;gap:2px;align-items:flex-end;height:13px}
+#sound .ico i{width:2px;background:var(--cyan);display:block;border-radius:1px;animation:eq 1s ease-in-out infinite}
+#sound .ico i:nth-child(1){height:5px}#sound .ico i:nth-child(2){height:11px;animation-delay:.2s}
+#sound .ico i:nth-child(3){height:7px;animation-delay:.4s}#sound .ico i:nth-child(4){height:13px;animation-delay:.1s}
+@keyframes eq{0%,100%{transform:scaleY(.4)}50%{transform:scaleY(1)}}
+#sound.muted .ico i{animation-play-state:paused;background:var(--ink-faint);transform:scaleY(.4)}
+
+/* ===================== GATE / REPLAY ===================== */
+#gate{position:fixed;inset:0;z-index:100;background:#000;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;gap:2rem;text-align:center;transition:opacity 1s ease}
+#gate .mk{font-family:var(--font-mono);font-size:.66rem;letter-spacing:.5em;color:var(--ink-dim);text-transform:uppercase}
+#gate h1{font-family:var(--font-display);font-weight:500;font-size:clamp(2.4rem,8vw,6rem);letter-spacing:.16em;
+  text-transform:uppercase;background:linear-gradient(180deg,#fff,#9fb0c2);-webkit-background-clip:text;background-clip:text;color:transparent}
+#gate p{color:var(--ink-dim);max-width:36ch;font-size:.92rem}
+.btn{cursor:pointer;border:1px solid var(--cyan);background:transparent;color:var(--cyan);
+  font-family:var(--font-mono);font-size:.78rem;letter-spacing:.3em;text-transform:uppercase;
+  padding:1rem 2.6rem;border-radius:2px;transition:all .35s ease}
+.btn:hover{background:var(--cyan);color:#04212a;box-shadow:0 0 40px rgba(25,211,218,.45)}
+#gate.hidden{opacity:0;pointer-events:none}
+.pulse{animation:pulse 2.6s ease-in-out infinite}@keyframes pulse{0%,100%{opacity:.6}50%{opacity:1}}
+#replay{position:fixed;left:50%;bottom:13vh;transform:translateX(-50%);z-index:60;opacity:0;pointer-events:none;transition:opacity .6s}
+#replay.show{opacity:1;pointer-events:auto}
+
+@media(max-width:860px){
+  .dd{grid-template-columns:1fr;gap:2rem;text-align:center}
+  .dd .left{text-align:center} .dd .logo{margin-left:auto;margin-right:auto}
+  .dd .purpose{margin-left:auto;margin-right:auto}
+  #brand{display:none}
+}
+</style>
+</head>
+<body>
+
+<div id="stage">
+  <div id="tint"></div>
+  <canvas id="fx"></canvas>
+
+  <!-- ========== BANNER ========== -->
+  <section class="scene" id="sc-banner" data-grade="grey">
+    <div class="bg grey vign"><img src="assets/images/film/K1.jpg" alt="" /></div>
+    <div class="inner">
+      <h1 class="bigtitle" data-seg="seg01">The BGR Ecosystem</h1>
+      <div class="banner-sub" data-seg="seg02">From the land that makes the Products<br/>— to the land that makes the Makers —</div>
+    </div>
+  </section>
+
+  <!-- ========== PROBLEM ========== -->
+  <section class="scene" id="sc-problem" data-grade="grey">
+    <div class="bg grey vign"><img src="assets/images/film/K5.jpg" alt="" /></div>
+    <div class="inner">
+      <div class="line" data-seg="seg03">Every factory begins as empty ground.</div>
+      <div class="line" data-seg="seg04">And the world needs more of them than ever.</div>
+      <div class="req-intro" data-seg="seg05">But every factory requires —</div>
+      <div class="req-grid">
+        <span data-seg="seg06">Land</span><span data-seg="seg07">Design</span><span data-seg="seg08">Water</span>
+        <span data-seg="seg09">Cooling</span><span data-seg="seg10">Steel</span><span data-seg="seg11">Power</span>
+        <span data-seg="seg12">Machines</span>
+      </div>
+      <div class="req-approvals" data-seg="seg13">…and a thousand approvals.</div>
+    </div>
+  </section>
+
+  <!-- ========== QUESTION ========== -->
+  <section class="scene" id="sc-question" data-grade="grey">
+    <div class="bg grey vign"><img src="assets/images/film/FISTTOUCH.jpg" alt="" /></div>
+    <div class="inner">
+      <div class="qbig">
+        <span data-seg="seg14">What&nbsp;if</span>
+        <span class="accent" data-seg="seg14">one&nbsp;hand</span>
+        <span data-seg="seg14">could&nbsp;build&nbsp;it&nbsp;all?</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== BLOOM ========== -->
+  <section class="scene" id="sc-bloom" data-grade="cyan">
+    <div class="bg vign"><img src="assets/images/film/K6D.jpg" alt="" /></div>
+    <div id="bloom"></div>
+    <div class="inner">
+      <div class="welcome" data-seg="seg15">Welcome to the<br/><span class="accent">BGR&nbsp;Ecosystem</span></div>
+    </div>
+  </section>
+
+  <!-- ========== ONE WINDOW ========== -->
+  <section class="scene" id="sc-onewindow" data-grade="cyan">
+    <div class="grid-bg"></div>
+    <div class="inner">
+      <div class="ow">
+        <span data-seg="seg16">One&nbsp;Window.<span class="dot">&nbsp;</span></span>
+        <span data-seg="seg16">One&nbsp;Partner.<span class="dot">&nbsp;</span></span>
+        <span data-seg="seg16">Land&nbsp;to&nbsp;Handover.</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== PARTNERSHIP / CONSTELLATION ========== -->
+  <section class="scene" id="sc-partnership" data-grade="cyan">
+    <div class="grid-bg"></div>
+    <div class="inner">
+      <h2 class="title" data-seg="seg17">From bare land to a <span class="accent">running factory.</span></h2>
+      <div class="kicker" style="justify-content:center" data-seg="seg18">[ Made possible through the partnership of ]</div>
+      <div class="constellation">
+        <svg viewBox="0 0 1000 520" preserveAspectRatio="xMidYMid meet">
+          <line x1="500" y1="260" x2="200" y2="120" stroke="#19D3DA" stroke-width="1.2" opacity="0.5" data-seg="seg19"/>
+          <line x1="500" y1="260" x2="800" y2="120" stroke="#9fb0c2" stroke-width="1.2" opacity="0.5" data-seg="seg19"/>
+          <line x1="500" y1="260" x2="200" y2="400" stroke="#34b3a8" stroke-width="1.2" opacity="0.5" data-seg="seg19"/>
+          <line x1="500" y1="260" x2="800" y2="400" stroke="#5CC15A" stroke-width="1.2" opacity="0.5" data-seg="seg19"/>
+        </svg>
+        <div class="pcenter" data-seg="seg19"></div>
+        <div class="pnode" style="left:20%;top:23%" data-seg="seg19"><div class="lg"><img src="assets/images/logos/ANITA.png" alt="ANITA"/></div><div class="nm">ANITA</div><div class="rl">Design · Digital Twin</div></div>
+        <div class="pnode" style="left:80%;top:23%" data-seg="seg19"><div class="lg"><img src="assets/images/logos/NIKITHA.png" alt="NIKITHA"/></div><div class="nm">NIKITHA</div><div class="rl">Build · Steel</div></div>
+        <div class="pnode" style="left:20%;top:77%" data-seg="seg19"><div class="lg"><img src="assets/images/logos/ENEXIO.png" alt="ENEXIO"/></div><div class="nm">ENEXIO</div><div class="rl">Power · Cooling</div></div>
+        <div class="pnode" style="left:80%;top:77%" data-seg="seg19"><div class="lg"><img src="assets/images/logos/BGRNEO.png" alt="BGR NEO"/></div><div class="nm">BGR&nbsp;NEO</div><div class="rl">Automation</div></div>
+      </div>
+      <div class="backed" data-seg="seg19">Backed by the <b>$500M BGR Group</b> · since 1985</div>
+    </div>
+  </section>
+
+  <!-- ========== ANITA ========== -->
+  <section class="scene" id="sc-anita" data-grade="cyan">
+    <div class="grid-bg"></div>
+    <div class="inner">
+      <div class="dd">
+        <div class="left">
+          <div class="logo" data-seg="seg20"><img src="assets/images/logos/ANITA.png" alt="ANITA"/></div>
+          <div class="role" data-seg="seg20">01 · Design — In-house Physical-AI Team</div>
+          <div class="name" data-seg="seg20">ANITA</div>
+          <div class="tag" data-seg="seg20">Born in Light</div>
+        </div>
+        <div class="right">
+          <p class="purpose" data-seg="seg21">The factory is <b>born first in light</b> — designed, simulated and virtually
+            commissioned as a living <b>digital twin</b>, before a single beam is raised.</p>
+          <div class="chips" data-seg="seg21">
+            <span class="chip on">NVIDIA Omniverse</span><span class="chip">Physics-accurate simulation</span>
+            <span class="chip">Robot fleets in-sim</span><span class="chip">Ref: Ola "Future Factory" · ~8 months</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== NIKITHA ========== -->
+  <section class="scene" id="sc-nikitha" data-grade="steel">
+    <div class="grid-bg"></div>
+    <div class="inner">
+      <div class="dd">
+        <div class="left">
+          <div class="logo" data-seg="seg22"><img src="assets/images/logos/NIKITHA.png" alt="NIKITHA"/></div>
+          <div class="role" data-seg="seg22">02 · Build — PEB · Civil · Structural Steel</div>
+          <div class="name" data-seg="seg22">NIKITHA</div>
+          <div class="tag" data-seg="seg22">It Rises in Steel</div>
+        </div>
+        <div class="right">
+          <p class="purpose" data-seg="seg23">Then it <b>rises in steel</b> — the structure that holds the factory,
+            engineered and erected end to end.</p>
+          <div class="ddstats" data-seg="seg23">
+            <div class="st"><div class="n" data-count="31" data-suffix="+"></div><div class="c">Years · since 1994</div></div>
+            <div class="st"><div class="n" data-count="24000" data-suffix=" MT/yr"></div><div class="c">Fabrication capacity</div></div>
+            <div class="st"><div class="n" data-count="20000" data-suffix=" m²"></div><div class="c">Plant footprint</div></div>
+          </div>
+          <div class="chips" data-seg="seg23">
+            <span class="chip">Samsung Sriperumbudur</span><span class="chip">Hyundai / Kia</span>
+            <span class="chip">Bengaluru Airport T2 · 4,000 MT</span><span class="chip">Tekla + STAAD</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== ENEXIO ========== -->
+  <section class="scene" id="sc-enexio" data-grade="teal">
+    <div class="grid-bg"></div>
+    <div class="inner">
+      <div class="dd">
+        <div class="left">
+          <div class="logo" data-seg="seg24"><img src="assets/images/logos/ENEXIO.png" alt="ENEXIO"/></div>
+          <div class="role" data-seg="seg24">03 · Power & Cooling — ex-GEA</div>
+          <div class="name" data-seg="seg24">ENEXIO</div>
+          <div class="tag" data-seg="seg24">Cooling Without Water</div>
+        </div>
+        <div class="right">
+          <p class="purpose" data-seg="seg25">Then it <b>breathes</b> — powered and cooled. Tamil Nadu is water-scarce?
+            <b style="color:var(--teal)">No matter — ENEXIO cools without water.</b></p>
+          <div class="ddstats" data-seg="seg25">
+            <div class="st"><div class="n" data-count="500" data-suffix="+"></div><div class="c">Cooling systems</div></div>
+            <div class="st"><div class="n" data-count="100" data-suffix="+"></div><div class="c">In India</div></div>
+            <div class="st"><div class="n" data-count="50" data-suffix="+"></div><div class="c">Countries</div></div>
+          </div>
+          <div class="chips" data-seg="seg25"><span class="chip on">Air-cooled condensers</span><span class="chip">Dry cooling</span><span class="chip">Chennai HQ</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== BGR NEO ========== -->
+  <section class="scene" id="sc-bgrneo" data-grade="green">
+    <div class="grid-bg"></div>
+    <div class="inner">
+      <div class="dd">
+        <div class="left">
+          <div class="logo" data-seg="seg26"><img src="assets/images/logos/BGRNEO.png" alt="BGR NEO"/></div>
+          <div class="role" data-seg="seg26">04 · Automate — Robotics & Industry 4.0</div>
+          <div class="name" data-seg="seg26">BGR&nbsp;NEO</div>
+          <div class="tag" data-seg="seg26">It Comes Alive</div>
+        </div>
+        <div class="right">
+          <p class="purpose" data-seg="seg27">And then it <b>comes alive</b> — robotics, automation and intelligence,
+            built into the factory from the ground up.</p>
+          <div class="chips" data-seg="seg27">
+            <span class="chip on">ABB</span><span class="chip on">Caterpillar</span><span class="chip on">Lockheed Martin · F-16</span>
+            <span class="chip">TVS</span><span class="chip">JSW</span><span class="chip">KONE</span>
+            <span class="chip">Schneider</span><span class="chip">Reliance</span><span class="chip">PLC / SCADA · Industry 4.0</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== CLOSE ========== -->
+  <section class="scene" id="sc-close" data-grade="warm">
+    <div class="inner">
+      <div class="lockup" data-seg="seg28"><span><b>ANITA</b></span><span><b>NIKITHA</b></span><span><b>ENEXIO</b></span><span><b>BGR&nbsp;NEO</b></span></div>
+      <div class="recap" data-seg="seg28">From bare land — to a living factory. One ecosystem.</div>
+      <div class="closer">
+        <span data-seg="seg29">Our path is no longer found.</span>
+        <span class="big" data-seg="seg30">It is made.</span>
+      </div>
+      <div class="endtag endreveal">From the land that makes products — to the land that makes the makers.</div>
+      <div class="contact endreveal"><b>BGR&nbsp;NEO</b> · Reimagining Human Values with Machines<br/>+91&nbsp;44&nbsp;69&nbsp;250&nbsp;250 · info@bgrneo.com · www.bgrneo.com</div>
+    </div>
+  </section>
+
+  <div class="bar top"></div>
+  <div class="bar bot"></div>
+  <div id="grain"></div>
+</div>
+
+<!-- HUD -->
+<div id="brand"><b>THE&nbsp;BGR&nbsp;ECOSYSTEM</b></div>
+<div id="progress"></div>
+<div id="sound" class="muted"><span class="ico"><i></i><i></i><i></i><i></i></span><span id="sLbl">Sound&nbsp;Off</span></div>
+<button id="replay" class="btn">↻ &nbsp;Replay</button>
+
+<!-- GATE -->
+<div id="gate">
+  <div class="mk">A&nbsp;CINEMATIC&nbsp;PROPOSAL&nbsp;FOR&nbsp;TAMIL&nbsp;NADU</div>
+  <h1>The BGR Ecosystem</h1>
+  <p>A two-minute film — from bare greenfield land to a living, automated factory. Best with sound, in fullscreen.</p>
+  <button id="beginBtn" class="btn pulse">▶ &nbsp;Begin&nbsp; — &nbsp;press F for fullscreen</button>
+</div>
+
+<script src="assets/vendor/gsap.min.js"></script>
+<script>
+/* =====================================================================
+   THE BGR ECOSYSTEM — self-playing cinematic engine
+   Each VO clip drives its on-screen beat → text stays locked to voice.
+   ===================================================================== */
+
+/* ---- OPTIONAL: drop looping background video per scene here ----------
+   Put a file at the path and it auto-replaces the still (muted/looped).
+   e.g.  problem:'assets/video/problem.mp4'                              */
+const SCENE_VIDEO = {
+  // banner:'assets/video/banner.mp4',
+  // problem:'assets/video/problem.mp4',
+  // bloom:'assets/video/bloom.mp4',
+};
+
+/* timeline: every VO clip, and the scene it belongs to */
+const TL = [
+  ['seg01','banner'],['seg02','banner'],
+  ['seg03','problem'],['seg04','problem'],['seg05','problem'],
+  ['seg06','problem'],['seg07','problem'],['seg08','problem'],['seg09','problem'],
+  ['seg10','problem'],['seg11','problem'],['seg12','problem'],['seg13','problem'],
+  ['seg14','question'],
+  ['seg15','bloom'],
+  ['seg16','onewindow'],
+  ['seg17','partnership'],['seg18','partnership'],['seg19','partnership'],
+  ['seg20','anita'],['seg21','anita'],
+  ['seg22','nikitha'],['seg23','nikitha'],
+  ['seg24','enexio'],['seg25','enexio'],
+  ['seg26','bgrneo'],['seg27','bgrneo'],
+  ['seg28','close'],['seg29','close'],['seg30','close'],
+];
+const GRADES = {
+  grey :'radial-gradient(120% 90% at 50% 32%,#0c0f13,#06080b 60%,#030406)',
+  cyan :'radial-gradient(120% 90% at 50% 36%,#06181c,#05090e 55%,#02050a)',
+  steel:'radial-gradient(120% 90% at 50% 36%,#0d1218,#06090d 60%,#030406)',
+  teal :'radial-gradient(120% 90% at 50% 36%,#06181a,#05090d 60%,#02050a)',
+  green:'radial-gradient(120% 90% at 50% 36%,#08150a,#05090c 60%,#030406)',
+  warm :'radial-gradient(120% 95% at 50% 42%,#1a120a,#0a0a0c 55%,#050507)',
+};
+
+const tint = document.getElementById('tint');
+const progressEl = document.getElementById('progress');
+const vo = new Audio(); vo.preload='auto';
+let idx=-1, curScene=null, muted=false, safety=null, playing=false;
+
+/* inject any provided background videos */
+Object.entries(SCENE_VIDEO).forEach(([sc,src])=>{
+  const bg=document.querySelector(`#sc-${sc} .bg`);
+  if(!bg) return;
+  const v=document.createElement('video');
+  v.src=src; v.muted=true; v.loop=true; v.playsInline=true; v.autoplay=true;
+  bg.insertBefore(v, bg.firstChild);
+  const img=bg.querySelector('img'); if(img) img.style.display='none';
+});
+
+function setScene(sc){
+  if(curScene===sc) return;
+  const next=document.getElementById('sc-'+sc);
+  const prev=curScene?document.getElementById('sc-'+curScene):null;
+  // reset reveals so they animate fresh
+  next.querySelectorAll('[data-seg]').forEach(e=>{e.style.opacity=0;e.style.transform='translateY(26px)';});
+  tint.style.background = GRADES[next.dataset.grade] || GRADES.grey;
+  next.classList.add('active'); void next.offsetWidth; next.classList.add('kb');
+  gsap.fromTo(next,{opacity:0},{opacity:1,duration:1.1,ease:'power2.out'});
+  if(prev){ gsap.to(prev,{opacity:0,duration:.9,ease:'power2.in',
+    onComplete:()=>{prev.classList.remove('active','kb');}}); }
+  if(sc==='bloom') runBloom();
+  // restart any bg video
+  const v=next.querySelector('video'); if(v){ try{v.currentTime=0;v.play();}catch(e){} }
+  curScene=sc;
+}
+
+function runBloom(){
+  const b=document.getElementById('bloom');
+  gsap.fromTo(b,{scale:0,opacity:0},{scale:170,opacity:1,duration:1.6,ease:'power2.in'});
+  gsap.to(b,{opacity:0,duration:1.2,delay:1.4,ease:'power1.out'});
+}
+
+function countUp(el){
+  const end=+el.dataset.count, suf=el.dataset.suffix||'';
+  const fmt=v=> (end>=1000?Math.round(v).toLocaleString('en-IN'):Math.round(v));
+  const o={v:0}; gsap.to(o,{v:end,duration:1.5,ease:'power2.out',onUpdate:()=>el.textContent=fmt(o.v)+suf});
+}
+
+function reveal(seg){
+  const els=document.querySelectorAll(`[data-seg="${seg}"]`);
+  gsap.to(els,{opacity:1,y:0,duration:.9,ease:'power3.out',stagger:.16});
+  els.forEach(el=>{
+    if(el.dataset.count!=null) countUp(el);
+    el.querySelectorAll&&el.querySelectorAll('[data-count]').forEach(countUp);
+  });
+}
+
+function advance(){ clearTimeout(safety); vo.onended=null; gsap.delayedCall(.32, step); }
+
+function playClip(seg){
+  clearTimeout(safety);
+  vo.onended=()=>advance();
+  vo.onerror=()=>{ clearTimeout(safety); safety=setTimeout(advance,2600); };
+  vo.onloadedmetadata=()=>{ clearTimeout(safety);
+    safety=setTimeout(advance,(isFinite(vo.duration)?vo.duration*1000:2600)+2500); };
+  vo.src=`assets/audio/vo/${seg}.mp3`;
+  vo.muted=muted; vo.currentTime=0;
+  vo.play().catch(()=>{ clearTimeout(safety); safety=setTimeout(advance,2800); });
+  safety=setTimeout(advance,9000); // hard backstop
+}
+
+function step(){
+  idx++;
+  if(idx>=TL.length) return finish();
+  const [seg,sc]=TL[idx];
+  const changed = sc!==curScene;
+  setScene(sc);
+  progressEl.style.width = ((idx+1)/TL.length*100)+'%';
+  setTimeout(()=>reveal(seg), changed?650:60);
+  playClip(seg);
+}
+
+function finish(){
+  playing=false;
+  gsap.to('.endreveal',{opacity:1,y:0,duration:1,ease:'power3.out',stagger:.3});
+  progressEl.style.width='100%';
+  document.getElementById('replay').classList.add('show');
+}
+
+function start(){
+  document.getElementById('replay').classList.remove('show');
+  document.querySelectorAll('[data-seg],.endreveal').forEach(e=>{e.style.opacity=0;e.style.transform='translateY(26px)';});
+  idx=-1; curScene=null; playing=true; step();
+}
+
+/* sound toggle */
+const soundBtn=document.getElementById('sound'), sLbl=document.getElementById('sLbl');
+function setSound(on){ muted=!on; vo.muted=muted; soundBtn.classList.toggle('muted',!on); sLbl.textContent=on?'Sound On':'Sound Off'; }
+soundBtn.addEventListener('click',()=>setSound(muted));
+
+/* gate */
+const gate=document.getElementById('gate');
+document.getElementById('beginBtn').addEventListener('click',()=>{
+  gate.classList.add('hidden'); setTimeout(()=>gate.remove(),1100);
+  setSound(true); start();
+});
+document.getElementById('replay').addEventListener('click',start);
+
+/* fullscreen */
+addEventListener('keydown',e=>{ if(e.key==='f'||e.key==='F'){
+  document.fullscreenElement?document.exitFullscreen?.():document.documentElement.requestFullscreen?.(); }});
+
+/* test hook (used by _audit.mjs; harmless in production) */
+window.__cinema={
+  goto:i=>{ idx=i-1; clearTimeout(safety); vo.pause();
+    const [seg,sc]=TL[i]; setScene(sc); reveal(seg);
+    progressEl.style.width=((i+1)/TL.length*100)+'%'; },
+  scene:scId=>{ clearTimeout(safety); vo.pause(); setScene(scId);
+    TL.filter(t=>t[1]===scId).forEach(t=>reveal(t[0]));
+    if(scId==='close') gsap.to('.endreveal',{opacity:1,y:0,duration:.6,stagger:.1}); },
+  end:finish };
+
+/* ===================== ambient particle field ===================== */
+(function fx(){
+  const c=document.getElementById('fx'), x=c.getContext('2d'); let w,h,parts;
+  function size(){ w=c.width=innerWidth; h=c.height=innerHeight;
+    parts=Array.from({length:Math.min(70,Math.floor(w/26))},()=>({
+      x:Math.random()*w,y:Math.random()*h,r:Math.random()*1.6+.3,
+      vx:(Math.random()-.5)*.18,vy:(Math.random()-.5)*.18,a:Math.random()*.5+.1})); }
+  size(); addEventListener('resize',size);
+  (function draw(){requestAnimationFrame(draw);
+    x.clearRect(0,0,w,h);
+    for(const p of parts){ p.x+=p.vx;p.y+=p.vy;
+      if(p.x<0)p.x=w;if(p.x>w)p.x=0;if(p.y<0)p.y=h;if(p.y>h)p.y=0;
+      x.beginPath();x.arc(p.x,p.y,p.r,0,6.28);
+      x.fillStyle=`rgba(25,211,218,${p.a*.6})`;x.fill(); }
+  })();
+})();
+</script>
+</body>
+</html>

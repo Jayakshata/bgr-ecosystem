@@ -1,0 +1,37 @@
+# --- keep the published site lean: only ship what index.html uses ---
+
+# unused source film frames (we ship only the 4 optimized .jpg heroes)
+assets/images/film/*.png
+
+# inspo board (design reference only)
+assets/images/inspo/
+
+# old / alternate narration takes (live site uses assets/audio/vo/*.mp3)
+assets/audio/Block1_script.mp3
+assets/audio/ALT_*.mp3
+
+# empty drop-in folder
+assets/video/
+
+# dev + build tooling
+_audit.mjs
+_optimize.py
+_shot_*.png
+__pycache__/
+*.pyc
+
+# os
+Thumbs.db
+.DS_Store
+
+# --- internal: keep OUT of the public site repo (stay local only) ---
+CLAUDE.md
+PROJECT_MASTER_CONTEXT.md
+SLIDES_OUTLINE.md
+START_HERE.md
+DESIGN_REFERENCE.md
+ASSETS_NEEDED.md
+NARRATION.md
+render_vo.py
+content_extracted/
+assets/fonts/KIONA.png
