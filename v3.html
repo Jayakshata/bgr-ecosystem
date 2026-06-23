@@ -1063,41 +1063,33 @@ function jumpToScene(scId){
   const matP=new THREE.LineBasicMaterial({color:STB,transparent:true,opacity:0});
   const matB=new THREE.LineBasicMaterial({color:STB,transparent:true,opacity:.9});
   const E=(g,m)=>new THREE.LineSegments(new THREE.EdgesGeometry(g),m||mat);
-  const grid=new THREE.GridHelper(120,60,ST,ST); grid.material.opacity=.09;grid.material.transparent=true; root.add(grid);
-  const BW=17,H=7,RIDGE=10,NF=11,SP=3.0;
-  const Z=-(NF-1)*SP;
-  const rlen=Math.hypot(BW/2,RIDGE-H), rang=Math.atan2(RIDGE-H,BW/2);
-  const frames=[];
-  for(let f=0;f<NF;f++){ const g=new THREE.Group(); g.position.z=-f*SP; root.add(g); frames.push(g);
-    g.add(E(new THREE.BoxGeometry(0.32,H,0.32)).translateX(-BW/2).translateY(H/2));
-    g.add(E(new THREE.BoxGeometry(0.32,H,0.32)).translateX(BW/2).translateY(H/2));
-    const rl=E(new THREE.BoxGeometry(0.26,rlen,0.26)); rl.position.set(-BW/4,(H+RIDGE)/2,0); rl.rotation.z=rang-Math.PI/2; g.add(rl);
-    const rr=E(new THREE.BoxGeometry(0.26,rlen,0.26)); rr.position.set(BW/4,(H+RIDGE)/2,0); rr.rotation.z=Math.PI/2-rang; g.add(rr); }
-  // purlins + girts (fade in after erection)
-  const pg=new THREE.Group(); root.add(pg);
-  function lw(x,y){ const e=E(new THREE.BoxGeometry(0.1,0.1,Math.abs(Z)),matP); e.position.set(x,y,Z/2); pg.add(e); }
-  for(let k=0;k<=5;k++){ const fx=(BW/2)*(1-k/5), fy=H+(RIDGE-H)*(k/5); lw(fx,fy); lw(-fx,fy); }
-  for(const gy of [1.8,3.6]){ lw(BW/2,gy); lw(-BW/2,gy); }
-  // ---- extended structure: eave/ridge beams, crane runway + bridge, mezzanine, end-bay bracing ----
-  for(const bb of [[-BW/2,H],[BW/2,H],[0,RIDGE]]) root.add(E(new THREE.BoxGeometry(0.26,0.26,Math.abs(Z))).translateX(bb[0]).translateY(bb[1]).translateZ(Z/2));
-  for(const bx of [-BW/2+1.6,BW/2-1.6]) root.add(E(new THREE.BoxGeometry(0.42,0.55,Math.abs(Z))).translateX(bx).translateY(H-1.3).translateZ(Z/2));
-  root.add(E(new THREE.BoxGeometry(BW-2.6,0.4,0.7),matB).translateY(H-1.0).translateZ(Z*0.35));   // static crane bridge (no moving block)
-  const mz=new THREE.Group(); root.add(mz);
-  mz.add(E(new THREE.BoxGeometry(BW-1,0.2,Math.abs(Z)*0.42)).translateY(3.3).translateZ(Z*0.74));
-  for(let mx=-BW/2+2;mx<BW/2-1;mx+=3.5) for(let mz2=Z*0.55;mz2>Z+1;mz2-=4) mz.add(E(new THREE.BoxGeometry(0.18,3.3,0.18)).translateX(mx).translateY(1.65).translateZ(mz2));
-  for(const wx of [-BW/2,BW/2]) for(const s of [1,-1]){ const br=E(new THREE.BoxGeometry(0.12,Math.hypot(SP*2,H),0.12),matP); br.position.set(wx,H/2,-SP); br.rotation.x=s*Math.atan2(SP*2,H); root.add(br); }
-  const A1=new THREE.Vector3(4,4.5,2), A2=new THREE.Vector3(-3,5,-22), NB=new THREE.Vector3(13,11,27),
-        L1=new THREE.Vector3(0,5,-12), L2=new THREE.Vector3(0,5,-30), NTB=new THREE.Vector3(-7,5,-12);
+  const matD=new THREE.LineBasicMaterial({color:ST,transparent:true,opacity:.28});
+  const grid=new THREE.GridHelper(150,75,ST,ST); grid.material.opacity=.08;grid.material.transparent=true; root.add(grid);
+  // ---- multi-storey steel frame (BIM-style: column grid + floor-beam grids + joists + slabs + MEP detail) ----
+  const GX=6, GZ=3, BAY=4, FH=3.0, FLOORS=6, BW=(GX-1)*BAY, BD=(GZ-1)*BAY, TH=FLOORS*FH;
+  const floors=[];
+  root.add(E(new THREE.BoxGeometry(BW+2,0.3,BD+2),matD));                                                                                         // ground slab
+  for(let f=0;f<FLOORS;f++){ const g=new THREE.Group(); g.position.y=f*FH; root.add(g); floors.push(g);
+    for(let i=0;i<GX;i++) for(let j=0;j<GZ;j++) g.add(E(new THREE.BoxGeometry(0.3,FH,0.3)).translateX(-BW/2+i*BAY).translateY(FH/2).translateZ(-BD/2+j*BAY)); // columns
+    for(let j=0;j<GZ;j++) g.add(E(new THREE.BoxGeometry(BW,0.32,0.32)).translateY(FH).translateZ(-BD/2+j*BAY));                                    // x primary beams
+    for(let i=0;i<GX;i++) g.add(E(new THREE.BoxGeometry(0.32,0.32,BD)).translateX(-BW/2+i*BAY).translateY(FH));                                    // z primary beams
+    for(let i=0;i<GX-1;i++) for(let s=1;s<=2;s++) g.add(E(new THREE.BoxGeometry(0.14,0.14,BD),matP).translateX(-BW/2+i*BAY+s*BAY/3).translateY(FH-0.05)); // joists (fade in)
+    g.add(E(new THREE.BoxGeometry(BW+0.6,0.08,BD+0.6),matD).translateY(FH));                                                                       // slab plate
+    for(let k=0;k<4;k++) g.add(E(new THREE.BoxGeometry(0.7,0.7,0.7),matB).translateX(-BW/2+1.5+Math.random()*(BW-3)).translateY(0.9).translateZ(-BD/2+1+Math.random()*(BD-2))); // MEP/equipment
+    for(const ex of [-BW/2,BW/2]){ const br=E(new THREE.BoxGeometry(0.1,Math.hypot(BAY,FH),0.1),matP); br.position.set(ex,FH/2,-BD/2+BAY/2); br.rotation.x=Math.atan2(BAY,FH); g.add(br); } // end-bay bracing
+  }
+  const A1=new THREE.Vector3(4,19,5), A2=new THREE.Vector3(4,4,5), NB=new THREE.Vector3(18,13,34),
+        L1=new THREE.Vector3(0,16,-1), L2=new THREE.Vector3(0,1,-1), NTB=new THREE.Vector3(-5,8,-3);   // drone: top-down floor tour -> dolly out
   const v1=new THREE.Vector3(), v2=new THREE.Vector3(); let tp=0;
   function size(){ const w=canvas.clientWidth||720,h=canvas.clientHeight||400; R.setSize(w,h,false); cam.aspect=w/h; cam.updateProjectionMatrix(); }
   let sized=false,age=0,t=0; window.addEventListener('resize',()=>sized=false);
   (function loop(){ requestAnimationFrame(loop); if(curScene!=='nikitha'){ age=0; matP.opacity=0; return; } if(!sized){size();sized=true;}
     age++; t+=0.01;
-    frames.forEach((g,i)=>{ const fp=Math.max(0,Math.min(1,(age-i*6)/34)); g.scale.y=Math.max(0.0001,fp); });
-    matP.opacity=Math.max(0,Math.min(.34,(age-NF*6)/60*0.34));
+    floors.forEach((g,f)=>{ const fp=Math.max(0,Math.min(1,(age-f*9)/30)); g.scale.y=Math.max(0.0001,fp); });   // erect floor by floor
+    matP.opacity=Math.max(0,Math.min(.34,(age-FLOORS*9)/70*0.34));
     const split=document.getElementById('sc-nikitha').classList.contains('split');
     tp=Math.max(0,Math.min(1,tp+(split?1:-1)*0.01)); const e=tp*tp*(3-2*tp);
-    const d=(Math.sin(t*1.0)+1)/2;
+    const d=(Math.sin(t*1.4)+1)/2;
     v1.lerpVectors(A1,A2,d).lerp(NB,e); v2.lerpVectors(L1,L2,d).lerp(NTB,e);
     cam.position.copy(v1); cam.lookAt(v2);
     R.render(scene,cam); })();
