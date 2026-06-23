@@ -791,9 +791,9 @@ function setScene(sc){
   tint.style.background = GRADES[next.dataset.grade] || GRADES.grey;
   setBloom(next);
   next.classList.add('active'); void next.offsetWidth; next.classList.add('kb');
-  gsap.fromTo(next,{opacity:0},{opacity:1,duration:1.1,ease:'power2.out'});
-  if(prev){ gsap.to(prev,{opacity:0,duration:.9,ease:'power2.in',
-    onComplete:()=>{prev.classList.remove('active','kb');}}); }
+  gsap.fromTo(next,{opacity:0,scale:1.06},{opacity:1,scale:1,duration:1.2,ease:'power2.out'});   // filmic crossfade-zoom in
+  if(prev){ gsap.to(prev,{opacity:0,scale:0.95,duration:.9,ease:'power2.in',
+    onComplete:()=>{prev.classList.remove('active','kb'); gsap.set(prev,{clearProps:'transform'});}}); }
   if(sc==='bloom') runBloom();
   if(sc==='close') finReset();          // hide finale elements on enter — kills the stale "It is made" flash
   if(next.classList.contains('wh')) next.classList.remove('split','loaded');   // reset zoom->split so it replays each entry
