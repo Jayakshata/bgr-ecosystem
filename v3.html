@@ -820,7 +820,7 @@ const REQ={seg06:1,seg07:1,seg08:1,seg09:1,seg10:1,seg11:1,seg12:1,seg13:1};   /
 function reveal(seg){
   if(FIN[seg]){ FIN[seg](); return; }
   if(PART[seg]){ PART[seg](); return; }
-  if(REQ[seg]){ SFX.clink(); document.querySelectorAll('[data-seg="'+seg+'"]').forEach(el=>gsap.fromTo(el,{opacity:0,scale:.72,y:8},{opacity:1,scale:1,y:0,duration:.32,ease:'back.out(2.4)'})); return; }
+  if(REQ[seg]){ SFX.clink(); document.querySelectorAll('[data-seg="'+seg+'"]').forEach(el=>gsap.fromTo(el,{opacity:0,scale:.72,y:8},{opacity:1,scale:1,y:0,duration:.26,ease:'back.out(2.6)'})); return; }
   if(HOVER[seg]){ SFX.swish(); return; }
   if(COMP[seg]){ runCompany(COMP[seg]); return; }
   const els=document.querySelectorAll(`[data-seg="${seg}"]`);
@@ -839,7 +839,7 @@ function advance(){ clearTimeout(safety); vo.onended=null;
   const cur=TL[idx], nxt=TL[idx+1];
   const HOLD={seg28:1.3};   // brief hold: let the fast pipeline finish + RUNNING FACTORY glow, then converge (no dead gap)
   const RAPID={seg05:1,seg06:1,seg07:1,seg08:1,seg09:1,seg10:1,seg11:1,seg12:1};   // requirements fire back-to-back, no gaps
-  const gap=(cur&&HOLD[cur[0]]) || (cur&&RAPID[cur[0]]?0.06:((nxt&&cur&&nxt[1]!==cur[1])?2.2:0.32));
+  const gap=(cur&&HOLD[cur[0]]) || (cur&&RAPID[cur[0]]?0.02:((nxt&&cur&&nxt[1]!==cur[1])?2.2:0.32));
   gsap.delayedCall(gap, step); }
 
 function playClip(seg){
@@ -848,7 +848,7 @@ function playClip(seg){
   vo.onerror=()=>{ clearTimeout(safety); safety=setTimeout(advance,2600); };
   vo.onloadedmetadata=()=>{ clearTimeout(safety);
     safety=setTimeout(advance,(isFinite(vo.duration)?vo.duration*1000:2600)+2500); };
-  vo.src=`assets/audio/vo/${seg}.mp3?v=3`;
+  vo.src=`assets/audio/vo/${seg}.mp3?v=4`;
   vo.muted=muted; vo.currentTime=0;
   vo.play().catch(()=>{ clearTimeout(safety); safety=setTimeout(advance,2800); });
   safety=setTimeout(advance,9000); // hard backstop
