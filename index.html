@@ -128,12 +128,12 @@ img{display:block;max-width:100%}
 .constellation{position:relative;width:100%;max-width:920px;height:46vh;margin:2.2rem auto 0}
 .constellation svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
 .pnode{position:absolute;transform:translate(-50%,-50%);text-align:center}
-.pnode .lg{width:clamp(70px,9vw,104px);height:clamp(50px,6vw,70px);margin:0 auto .55rem;border:1px solid rgba(255,255,255,.14);
+.pnode .lg{width:clamp(70px,9vw,104px);height:clamp(50px,6vw,70px);margin:0 auto .55rem;border:1px solid color-mix(in srgb,var(--pc,#fff) 55%,rgba(255,255,255,.14));
   border-radius:9px;display:flex;align-items:center;justify-content:center;background:rgba(245,248,251,.97);
-  padding:7px 10px;overflow:hidden;box-shadow:0 6px 22px rgba(0,0,0,.4)}
+  padding:7px 10px;overflow:hidden;box-shadow:0 0 24px color-mix(in srgb,var(--pc,#19D3DA) 42%,transparent),0 6px 22px rgba(0,0,0,.45)}
 .pnode .lg img{max-width:100%;max-height:100%;object-fit:contain}
 .pnode .nm{font-family:var(--font-display);text-transform:uppercase;letter-spacing:.12em;
-  font-size:clamp(.9rem,1.8vw,1.4rem);color:var(--ink)}
+  font-size:clamp(.9rem,1.8vw,1.4rem);color:var(--pc,var(--ink));text-shadow:0 0 18px color-mix(in srgb,var(--pc,transparent) 55%,transparent)}
 .pnode .rl{font-family:var(--font-mono);font-size:.54rem;letter-spacing:.2em;color:var(--ink-dim);text-transform:uppercase}
 .pcenter{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:16px;height:16px;border-radius:50%;
   background:var(--cyan);box-shadow:0 0 28px var(--cyan)}
@@ -412,16 +412,16 @@ img{display:block;max-width:100%}
       <div class="kicker" style="justify-content:center" data-seg="seg18">[ Made possible through the partnership of ]</div>
       <div class="constellation">
         <svg viewBox="0 0 1000 520" preserveAspectRatio="xMidYMid meet">
-          <line x1="500" y1="260" x2="200" y2="120" stroke="#19D3DA" stroke-width="1.2" opacity="0.5" data-seg="seg19"/>
-          <line x1="500" y1="260" x2="800" y2="120" stroke="#9fb0c2" stroke-width="1.2" opacity="0.5" data-seg="seg19"/>
-          <line x1="500" y1="260" x2="200" y2="400" stroke="#34b3a8" stroke-width="1.2" opacity="0.5" data-seg="seg19"/>
-          <line x1="500" y1="260" x2="800" y2="400" stroke="#5CC15A" stroke-width="1.2" opacity="0.5" data-seg="seg19"/>
+          <line class="pline pl-anita"   x1="500" y1="260" x2="200" y2="120" stroke="#19D3DA" stroke-width="1.5" opacity="0" data-seg="seg19"/>
+          <line class="pline pl-nikitha" x1="500" y1="260" x2="800" y2="120" stroke="#E8A24C" stroke-width="1.5" opacity="0" data-seg="seg19"/>
+          <line class="pline pl-enexio"  x1="500" y1="260" x2="200" y2="400" stroke="#4fb0f0" stroke-width="1.5" opacity="0" data-seg="seg19"/>
+          <line class="pline pl-bgrneo"  x1="500" y1="260" x2="800" y2="400" stroke="#5CC15A" stroke-width="1.5" opacity="0" data-seg="seg19"/>
         </svg>
         <div class="pcenter" data-seg="seg19"></div>
-        <div class="pnode" style="left:20%;top:23%" data-seg="seg19"><div class="lg"><img src="assets/images/logos/ANITA.png" alt="ANITA"/></div><div class="nm">ANITA</div><div class="rl">Design · Digital Twin</div></div>
-        <div class="pnode" style="left:80%;top:23%" data-seg="seg19"><div class="lg"><img src="assets/images/logos/NIKITHA.png" alt="NIKITHA"/></div><div class="nm">NIKITHA</div><div class="rl">Design · Build</div></div>
-        <div class="pnode" style="left:20%;top:77%" data-seg="seg19"><div class="lg"><img src="assets/images/logos/ENEXIO.png" alt="ENEXIO"/></div><div class="nm">ENEXIO</div><div class="rl">Power · Cooling</div></div>
-        <div class="pnode" style="left:80%;top:77%" data-seg="seg19"><div class="lg"><img src="assets/images/logos/BGRNEO.png" alt="BGR NEO"/></div><div class="nm">BGR&nbsp;NEO</div><div class="rl">Automation</div></div>
+        <div class="pnode pn-anita"   style="left:20%;top:23%;--pc:#19D3DA" data-seg="seg19"><div class="lg"><img src="assets/images/logos/ANITA.png" alt="ANITA"/></div><div class="nm">ANITA</div><div class="rl">Design · Digital Twin</div></div>
+        <div class="pnode pn-nikitha" style="left:80%;top:23%;--pc:#E8A24C" data-seg="seg19"><div class="lg"><img src="assets/images/logos/NIKITHA.png" alt="NIKITHA"/></div><div class="nm">NIKITHA</div><div class="rl">Design · Build</div></div>
+        <div class="pnode pn-enexio"  style="left:20%;top:77%;--pc:#4fb0f0" data-seg="seg19"><div class="lg"><img src="assets/images/logos/ENEXIO.png" alt="ENEXIO"/></div><div class="nm">ENEXIO</div><div class="rl">Power · Cooling</div></div>
+        <div class="pnode pn-bgrneo"  style="left:80%;top:77%;--pc:#5cc15a" data-seg="seg19"><div class="lg"><img src="assets/images/logos/BGRNEO.png" alt="BGR NEO"/></div><div class="nm">BGR&nbsp;NEO</div><div class="rl">Automation</div></div>
       </div>
       <div class="backed" data-seg="seg19">Backed by the <b>$500M BGR Group</b> · since 1985</div>
     </div>
@@ -720,6 +720,20 @@ FIN.seg30=function(){ SFX.chime();
   gsap.fromTo('.fin-final .b',{opacity:0,y:18,scale:.94,filter:'blur(10px)'},{opacity:1,y:0,scale:1,filter:'blur(0px)',duration:1.2,ease:'power3.out'});
   gsap.fromTo('.fin-mark',{opacity:0,y:14},{opacity:1,y:0,duration:1,delay:1.3}); };
 
+/* ===== PARTNERSHIP — partners ignite one-by-one in their colour, synced to the VO naming ===== */
+const PART={};
+PART.seg19=function(){
+  const P=[['pl-anita','pn-anita','#19D3DA'],['pl-nikitha','pn-nikitha','#E8A24C'],['pl-enexio','pn-enexio','#4fb0f0'],['pl-bgrneo','pn-bgrneo','#5cc15a']];
+  gsap.fromTo('.pcenter',{xPercent:-50,yPercent:-50,scale:0,opacity:0},{xPercent:-50,yPercent:-50,scale:1,opacity:1,duration:.5,ease:'back.out(2)'});
+  P.forEach((p,i)=>{ gsap.delayedCall(i*0.78,()=>{ SFX.clink(); finBloom(p[2]);
+    const ln=document.querySelector('.'+p[0]);
+    if(ln){ let len=420; try{len=ln.getTotalLength();}catch(e){} gsap.set(ln,{y:0,opacity:.8,strokeDasharray:len,strokeDashoffset:len}); gsap.to(ln,{strokeDashoffset:0,duration:.55,ease:'power2.out'}); }
+    const nd=document.querySelector('.'+p[1]);
+    if(nd) gsap.fromTo(nd,{xPercent:-50,yPercent:-50,opacity:0,scale:.55,y:16,filter:'blur(6px)'},{xPercent:-50,yPercent:-50,opacity:1,scale:1,y:0,filter:'blur(0px)',duration:.6,ease:'back.out(1.5)'});
+  }); });
+  gsap.delayedCall(4*0.78+0.2,()=>{ gsap.fromTo('.backed',{opacity:0,y:10},{opacity:1,y:0,duration:.7,ease:'power2.out'}); finBloom('#19D3DA'); });
+};
+
 const tint = document.getElementById('tint');
 const progressEl = document.getElementById('progress');
 const vo = new Audio(); vo.preload='auto';
@@ -782,6 +796,7 @@ function countUp(el){
 
 function reveal(seg){
   if(FIN[seg]){ FIN[seg](); return; }
+  if(PART[seg]){ PART[seg](); return; }
   const els=document.querySelectorAll(`[data-seg="${seg}"]`);
   if(els.length) SFX.reveal();
   els.forEach((el,i)=>{
