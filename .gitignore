@@ -58,3 +58,5 @@ _fin_*.png
 # --- v3 redesign WIP (now TRACKED for off-disk backup; promote to index.html when ready) ---
 _partcap.mjs
 _part_*.png
+_cocap.mjs
+_co_*.png
