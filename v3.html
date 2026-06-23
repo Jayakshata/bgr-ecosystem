@@ -419,6 +419,10 @@ img{display:block;max-width:100%}
           <line class="pline pl-nikitha" x1="500" y1="260" x2="800" y2="120" stroke="#E8A24C" stroke-width="1.5" opacity="0" data-seg="seg19"/>
           <line class="pline pl-enexio"  x1="500" y1="260" x2="200" y2="400" stroke="#4fb0f0" stroke-width="1.5" opacity="0" data-seg="seg19"/>
           <line class="pline pl-bgrneo"  x1="500" y1="260" x2="800" y2="400" stroke="#FF5A1F" stroke-width="1.5" opacity="0" data-seg="seg19"/>
+          <circle class="ppulse pp-anita"   cx="500" cy="260" r="6" fill="#19D3DA" opacity="0"/>
+          <circle class="ppulse pp-nikitha" cx="500" cy="260" r="6" fill="#E8A24C" opacity="0"/>
+          <circle class="ppulse pp-enexio"  cx="500" cy="260" r="6" fill="#4fb0f0" opacity="0"/>
+          <circle class="ppulse pp-bgrneo"  cx="500" cy="260" r="6" fill="#FF5A1F" opacity="0"/>
         </svg>
         <div class="pcenter" data-seg="seg19"></div>
         <div class="pnode pn-anita"   style="left:20%;top:23%;--pc:#19D3DA" data-seg="seg19"><div class="lg"><img src="assets/images/logos/ANITA.png" alt="ANITA"/></div><div class="nm">ANITA</div><div class="rl">Design · Digital Twin</div></div>
@@ -728,15 +732,28 @@ FIN.seg30=function(){ SFX.chime();
 /* ===== PARTNERSHIP — partners ignite one-by-one in their colour, synced to the VO naming ===== */
 const PART={};
 PART.seg19=function(){
-  const P=[['pl-anita','pn-anita','#19D3DA'],['pl-nikitha','pn-nikitha','#E8A24C'],['pl-enexio','pn-enexio','#4fb0f0'],['pl-bgrneo','pn-bgrneo','#FF5A1F']];
-  gsap.fromTo('.pcenter',{xPercent:-50,yPercent:-50,scale:0,opacity:0},{xPercent:-50,yPercent:-50,scale:1,opacity:1,duration:.5,ease:'back.out(2)'});
-  P.forEach((p,i)=>{ gsap.delayedCall(i*0.78,()=>{ SFX.clink(); finBloom(p[2]);
+  // [line, node, pulse, colour, node-x, node-y]
+  const P=[['pl-anita','pn-anita','pp-anita','#19D3DA',200,120],['pl-nikitha','pn-nikitha','pp-nikitha','#E8A24C',800,120],['pl-enexio','pn-enexio','pp-enexio','#4fb0f0',200,400],['pl-bgrneo','pn-bgrneo','pp-bgrneo','#FF5A1F',800,400]];
+  const ctr=document.querySelector('.pcenter');
+  gsap.fromTo(ctr,{xPercent:-50,yPercent:-50,scale:0,opacity:0},{xPercent:-50,yPercent:-50,scale:1,opacity:1,duration:.4,ease:'back.out(2)'});
+  P.forEach((p,i)=>{ gsap.delayedCall(0.35+i*0.5,()=>{
     const ln=document.querySelector('.'+p[0]);
-    if(ln){ let len=420; try{len=ln.getTotalLength();}catch(e){} gsap.set(ln,{y:0,opacity:.8,strokeDasharray:len,strokeDashoffset:len}); gsap.to(ln,{strokeDashoffset:0,duration:.55,ease:'power2.out'}); }
-    const nd=document.querySelector('.'+p[1]);
-    if(nd) gsap.fromTo(nd,{xPercent:-50,yPercent:-50,opacity:0,scale:.55,y:16,filter:'blur(6px)'},{xPercent:-50,yPercent:-50,opacity:1,scale:1,y:0,filter:'blur(0px)',duration:.6,ease:'back.out(1.5)'});
+    if(ln){ let len=420; try{len=ln.getTotalLength();}catch(e){} gsap.set(ln,{y:0,opacity:.32,strokeDasharray:len,strokeDashoffset:len}); gsap.to(ln,{strokeDashoffset:0,opacity:.65,duration:.42,ease:'power2.out'}); }
+    const pulse=document.querySelector('.'+p[2]), o={x:500,y:260};   // energy pulse flows hub -> partner
+    if(pulse){ gsap.set(pulse,{opacity:1}); pulse.setAttribute('cx',500); pulse.setAttribute('cy',260);
+      gsap.to(o,{x:p[4],y:p[5],duration:.42,ease:'power1.inOut',onUpdate:()=>{pulse.setAttribute('cx',o.x);pulse.setAttribute('cy',o.y);},onComplete:()=>{
+        gsap.to(pulse,{opacity:0,duration:.18}); SFX.clink(); finBloom(p[3]);
+        const nd=document.querySelector('.'+p[1]);                   // partner ignites when the pulse arrives
+        if(nd) gsap.fromTo(nd,{xPercent:-50,yPercent:-50,opacity:0,scale:.5,filter:'blur(7px)'},{xPercent:-50,yPercent:-50,opacity:1,scale:1,filter:'blur(0px)',duration:.5,ease:'back.out(1.8)'});
+        gsap.fromTo(ctr,{scale:1.22},{scale:1,duration:.4,ease:'power2.out'});   // hub powers up with each link
+      }});
+    }
   }); });
-  gsap.delayedCall(4*0.78+0.2,()=>{ gsap.fromTo('.backed',{opacity:0,y:10},{opacity:1,y:0,duration:.7,ease:'power2.out'}); finBloom('#19D3DA'); });
+  gsap.delayedCall(0.35+4*0.5+0.55,()=>{                              // unified: hub bursts, "backed by" in
+    gsap.fromTo(ctr,{scale:1},{scale:1.7,duration:.35,yoyo:true,repeat:1,ease:'power2.inOut'});
+    finBloom('#19D3DA'); SFX.glow();
+    gsap.fromTo('.backed',{opacity:0,y:10},{opacity:1,y:0,duration:.6,ease:'power2.out'});
+  });
 };
 
 const tint = document.getElementById('tint');
