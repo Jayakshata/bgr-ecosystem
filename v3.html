@@ -1078,8 +1078,8 @@ function jumpToScene(scId){
     for(let k=0;k<4;k++) g.add(E(new THREE.BoxGeometry(0.7,0.7,0.7),matB).translateX(-BW/2+1.5+Math.random()*(BW-3)).translateY(0.9).translateZ(-BD/2+1+Math.random()*(BD-2))); // MEP/equipment
     for(const ex of [-BW/2,BW/2]){ const br=E(new THREE.BoxGeometry(0.1,Math.hypot(BAY,FH),0.1),matP); br.position.set(ex,FH/2,-BD/2+BAY/2); br.rotation.x=Math.atan2(BAY,FH); g.add(br); } // end-bay bracing
   }
-  const A1=new THREE.Vector3(4,19,5), A2=new THREE.Vector3(4,4,5), NB=new THREE.Vector3(18,13,34),
-        L1=new THREE.Vector3(0,16,-1), L2=new THREE.Vector3(0,1,-1), NTB=new THREE.Vector3(-5,8,-3);   // drone: top-down floor tour -> dolly out
+  const A1=new THREE.Vector3(4,19,5), A2=new THREE.Vector3(4,4,5), NB=new THREE.Vector3(20,13,37),
+        L1=new THREE.Vector3(0,16,-1), L2=new THREE.Vector3(0,1,-1), NTB=new THREE.Vector3(-13,8,-2);   // drone: top-down floor tour -> dolly out (building right)
   const v1=new THREE.Vector3(), v2=new THREE.Vector3(); let tp=0;
   function size(){ const w=canvas.clientWidth||720,h=canvas.clientHeight||400; R.setSize(w,h,false); cam.aspect=w/h; cam.updateProjectionMatrix(); }
   let sized=false,age=0,t=0; window.addEventListener('resize',()=>sized=false);
