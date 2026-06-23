@@ -36,6 +36,8 @@ img{display:block;max-width:100%}
 #tint{position:absolute;inset:0;z-index:0;
   background:radial-gradient(120% 90% at 50% 38%,#0c0f13,#06080b 60%,#030406);
   transition:background 1.2s ease}
+#backlight{position:absolute;inset:0;z-index:0;pointer-events:none;opacity:0;will-change:opacity,transform;
+  background:radial-gradient(78% 70% at 50% 47%,color-mix(in srgb,var(--bloom,#19D3DA) 52%,transparent),color-mix(in srgb,var(--bloom,#19D3DA) 14%,transparent) 46%,transparent 70%)}
 #fx{position:absolute;inset:0;z-index:1;pointer-events:none;opacity:.7}
 #grain{position:absolute;inset:0;z-index:40;pointer-events:none;opacity:.05;mix-blend-mode:overlay;
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
@@ -247,29 +249,32 @@ img{display:block;max-width:100%}
 #sc-close.fin .inner{position:relative;z-index:6;max-width:1300px;height:100%}
 .fin-core{position:absolute;left:50%;top:50%;width:62vw;max-width:780px;height:62vw;max-height:780px;transform:translate(-50%,-50%);
   border-radius:50%;z-index:1;pointer-events:none;opacity:0;background:radial-gradient(circle,rgba(255,232,190,.55),rgba(25,211,218,.18) 36%,transparent 64%);filter:blur(34px)}
-.fin-pipe{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);display:flex;align-items:center;gap:2.4rem;width:min(90vw,1080px);z-index:6}
-.fin-cap{font-family:var(--font-display);text-transform:uppercase;letter-spacing:.1em;font-size:clamp(.85rem,1.8vw,1.45rem);line-height:1.15;color:#fff;opacity:0;white-space:nowrap;flex:none}
+.fin-pipe{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);display:flex;align-items:center;gap:2.6rem;width:min(94vw,1260px);z-index:6}
+.fin-cap{font-family:var(--font-display);text-transform:uppercase;letter-spacing:.1em;font-size:clamp(1rem,2.1vw,1.75rem);line-height:1.15;color:#fff;opacity:0;white-space:nowrap;flex:none}
 .fin-cap.l{text-align:right}.fin-cap.r{text-align:left;color:var(--cyan)}
 .fin-rail{position:relative;flex:1;height:2px;background:rgba(255,255,255,.14);opacity:0}
-.fin-fill{position:absolute;left:0;top:0;height:100%;width:100%;background:linear-gradient(90deg,var(--cyan),#fff);box-shadow:0 0 16px var(--cyan);transform-origin:left center;transform:scaleX(0)}
+.fin-fill{position:absolute;left:0;top:0;height:100%;width:100%;background:linear-gradient(90deg,color-mix(in srgb,var(--bloom,#19D3DA) 70%,transparent),#fff);box-shadow:0 0 16px var(--bloom,#19D3DA);transform-origin:left center;transform:scaleX(0)}
+.fin-pulse{position:absolute;top:50%;left:0;width:16px;height:16px;border-radius:50%;transform:translate(-50%,-50%);background:#fff;box-shadow:0 0 16px 5px color-mix(in srgb,var(--bloom,#fff) 80%,#fff),0 0 40px 12px var(--bloom,#19D3DA);opacity:0;z-index:3;pointer-events:none}
 .fin-stops{position:absolute;left:0;right:0;top:50%;display:flex;justify-content:space-around;transform:translateY(-50%)}
 .fin-stop{position:relative;display:flex;flex-direction:column;align-items:center}
-.fin-nm{position:absolute;bottom:16px;left:50%;transform:translateX(-50%);font-family:var(--font-display);text-transform:uppercase;letter-spacing:.1em;font-size:clamp(.66rem,1.3vw,.95rem);white-space:nowrap;color:#fff;opacity:0}
-.fin-d{width:11px;height:11px;border-radius:50%;background:var(--cyan);box-shadow:0 0 14px var(--cyan),0 0 28px var(--cyan);opacity:0}
+.fin-nm{position:absolute;bottom:16px;left:50%;transform:translateX(-50%);font-family:var(--font-display);text-transform:uppercase;letter-spacing:.1em;font-size:clamp(.82rem,1.7vw,1.22rem);white-space:nowrap;color:#fff;opacity:0}
+.fin-d{width:15px;height:15px;border-radius:50%;background:var(--cyan);box-shadow:0 0 18px var(--cyan),0 0 36px var(--cyan);opacity:0}
 .fin-brand{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:6;display:flex;align-items:baseline;justify-content:center;gap:.35em;opacity:0;perspective:900px;white-space:nowrap}
-.fin-one{font-family:var(--font-display);font-weight:600;text-transform:uppercase;font-size:clamp(3rem,11vw,8rem);letter-spacing:.05em;color:#fff;text-shadow:0 0 55px rgba(25,211,218,.6);transform-style:preserve-3d;display:inline-block}
-.fin-eco{font-family:var(--font-display);font-weight:500;text-transform:uppercase;font-size:clamp(1.4rem,5vw,3.6rem);letter-spacing:.16em;color:var(--cyan);max-width:0;overflow:hidden;opacity:0}
-.fin-tagline{position:absolute;left:50%;bottom:20%;transform:translateX(-50%);z-index:6;font-size:clamp(1rem,2.1vw,1.5rem);font-weight:300;color:var(--cyan);opacity:0;line-height:1.5}
+.fin-one{font-family:var(--font-display);font-weight:600;text-transform:uppercase;font-size:clamp(3.6rem,13vw,9.6rem);letter-spacing:.05em;color:#fff;text-shadow:0 0 55px rgba(25,211,218,.6);transform-style:preserve-3d;display:inline-block}
+.fin-eco{font-family:var(--font-display);font-weight:500;text-transform:uppercase;font-size:clamp(1.7rem,5.8vw,4.3rem);letter-spacing:.16em;color:var(--cyan);max-width:0;overflow:hidden;opacity:0}
+.fin-tagline{position:absolute;left:50%;bottom:15%;transform:translateX(-50%);z-index:6;font-family:var(--font-display);text-transform:uppercase;letter-spacing:.07em;font-size:clamp(1.25rem,2.9vw,2.25rem);font-weight:500;color:#dfeef0;opacity:0;line-height:1.42;white-space:nowrap;text-align:center}
+.fin-tagline .dim{color:var(--ink-dim);font-weight:400}
+.fin-tagline .hl{color:var(--cyan);font-weight:700;text-shadow:0 0 34px rgba(25,211,218,.55)}
 .fin-final{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:6;font-family:var(--font-display);text-transform:uppercase;letter-spacing:.05em;opacity:0;width:100%}
-.fin-final .a{display:block;font-size:clamp(1.4rem,3.6vw,2.8rem);color:#e9eff5;line-height:1.1;opacity:0}
-.fin-final .b{display:block;font-size:clamp(2rem,6vw,4.4rem);color:var(--cyan);text-shadow:0 0 55px rgba(25,211,218,.5);margin-top:.18em;opacity:0}
+.fin-final .a{display:block;font-size:clamp(1.7rem,4.2vw,3.3rem);color:#e9eff5;line-height:1.1;opacity:0}
+.fin-final .b{display:block;font-size:clamp(2.4rem,7vw,5.2rem);color:var(--cyan);text-shadow:0 0 55px rgba(25,211,218,.5);margin-top:.18em;opacity:0}
 .fin-mark{position:absolute;left:50%;bottom:10vh;transform:translateX(-50%);z-index:6;font-family:var(--font-display);text-transform:uppercase;letter-spacing:.32em;font-size:clamp(.9rem,1.8vw,1.3rem);color:var(--ink-dim);opacity:0}
 #sc-nikitha .name{color:#fff} #sc-nikitha .tag{color:var(--steel)}
 #sc-enexio .name,#sc-enexio .tag{color:var(--teal)} #sc-enexio .role{color:var(--teal)}
 #sc-bgrneo .name,#sc-bgrneo .tag{color:var(--green)} #sc-bgrneo .role{color:var(--green)}
 
 /* ---- close ---- */
-#sc-close{background:#000} #sc-close .inner{text-align:center}
+#sc-close .inner{text-align:center}
 .lockup{display:flex;gap:clamp(1.2rem,4vw,3.4rem);justify-content:center;flex-wrap:wrap;
   font-family:var(--font-display);text-transform:uppercase;letter-spacing:.18em;
   font-size:clamp(.85rem,1.7vw,1.2rem);color:var(--ink-dim);margin-bottom:2.4rem}
@@ -337,6 +342,7 @@ img{display:block;max-width:100%}
 
 <div id="stage">
   <div id="tint"></div>
+  <div id="backlight"></div>
   <canvas id="fx"></canvas>
 
   <!-- ========== BANNER ========== -->
@@ -524,7 +530,7 @@ img{display:block;max-width:100%}
     <div class="inner">
       <div class="fin-pipe">
         <div class="fin-cap l">From<br/>bare&nbsp;land</div>
-        <div class="fin-rail"><div class="fin-fill"></div>
+        <div class="fin-rail"><div class="fin-fill"></div><div class="fin-pulse"></div>
           <div class="fin-stops">
             <div class="fin-stop"><div class="fin-nm">ANITA</div><div class="fin-d"></div></div>
             <div class="fin-stop"><div class="fin-nm">NIKITHA</div><div class="fin-d"></div></div>
@@ -535,7 +541,7 @@ img{display:block;max-width:100%}
         <div class="fin-cap r">A&nbsp;running<br/>factory</div>
       </div>
       <div class="fin-brand"><span class="fin-one">ONE</span><span class="fin-eco">Ecosystem</span></div>
-      <div class="fin-tagline">From the land that makes products —<br/>to the land that makes the makers.</div>
+      <div class="fin-tagline">From the land that makes <span class="dim">products</span><br/>to the land that makes <span class="hl">the makers</span></div>
       <div class="fin-final"><span class="a">Our path is no longer found.</span><span class="b">It is made.</span></div>
       <div class="fin-mark">BGR&nbsp;NEO</div>
     </div>
@@ -647,31 +653,61 @@ function typeOut(el){
 
 /* ===================== FINALE choreography (drives the close beats) ===================== */
 const FIN={};
+function finBloom(color){            // shift the backlight to a company colour + pop
+  document.documentElement.style.setProperty('--bloom', color);
+  gsap.killTweensOf('#backlight');
+  gsap.timeline()
+    .fromTo('#backlight',{opacity:.35,scale:.9},{opacity:.95,scale:1.07,duration:.5,ease:'power2.out'})
+    .to('#backlight',{opacity:.78,scale:1,duration:.9,ease:'sine.inOut'});
+}
 function finReset(){
+  if(FIN._tl){ FIN._tl.kill(); FIN._tl=null; }
   const one=document.querySelector('.fin-one'); if(one) one.textContent='ONE';
   gsap.set('.fin-one',{rotationY:0,x:0,opacity:0});
   gsap.set(['.fin-cap','.fin-rail','.fin-nm','.fin-d','.fin-brand','.fin-eco','.fin-tagline','.fin-final','.fin-final .a','.fin-final .b','.fin-mark','.fin-core'],{opacity:0,clearProps:'transform'});
   gsap.set('.fin-pipe',{opacity:1});
+  gsap.set('.fin-stops',{clearProps:'all'});   // reset swivel (rotation/scale) so replay starts clean
   gsap.set('.fin-fill',{scaleX:0,transformOrigin:'left center'});
   gsap.set('.fin-d',{scale:0}); gsap.set('.fin-eco',{maxWidth:0});
 }
 FIN.seg28=function(){ finReset(); SFX.swish();
-  gsap.to(['.fin-cap.l','.fin-rail'],{opacity:1,duration:.6});
-  gsap.to('.fin-fill',{scaleX:1,duration:3.4,ease:'power1.inOut',delay:.3});
-  gsap.utils.toArray('.fin-stop').forEach((s,i)=>{ gsap.delayedCall(0.7+i*0.72,()=>{ SFX.clink();
-    gsap.to(s.querySelector('.fin-d'),{opacity:1,scale:1,duration:.4,ease:'back.out(2.5)'});
-    gsap.fromTo(s.querySelector('.fin-nm'),{opacity:0,y:12},{opacity:1,y:0,duration:.5}); }); });
-  gsap.delayedCall(0.7+4*0.72,()=>{ SFX.clink(); gsap.to('.fin-cap.r',{opacity:1,duration:.6}); });
+  const COL=['#19D3DA','#E8A24C','#4fb0f0','#5cc15a'];  // ANITA cyan · NIKITHA gold · ENEXIO blue · BGR NEO green
+  const stops=gsap.utils.toArray('.fin-stop');
+  const names=stops.map(s=>s.querySelector('.fin-nm')), dots=stops.map(s=>s.querySelector('.fin-d'));
+  // all names pre-exist pushed BACK + blurred + hidden; each comes forward in turn (focus pull)
+  gsap.set(names,{xPercent:-50,z:-150,transformPerspective:1100,filter:'blur(6px)',opacity:0});
+  gsap.set(dots,{opacity:0,scale:0});
+  gsap.set('.fin-pulse',{left:'0%',opacity:0});
+  gsap.set('.fin-pipe',{xPercent:-50,yPercent:-50,rotationX:12,rotationY:-6,transformPerspective:1500,transformOrigin:'50% 50%'}); // isometric tilt
+  const tl=FIN._tl=gsap.timeline();
+  tl.to(['.fin-cap.l','.fin-rail'],{opacity:1,duration:.6},0);
+  tl.to('.fin-pulse',{opacity:1,duration:.3},0.4);                         // a glowing energy pulse...
+  tl.to('.fin-fill',{scaleX:1,duration:4.6,ease:'none'},0.4);
+  tl.to('.fin-pulse',{left:'100%',duration:4.6,ease:'none'},0.4);          // ...travels the line, igniting each company
+  stops.forEach((s,i)=>{ const t=0.95+i*1.05;
+    tl.call(()=>{ SFX.clink(); finBloom(COL[i]); }, null, t);                                  // backlight -> this colour
+    tl.to(dots[i],{opacity:1,scale:1,duration:.4,ease:'back.out(2.5)'}, t);
+    tl.to(names[i],{z:165,opacity:1,filter:'blur(0px)',duration:.72,ease:'power3.out'}, t);     // FORWARD, sharp, bright
+    if(i>0) tl.to(names[i-1],{z:-150,opacity:.32,filter:'blur(5px)',duration:.72,ease:'power2.in'}, t); // prev recedes + blurs
+  });
+  const tr=5.0;
+  tl.call(()=>{ SFX.clink(); }, null, tr);
+  tl.to('.fin-cap.r',{opacity:1,duration:.6}, tr);
+  tl.to('.fin-pulse',{opacity:0,duration:.5}, tr);
+  tl.to(names,{z:0,opacity:1,filter:'blur(0px)',duration:.8,ease:'power2.out'}, tr);            // all settle level + sharp
 };
-FIN.seg31=function(){ SFX.glow();
-  gsap.to('.fin-pipe',{opacity:0,duration:.6});
+FIN.seg31=function(){ if(FIN._tl){ FIN._tl.kill(); FIN._tl=null; } SFX.glow(); finBloom('#19D3DA');
+  gsap.to('.fin-pipe',{rotationX:0,rotationY:0,duration:.5,ease:'power2.inOut'});             // level the isometric tilt
+  gsap.set('.fin-stops',{yPercent:-50,transformOrigin:'50% 50%'});
+  gsap.to('.fin-stops',{rotation:210,scale:0.05,opacity:0,duration:1.3,ease:'power2.in'});    // names swivel around into the glow
+  gsap.to(['.fin-cap','.fin-rail','.fin-fill'],{opacity:0,duration:.7,delay:.15});
   gsap.fromTo('.fin-core',{opacity:0,scale:.2},{opacity:1,scale:1.3,duration:1,ease:'power2.out'});
-  gsap.to('.fin-core',{opacity:.4,duration:1.4,delay:1});
+  gsap.to('.fin-core',{opacity:.45,duration:1.4,delay:1});
   const one=document.querySelector('.fin-one');
-  gsap.to('.fin-brand',{opacity:1,duration:.4,delay:.6});
-  gsap.fromTo(one,{scale:1.5,opacity:0},{scale:1,opacity:1,duration:.7,delay:.6,ease:'back.out(1.4)'});
-  gsap.delayedCall(1.8,()=>{ SFX.swivel(); gsap.to('.fin-eco',{maxWidth:820,opacity:1,duration:.7,ease:'power2.out'}); });
-  gsap.delayedCall(2.8,()=>{ SFX.swivel();
+  gsap.to('.fin-brand',{opacity:1,duration:.4,delay:1.0});
+  gsap.fromTo(one,{scale:1.5,opacity:0,z:280},{scale:1,opacity:1,z:0,duration:.8,delay:1.0,ease:'back.out(1.4)'});
+  gsap.delayedCall(2.2,()=>{ SFX.swivel(); gsap.to('.fin-eco',{maxWidth:1000,opacity:1,duration:.7,ease:'power2.out'}); });
+  gsap.delayedCall(3.2,()=>{ SFX.swivel();
     gsap.to(one,{rotationY:90,duration:.35,ease:'power1.in',onComplete:()=>{ one.textContent='NEO'; SFX.glow();
       gsap.fromTo(one,{rotationY:-90},{rotationY:0,duration:.45,ease:'power2.out'}); }}); });
 };
@@ -699,6 +735,16 @@ Object.entries(SCENE_VIDEO).forEach(([sc,src])=>{
   const img=bg.querySelector('img'); if(img) img.style.display='none';
 });
 
+function setBloom(scene){
+  const accent=getComputedStyle(scene).getPropertyValue('--accent').trim()||'#19D3DA';
+  const bare = scene.dataset.grade==='grey';
+  document.documentElement.style.setProperty('--bloom', accent);
+  const peak = bare ? 0.0 : 0.55;         // bare ground stays colourless; company colour blooms
+  gsap.killTweensOf('#backlight');
+  gsap.timeline()
+    .fromTo('#backlight',{opacity:0,scale:.72},{opacity:peak*1.3,scale:1.08,duration:.9,ease:'power2.out'})
+    .to('#backlight',{opacity:peak,scale:1,duration:1.3,ease:'sine.inOut'});
+}
 function setScene(sc){
   if(curScene===sc) return;
   SFX.swish();
@@ -707,11 +753,13 @@ function setScene(sc){
   // reset reveals so they animate fresh
   next.querySelectorAll('[data-seg]').forEach(e=>{e.style.opacity=0;e.style.transform='translateY(26px)';});
   tint.style.background = GRADES[next.dataset.grade] || GRADES.grey;
+  setBloom(next);
   next.classList.add('active'); void next.offsetWidth; next.classList.add('kb');
   gsap.fromTo(next,{opacity:0},{opacity:1,duration:1.1,ease:'power2.out'});
   if(prev){ gsap.to(prev,{opacity:0,duration:.9,ease:'power2.in',
     onComplete:()=>{prev.classList.remove('active','kb');}}); }
   if(sc==='bloom') runBloom();
+  if(sc==='close') finReset();          // hide finale elements on enter — kills the stale "It is made" flash
   if(sc==='enexio') SFX.fan();
   // restart any bg video
   const v=next.querySelector('video'); if(v){ try{v.currentTime=0;v.play();}catch(e){} }
@@ -748,7 +796,8 @@ function reveal(seg){
 
 function advance(){ clearTimeout(safety); vo.onended=null;
   const cur=TL[idx], nxt=TL[idx+1];
-  const gap=(nxt&&cur&&nxt[1]!==cur[1])?2.2:0.32;   // 2.2s ingest dwell at end of each scene
+  const HOLD={seg28:4.2};   // hold the converge until the bare-land -> running-factory pipeline finishes
+  const gap=(cur&&HOLD[cur[0]]) || ((nxt&&cur&&nxt[1]!==cur[1])?2.2:0.32);
   gsap.delayedCall(gap, step); }
 
 function playClip(seg){
@@ -757,7 +806,7 @@ function playClip(seg){
   vo.onerror=()=>{ clearTimeout(safety); safety=setTimeout(advance,2600); };
   vo.onloadedmetadata=()=>{ clearTimeout(safety);
     safety=setTimeout(advance,(isFinite(vo.duration)?vo.duration*1000:2600)+2500); };
-  vo.src=`assets/audio/vo/${seg}.mp3`;
+  vo.src=`assets/audio/vo/${seg}.mp3?v=2`;
   vo.muted=muted; vo.currentTime=0;
   vo.play().catch(()=>{ clearTimeout(safety); safety=setTimeout(advance,2800); });
   safety=setTimeout(advance,9000); // hard backstop

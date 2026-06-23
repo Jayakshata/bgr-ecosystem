@@ -9,6 +9,9 @@ assets/images/inspo/
 # old / alternate narration takes (live site uses assets/audio/vo/*.mp3)
 assets/audio/Block1_script.mp3
 assets/audio/ALT_*.mp3
+# music / end-card auditions (reference only, keep local — pending final audio pass)
+assets/audio/endchoice*.mp3
+assets/audio/trailer*.mp3
 
 # empty drop-in folder
 assets/video/
@@ -49,5 +52,7 @@ assets/images/logos/*.jpg
 # --- internal notes + v3 dev tooling (local only) ---
 REFINEMENTS.md
 _audit_v3.mjs
+_fincap.mjs
+_fin_*.png
 
 # --- v3 redesign WIP (now TRACKED for off-disk backup; promote to index.html when ready) ---

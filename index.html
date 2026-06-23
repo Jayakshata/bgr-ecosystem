@@ -36,6 +36,8 @@ img{display:block;max-width:100%}
 #tint{position:absolute;inset:0;z-index:0;
   background:radial-gradient(120% 90% at 50% 38%,#0c0f13,#06080b 60%,#030406);
   transition:background 1.2s ease}
+#backlight{position:absolute;inset:0;z-index:0;pointer-events:none;opacity:0;will-change:opacity,transform;
+  background:radial-gradient(78% 70% at 50% 47%,color-mix(in srgb,var(--bloom,#19D3DA) 52%,transparent),color-mix(in srgb,var(--bloom,#19D3DA) 14%,transparent) 46%,transparent 70%)}
 #fx{position:absolute;inset:0;z-index:1;pointer-events:none;opacity:.7}
 #grain{position:absolute;inset:0;z-index:40;pointer-events:none;opacity:.05;mix-blend-mode:overlay;
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
@@ -84,6 +86,7 @@ img{display:block;max-width:100%}
   font-size:clamp(2.2rem,6.2vw,5.4rem);line-height:1;letter-spacing:.1em;padding:0 .1em;
   background:linear-gradient(180deg,#fff,#b8c4d0 60%,#7d8a98);-webkit-background-clip:text;background-clip:text;color:transparent}
 .banner-lead{margin-top:1.6rem;font-size:clamp(1.05rem,2.3vw,1.75rem);font-weight:300;color:var(--ink);letter-spacing:.005em;line-height:1.35}
+.banner-desc{margin-top:.7rem;font-family:var(--font-mono);font-size:clamp(.62rem,1.3vw,.82rem);letter-spacing:.45em;text-transform:uppercase;color:var(--cyan)}
 .banner-sub{margin-top:1rem;font-family:var(--font-mono);font-size:clamp(.7rem,1.5vw,.95rem);
   letter-spacing:.3em;text-transform:uppercase;color:var(--ink-dim);line-height:2}
 
@@ -162,12 +165,116 @@ img{display:block;max-width:100%}
 
 /* per-company accents */
 #sc-anita .name,#sc-anita .tag{color:var(--cyan)} #sc-anita .role{color:var(--cyan)}
+#anita-canvas{position:absolute;inset:0;z-index:0}
+#sc-anita .name{text-shadow:0 0 45px rgba(25,211,218,.55),0 0 12px rgba(25,211,218,.35)}
+.dd .logo.glow{border-color:rgba(25,211,218,.45);box-shadow:0 0 46px rgba(25,211,218,.45),0 12px 40px rgba(0,0,0,.5)}
+.abbr{font-family:var(--font-mono);font-size:clamp(.55rem,1.1vw,.72rem);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-dim);margin:.5rem 0 1rem;line-height:1.7}
+.abbr b{color:var(--cyan)}
+/* ===== centered company hero (refs: NEONIX / HYPER / META WORLD) ===== */
+.scene.hero{justify-content:center;--accent:var(--cyan);--accent-glow:rgba(25,211,218,.38)}
+.hero-inner{text-align:center;display:flex;flex-direction:column;align-items:center;gap:.95rem;max-width:940px}
+.hero-glow{position:absolute;left:50%;top:48%;transform:translate(-50%,-50%);width:62vw;height:62vw;max-width:740px;max-height:740px;
+  border-radius:50%;z-index:1;pointer-events:none;background:radial-gradient(circle,var(--accent-glow),transparent 62%);filter:blur(34px)}
+.hero-kicker{font-family:var(--font-mono);font-size:clamp(.6rem,1.2vw,.72rem);letter-spacing:.34em;text-transform:uppercase;color:var(--accent)}
+.hero-logo{width:auto;max-width:clamp(180px,24vw,290px);max-height:clamp(64px,8.5vw,104px);object-fit:contain;
+  background:rgba(245,248,251,.97);border-radius:14px;padding:13px 22px;box-shadow:0 0 55px var(--accent-glow),0 14px 50px rgba(0,0,0,.55)}
+.hero-name{font-family:var(--font-display);font-weight:600;text-transform:uppercase;font-size:clamp(2.8rem,8.5vw,6.4rem);
+  line-height:.9;letter-spacing:.05em;color:#fff;text-shadow:0 0 55px var(--accent-glow)}
+.hero-abbr{font-family:var(--font-mono);font-size:clamp(.55rem,1.05vw,.72rem);letter-spacing:.2em;text-transform:uppercase;color:var(--ink-dim)}
+.hero-abbr b{color:var(--accent)}
+.hero-tag{font-family:var(--font-display);text-transform:uppercase;letter-spacing:.14em;font-size:clamp(1rem,2.2vw,1.55rem);color:var(--accent)}
+.hero-purpose{font-size:clamp(.95rem,1.5vw,1.18rem);font-weight:300;line-height:1.55;color:var(--ink);max-width:52ch}
+.hero-purpose b{font-weight:500;color:#fff}
+.hero-stats{display:flex;gap:clamp(1.5rem,4vw,3.4rem);justify-content:center;margin-top:.3rem}
+.hero-stats .st .n{font-family:var(--font-display);font-weight:600;font-size:clamp(1.7rem,3.3vw,2.7rem);color:#fff;line-height:1}
+.hero-stats .st .n .u{font-size:.42em;color:var(--accent);margin-left:.12em}
+.hero-stats .st .c{font-family:var(--font-mono);font-size:.55rem;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-dim);margin-top:.5rem}
+.chips.center{justify-content:center;max-width:62ch}
+#sc-anita{--accent:#19D3DA;--accent-glow:rgba(25,211,218,.4)}
+.hero-visual{position:relative;width:min(56vh,480px);height:clamp(210px,36vh,380px);margin:0 auto}
+.hero-visual canvas{position:absolute;inset:0;width:100%;height:100%}
+/* ANITA digital-twin stage + hero UI card */
+.hero-glow.big{width:72vw;max-width:840px;height:72vw;max-height:840px;top:42%;
+  background:radial-gradient(circle,rgba(25,211,218,.5),transparent 58%);filter:blur(42px);opacity:.85}
+.dt-stage{position:relative;width:min(76vw,780px);height:clamp(240px,42vh,420px);margin:.3rem auto}
+.hero-visual.dt{position:absolute;inset:0;border-radius:14px;overflow:hidden;border:1px solid rgba(25,211,218,.3);
+  box-shadow:0 0 60px rgba(25,211,218,.32),0 20px 60px rgba(0,0,0,.6)}
+.hero-visual.dt img{width:100%;height:100%;object-fit:cover;display:block}
+.dt-scan{position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,transparent,rgba(25,211,218,.10),transparent);
+  background-size:100% 45%;background-repeat:no-repeat;animation:scan 3.6s linear infinite}
+@keyframes scan{0%{background-position:0 -60%}100%{background-position:0 165%}}
+.dt-card{position:absolute;left:3%;bottom:7%;width:clamp(180px,21vw,238px);text-align:left;
+  background:rgba(8,13,19,.66);backdrop-filter:blur(12px);border:1px solid rgba(25,211,218,.28);border-radius:12px;
+  padding:13px 15px;box-shadow:0 14px 44px rgba(0,0,0,.55)}
+.dt-card .dt-logo{height:26px;width:auto;margin-bottom:9px;filter:drop-shadow(0 0 9px rgba(25,211,218,.7)) brightness(1.15)}
+.dt-card .dt-h{font-family:var(--font-mono);font-size:.54rem;letter-spacing:.22em;color:var(--cyan);margin-bottom:7px}
+.dt-row{display:flex;justify-content:space-between;gap:10px;font-family:var(--font-mono);font-size:.56rem;letter-spacing:.04em;
+  padding:3px 0;border-top:1px solid rgba(255,255,255,.07);text-transform:uppercase}
+.dt-row span{color:var(--ink-dim)} .dt-row b{color:#fff;font-weight:500} .dt-row b.ok{color:var(--cyan)}
+.hero-abbr.typeout{min-height:1.1em;color:var(--cyan);letter-spacing:.22em}
+/* ANITA faded factory-twin BG + HUD logo card */
+.dt-bg img{opacity:.30;filter:saturate(1.15) contrast(1.05);transform:scale(1.06)}
+.dt-bg::after{content:'';position:absolute;inset:0;background:radial-gradient(78% 68% at 50% 46%,rgba(3,5,8,.5),rgba(3,5,8,.9))}
+.dt-card.hud{position:relative;left:auto;bottom:auto;display:inline-flex;align-items:center;gap:14px;width:auto;
+  padding:9px 16px 9px 9px;background:rgba(8,13,19,.6);border:1px solid rgba(25,211,218,.28);border-radius:12px;
+  backdrop-filter:blur(12px);box-shadow:0 12px 40px rgba(0,0,0,.5)}
+.dt-card.hud .dt-logo{height:36px;width:auto;margin:0;background:rgba(245,248,251,.97);border-radius:8px;padding:6px 10px;filter:none}
+.dt-card.hud .dt-meta{text-align:left}
+.dt-card.hud .dt-h{font-family:var(--font-mono);font-size:.56rem;letter-spacing:.22em;color:var(--cyan);margin-bottom:3px}
+.dt-card.hud .dt-sub{font-family:var(--font-mono);font-size:.52rem;letter-spacing:.06em;color:var(--ink-dim);text-transform:uppercase}
+/* ANITA full-bleed warehouse twin */
+#sc-anita.wh{align-items:stretch;padding:0;overflow:hidden}
+.scene.wh canvas{position:absolute;inset:0;width:100%;height:100%;z-index:0;display:block}
+.wh-veil{position:absolute;inset:0;z-index:1;pointer-events:none;
+  background:linear-gradient(80deg,rgba(3,5,8,.94) 0%,rgba(3,5,8,.78) 22%,rgba(3,5,8,.3) 44%,rgba(3,5,8,.02) 64%,transparent 78%),
+             linear-gradient(0deg,rgba(3,5,8,.72) 0%,rgba(3,5,8,.1) 34%,transparent 50%)}
+.wh-hud{position:absolute;top:7.5vh;right:7vw;z-index:6;font-family:var(--font-mono);font-size:.58rem;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--accent);border:1px solid rgba(255,255,255,.18);border-radius:20px;padding:.4rem .9rem;
+  background:rgba(8,13,19,.5);backdrop-filter:blur(8px)}
+.wh-inner{position:relative;z-index:6;width:100%;max-width:1280px;margin:0 auto;height:100%;display:flex;align-items:flex-end;padding:0 7vw 11vh}
+.wh-text{text-align:left;max-width:52ch}
+.wh-kicker{font-family:var(--font-mono);font-size:.66rem;letter-spacing:.3em;text-transform:uppercase;color:var(--accent);margin-bottom:1rem}
+.wh-namerow{display:flex;align-items:center;gap:18px;margin-bottom:.4rem}
+.wh-logo{height:clamp(40px,5.5vw,62px);width:auto;background:rgba(245,248,251,.97);border-radius:9px;padding:6px 11px;box-shadow:0 0 30px var(--accent-glow)}
+.wh .hero-name{font-size:clamp(2.8rem,7.5vw,5.6rem);margin:0;line-height:.9}
+.wh-purpose{font-size:clamp(.92rem,1.4vw,1.14rem);font-weight:300;line-height:1.5;color:var(--ink);max-width:50ch;margin-top:.9rem}
+.wh-purpose b{color:#fff;font-weight:500}
+.wh-text .hero-stats{justify-content:flex-start;margin-top:1.1rem}
+#sc-nikitha{--accent:#E8A24C;--accent-glow:rgba(232,162,76,.42)}
+#sc-enexio{--accent:#4fb0f0;--accent-glow:rgba(79,176,240,.42)}
+#sc-bgrneo{--accent:#5cc15a;--accent-glow:rgba(92,193,90,.42)}
+/* ===== FINALE ===== */
+#sc-close{--accent:#19D3DA;--accent-glow:rgba(25,211,218,.4)}
+#sc-close.fin{justify-content:center;text-align:center;overflow:hidden;padding:0}
+#sc-close.fin .inner{position:relative;z-index:6;max-width:1300px;height:100%}
+.fin-core{position:absolute;left:50%;top:50%;width:62vw;max-width:780px;height:62vw;max-height:780px;transform:translate(-50%,-50%);
+  border-radius:50%;z-index:1;pointer-events:none;opacity:0;background:radial-gradient(circle,rgba(255,232,190,.55),rgba(25,211,218,.18) 36%,transparent 64%);filter:blur(34px)}
+.fin-pipe{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);display:flex;align-items:center;gap:2.6rem;width:min(94vw,1260px);z-index:6}
+.fin-cap{font-family:var(--font-display);text-transform:uppercase;letter-spacing:.1em;font-size:clamp(1rem,2.1vw,1.75rem);line-height:1.15;color:#fff;opacity:0;white-space:nowrap;flex:none}
+.fin-cap.l{text-align:right}.fin-cap.r{text-align:left;color:var(--cyan)}
+.fin-rail{position:relative;flex:1;height:2px;background:rgba(255,255,255,.14);opacity:0}
+.fin-fill{position:absolute;left:0;top:0;height:100%;width:100%;background:linear-gradient(90deg,color-mix(in srgb,var(--bloom,#19D3DA) 70%,transparent),#fff);box-shadow:0 0 16px var(--bloom,#19D3DA);transform-origin:left center;transform:scaleX(0)}
+.fin-pulse{position:absolute;top:50%;left:0;width:16px;height:16px;border-radius:50%;transform:translate(-50%,-50%);background:#fff;box-shadow:0 0 16px 5px color-mix(in srgb,var(--bloom,#fff) 80%,#fff),0 0 40px 12px var(--bloom,#19D3DA);opacity:0;z-index:3;pointer-events:none}
+.fin-stops{position:absolute;left:0;right:0;top:50%;display:flex;justify-content:space-around;transform:translateY(-50%)}
+.fin-stop{position:relative;display:flex;flex-direction:column;align-items:center}
+.fin-nm{position:absolute;bottom:16px;left:50%;transform:translateX(-50%);font-family:var(--font-display);text-transform:uppercase;letter-spacing:.1em;font-size:clamp(.82rem,1.7vw,1.22rem);white-space:nowrap;color:#fff;opacity:0}
+.fin-d{width:15px;height:15px;border-radius:50%;background:var(--cyan);box-shadow:0 0 18px var(--cyan),0 0 36px var(--cyan);opacity:0}
+.fin-brand{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:6;display:flex;align-items:baseline;justify-content:center;gap:.35em;opacity:0;perspective:900px;white-space:nowrap}
+.fin-one{font-family:var(--font-display);font-weight:600;text-transform:uppercase;font-size:clamp(3.6rem,13vw,9.6rem);letter-spacing:.05em;color:#fff;text-shadow:0 0 55px rgba(25,211,218,.6);transform-style:preserve-3d;display:inline-block}
+.fin-eco{font-family:var(--font-display);font-weight:500;text-transform:uppercase;font-size:clamp(1.7rem,5.8vw,4.3rem);letter-spacing:.16em;color:var(--cyan);max-width:0;overflow:hidden;opacity:0}
+.fin-tagline{position:absolute;left:50%;bottom:15%;transform:translateX(-50%);z-index:6;font-family:var(--font-display);text-transform:uppercase;letter-spacing:.07em;font-size:clamp(1.25rem,2.9vw,2.25rem);font-weight:500;color:#dfeef0;opacity:0;line-height:1.42;white-space:nowrap;text-align:center}
+.fin-tagline .dim{color:var(--ink-dim);font-weight:400}
+.fin-tagline .hl{color:var(--cyan);font-weight:700;text-shadow:0 0 34px rgba(25,211,218,.55)}
+.fin-final{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:6;font-family:var(--font-display);text-transform:uppercase;letter-spacing:.05em;opacity:0;width:100%}
+.fin-final .a{display:block;font-size:clamp(1.7rem,4.2vw,3.3rem);color:#e9eff5;line-height:1.1;opacity:0}
+.fin-final .b{display:block;font-size:clamp(2.4rem,7vw,5.2rem);color:var(--cyan);text-shadow:0 0 55px rgba(25,211,218,.5);margin-top:.18em;opacity:0}
+.fin-mark{position:absolute;left:50%;bottom:10vh;transform:translateX(-50%);z-index:6;font-family:var(--font-display);text-transform:uppercase;letter-spacing:.32em;font-size:clamp(.9rem,1.8vw,1.3rem);color:var(--ink-dim);opacity:0}
 #sc-nikitha .name{color:#fff} #sc-nikitha .tag{color:var(--steel)}
 #sc-enexio .name,#sc-enexio .tag{color:var(--teal)} #sc-enexio .role{color:var(--teal)}
 #sc-bgrneo .name,#sc-bgrneo .tag{color:var(--green)} #sc-bgrneo .role{color:var(--green)}
 
 /* ---- close ---- */
-#sc-close{background:#000} #sc-close .inner{text-align:center}
+#sc-close .inner{text-align:center}
 .lockup{display:flex;gap:clamp(1.2rem,4vw,3.4rem);justify-content:center;flex-wrap:wrap;
   font-family:var(--font-display);text-transform:uppercase;letter-spacing:.18em;
   font-size:clamp(.85rem,1.7vw,1.2rem);color:var(--ink-dim);margin-bottom:2.4rem}
@@ -204,6 +311,7 @@ img{display:block;max-width:100%}
 #gate .mk{font-family:var(--font-mono);font-size:.66rem;letter-spacing:.5em;color:var(--ink-dim);text-transform:uppercase}
 #gate h1{font-family:var(--font-display);font-weight:500;font-size:clamp(2.4rem,8vw,6rem);letter-spacing:.16em;
   text-transform:uppercase;background:linear-gradient(180deg,#fff,#9fb0c2);-webkit-background-clip:text;background-clip:text;color:transparent}
+#gate .gsub{font-family:var(--font-mono);font-size:clamp(.66rem,1.4vw,.82rem);letter-spacing:.5em;text-transform:uppercase;color:var(--cyan);margin-top:-.4rem}
 #gate p{color:var(--ink-dim);max-width:36ch;font-size:.92rem}
 .btn{cursor:pointer;border:1px solid var(--cyan);background:transparent;color:var(--cyan);
   font-family:var(--font-mono);font-size:.78rem;letter-spacing:.3em;text-transform:uppercase;
@@ -213,6 +321,14 @@ img{display:block;max-width:100%}
 .pulse{animation:pulse 2.6s ease-in-out infinite}@keyframes pulse{0%,100%{opacity:.6}50%{opacity:1}}
 #replay{position:fixed;left:50%;bottom:13vh;transform:translateX(-50%);z-index:60;opacity:0;pointer-events:none;transition:opacity .6s}
 #replay.show{opacity:1;pointer-events:auto}
+/* dev scene-jump bar (only with ?dev in the URL; presentation uses the clean URL) */
+#devnav{position:fixed;top:8px;left:50%;transform:translateX(-50%);z-index:130;display:none;gap:6px;align-items:center;
+  background:rgba(8,12,18,.82);border:1px solid rgba(255,255,255,.12);border-radius:30px;padding:6px 12px;backdrop-filter:blur(10px)}
+#devnav.on{display:flex;flex-wrap:wrap;max-width:94vw;justify-content:center}
+#devnav .lbl{color:var(--cyan);font-family:var(--font-mono);font-size:.5rem;letter-spacing:.2em;padding-right:.3rem}
+#devnav button{font-family:var(--font-mono);font-size:.54rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-dim);
+  background:transparent;border:1px solid rgba(255,255,255,.12);border-radius:20px;padding:.3rem .6rem;cursor:pointer;transition:all .2s}
+#devnav button:hover{color:var(--cyan);border-color:var(--cyan)}
 
 @media(max-width:860px){
   .dd{grid-template-columns:1fr;gap:2rem;text-align:center}
@@ -226,15 +342,16 @@ img{display:block;max-width:100%}
 
 <div id="stage">
   <div id="tint"></div>
+  <div id="backlight"></div>
   <canvas id="fx"></canvas>
 
   <!-- ========== BANNER ========== -->
   <section class="scene" id="sc-banner" data-grade="grey">
     <div class="bg grey vign"><img src="assets/images/film/K1.jpg" alt="" /></div>
     <div class="inner">
-      <h1 class="bigtitle" data-seg="seg01">The BGR Ecosystem</h1>
+      <h1 class="bigtitle" data-seg="seg01">The NEO Ecosystem</h1>
+      <div class="banner-desc" data-seg="seg01">for Industries</div>
       <div class="banner-lead" data-seg="seg02">Building factories from bare land — made easy, in one stop.</div>
-      <div class="banner-sub" data-seg="seg02">From the land that makes the Products — to the land that makes the Makers</div>
     </div>
   </section>
 
@@ -271,7 +388,7 @@ img{display:block;max-width:100%}
     <div class="bg vign"><img src="assets/images/film/K6D.jpg" alt="" /></div>
     <div id="bloom"></div>
     <div class="inner">
-      <div class="welcome" data-seg="seg15">Welcome to the<br/><span class="accent">BGR&nbsp;Ecosystem</span></div>
+      <div class="welcome" data-seg="seg15">Welcome to the<br/><span class="accent">NEO&nbsp;Ecosystem</span></div>
     </div>
   </section>
 
@@ -311,121 +428,122 @@ img{display:block;max-width:100%}
   </section>
 
   <!-- ========== ANITA ========== -->
-  <section class="scene" id="sc-anita" data-grade="cyan">
-    <div class="grid-bg"></div>
-    <div class="inner">
-      <div class="dd">
-        <div class="left">
-          <div class="logo" data-seg="seg20"><img src="assets/images/logos/ANITA.png" alt="ANITA"/></div>
-          <div class="role" data-seg="seg20">01 · Design — In-house Physical-AI Team</div>
-          <div class="name" data-seg="seg20">ANITA</div>
-          <div class="tag" data-seg="seg20">Born in Light</div>
+  <section class="scene wh" id="sc-anita" data-grade="cyan">
+    <canvas id="anita-dt"></canvas>
+    <div class="wh-veil"></div>
+    <div class="hero-glow big"></div>
+    <div class="wh-hud" data-seg="seg20">◢ DIGITAL TWIN · LIVE — NVIDIA Omniverse · Simulated · Within spec</div>
+    <div class="inner wh-inner">
+      <div class="wh-text">
+        <div class="wh-kicker" data-seg="seg20">01 · Design — In-house Physical-AI Team</div>
+        <div class="wh-namerow">
+          <img class="wh-logo" src="assets/images/logos/ANITA.png" alt="ANITA" data-seg="seg20"/>
+          <h2 class="hero-name name" data-seg="seg20">ANITA</h2>
         </div>
-        <div class="right">
-          <p class="purpose" data-seg="seg21">The factory is <b>born first in light</b> — our in-house physical-AI team
-            designs, simulates and <b>virtually commissions</b> the entire plant as a living <b>digital twin</b> on
-            NVIDIA Omniverse: layout, robot motion and material flow solved before a single beam is raised.</p>
-          <div class="chips" data-seg="seg21">
-            <span class="chip on">NVIDIA Omniverse</span><span class="chip">Digital twin &amp; simulation</span>
-            <span class="chip">Virtual commissioning</span><span class="chip">Robot fleets in-sim</span>
-            <span class="chip">Ref: Ola "Future Factory" · ~8 months</span>
-          </div>
+        <div class="hero-abbr typeout" data-seg="seg20">Artificial Neural Intelligent Technical Assistant</div>
+        <div class="hero-tag" data-seg="seg20">Born in Light</div>
+        <p class="wh-purpose" data-seg="seg21">The factory is born first in light — designed, simulated and <b>virtually commissioned</b> as a living <b>digital twin</b> on NVIDIA Omniverse. Layout, robot motion and material flow — solved before a single beam is raised.</p>
+        <div class="chips" data-seg="seg21">
+          <span class="chip on">NVIDIA Omniverse</span><span class="chip">Digital twin</span><span class="chip">Virtual commissioning</span><span class="chip">Robot fleets in-sim</span>
         </div>
       </div>
     </div>
   </section>
 
   <!-- ========== NIKITHA ========== -->
-  <section class="scene" id="sc-nikitha" data-grade="steel">
-    <div class="grid-bg"></div>
-    <div class="inner">
-      <div class="dd">
-        <div class="left">
-          <div class="logo" data-seg="seg22"><img src="assets/images/logos/NIKITHA.png" alt="NIKITHA"/></div>
-          <div class="role" data-seg="seg22">02 · Design &amp; Build — Civil · Steel · PEB</div>
-          <div class="name" data-seg="seg22">NIKITHA</div>
-          <div class="tag" data-seg="seg22">Designed &amp; Built in Steel</div>
+  <section class="scene wh" id="sc-nikitha" data-grade="warm">
+    <canvas id="nikitha-dt"></canvas>
+    <div class="wh-veil"></div>
+    <div class="hero-glow big"></div>
+    <div class="wh-hud" data-seg="seg22">◢ STRUCTURE · ERECTING — Tekla + STAAD · 24,000 MT/yr</div>
+    <div class="inner wh-inner">
+      <div class="wh-text">
+        <div class="wh-kicker" data-seg="seg22">02 · Design &amp; Build — Civil · Steel · PEB</div>
+        <div class="wh-namerow">
+          <img class="wh-logo" src="assets/images/logos/NIKITHA.png" alt="NIKITHA" data-seg="seg22"/>
+          <h2 class="hero-name name" data-seg="seg22">NIKITHA</h2>
         </div>
-        <div class="right">
-          <p class="purpose" data-seg="seg23">Nikitha doesn't just supply steel — it <b>designs and builds the factory</b> itself.
-            In-house engineering (<b>Tekla + STAAD</b>), civil works, structural steel and pre-engineered buildings —
-            through to MEP, electrical and utilities in the turnkey model. One stop: design → fabrication → erection → handover.</p>
-          <div class="ddstats" data-seg="seg23">
-            <div class="st"><div class="n" data-count="31" data-suffix="+"></div><div class="c">Years · since 1994</div></div>
-            <div class="st"><div class="n" data-count="24000" data-suffix=" MT/yr"></div><div class="c">Fabrication capacity</div></div>
-            <div class="st"><div class="n">₹215<span class="u">Cr</span></div><div class="c">Turnover · FY24-25</div></div>
-          </div>
-          <div class="chips" data-seg="seg23">
-            <span class="chip on">Samsung Sriperumbudur · 5,300 MT</span><span class="chip on">Bengaluru Airport T2 · 4,000 MT</span>
-            <span class="chip">JJM Medical · G+8 · 6,500 MT</span><span class="chip">Indian Cane Power · 10,600 MT</span>
-            <span class="chip">Alstom · TVS · Hyundai/Kia</span><span class="chip">ISO 9001·14001·45001</span>
-          </div>
+        <div class="hero-tag" data-seg="seg22">Designed &amp; Built in Steel</div>
+        <p class="wh-purpose" data-seg="seg23">Nikitha doesn't just supply steel — it <b>designs and builds the factory</b> itself: in-house engineering (Tekla + STAAD), civil, structural steel and pre-engineered buildings, through to MEP in the turnkey model.</p>
+        <div class="hero-stats" data-seg="seg23">
+          <div class="st"><div class="n" data-count="31" data-suffix="+"></div><div class="c">Years · since 1994</div></div>
+          <div class="st"><div class="n" data-count="24000" data-suffix=" MT/yr"></div><div class="c">Fabrication capacity</div></div>
+          <div class="st"><div class="n">₹215<span class="u">Cr</span></div><div class="c">Turnover · FY24-25</div></div>
+        </div>
+        <div class="chips" data-seg="seg23">
+          <span class="chip on">Samsung Sriperumbudur · 5,300 MT</span><span class="chip on">Bengaluru Airport T2 · 4,000 MT</span><span class="chip">JJM Medical · G+8 · 6,500 MT</span><span class="chip">ISO 9001·14001·45001</span>
         </div>
       </div>
     </div>
   </section>
 
   <!-- ========== ENEXIO ========== -->
-  <section class="scene" id="sc-enexio" data-grade="teal">
-    <div class="grid-bg"></div>
-    <div class="inner">
-      <div class="dd">
-        <div class="left">
-          <div class="logo" data-seg="seg24"><img src="assets/images/logos/ENEXIO.png" alt="ENEXIO"/></div>
-          <div class="role" data-seg="seg24">03 · Power & Cooling — ex-GEA</div>
-          <div class="name" data-seg="seg24">ENEXIO</div>
-          <div class="tag" data-seg="seg24">Dry &amp; Wet Cooling</div>
+  <section class="scene wh" id="sc-enexio" data-grade="teal">
+    <canvas id="enexio-dt"></canvas>
+    <div class="wh-veil"></div>
+    <div class="hero-glow big"></div>
+    <div class="wh-hud" data-seg="seg24">◢ COOLING · ACTIVE — Dry + Wet + Hybrid · 500+ systems</div>
+    <div class="inner wh-inner">
+      <div class="wh-text">
+        <div class="wh-kicker" data-seg="seg24">03 · Power &amp; Cooling — ex-GEA · Chennai</div>
+        <div class="wh-namerow">
+          <img class="wh-logo" src="assets/images/logos/ENEXIO.png" alt="ENEXIO" data-seg="seg24"/>
+          <h2 class="hero-name name" data-seg="seg24">ENEXIO</h2>
         </div>
-        <div class="right">
-          <p class="purpose" data-seg="seg25">Then it <b>breathes</b> — powered and cooled. ENEXIO masters <b>both dry and wet cooling</b> —
-            air-cooled condensers, cooling towers and heat exchangers. Its <b style="color:var(--teal)">dry-cooling systems
-            slash the water</b> a plant draws — the decisive edge for a water-scarce Tamil Nadu.</p>
-          <div class="ddstats" data-seg="seg25">
-            <div class="st"><div class="n" data-count="500" data-suffix="+"></div><div class="c">Cooling systems</div></div>
-            <div class="st"><div class="n" data-count="100" data-suffix="+"></div><div class="c">In India</div></div>
-            <div class="st"><div class="n" data-count="50" data-suffix="+"></div><div class="c">Countries</div></div>
-          </div>
-          <div class="chips" data-seg="seg25"><span class="chip on">Air-cooled condensers</span><span class="chip on">Cooling towers</span><span class="chip">Heat exchangers</span><span class="chip">Dry &amp; wet cooling</span><span class="chip">ex-GEA · Chennai HQ</span></div>
+        <div class="hero-tag" data-seg="seg24">Dry &amp; Wet Cooling</div>
+        <p class="wh-purpose" data-seg="seg25">Then it <b>breathes</b> — both <b>dry and wet cooling</b>: air-cooled condensers, cooling towers and hybrid deluge systems. Dry cooling <b>slashes the water</b> a plant draws — the edge for a water-scarce Tamil Nadu.</p>
+        <div class="hero-stats" data-seg="seg25">
+          <div class="st"><div class="n" data-count="500" data-suffix="+"></div><div class="c">Cooling systems</div></div>
+          <div class="st"><div class="n" data-count="100" data-suffix="+"></div><div class="c">In India</div></div>
+          <div class="st"><div class="n" data-count="50" data-suffix="+"></div><div class="c">Countries</div></div>
         </div>
+        <div class="chips" data-seg="seg25"><span class="chip on">Air-cooled condensers</span><span class="chip on">Cooling towers</span><span class="chip">Hybrid deluge</span><span class="chip">ex-GEA · Chennai HQ</span></div>
       </div>
     </div>
   </section>
 
   <!-- ========== BGR NEO ========== -->
-  <section class="scene" id="sc-bgrneo" data-grade="green">
-    <div class="grid-bg"></div>
-    <div class="inner">
-      <div class="dd">
-        <div class="left">
-          <div class="logo" data-seg="seg26"><img src="assets/images/logos/BGRNEO.png" alt="BGR NEO"/></div>
-          <div class="role" data-seg="seg26">04 · Automate — Robotics & Industry 4.0</div>
-          <div class="name" data-seg="seg26">BGR&nbsp;NEO</div>
-          <div class="tag" data-seg="seg26">It Comes Alive</div>
+  <section class="scene wh" id="sc-bgrneo" data-grade="green">
+    <canvas id="bgrneo-dt"></canvas>
+    <div class="wh-veil"></div>
+    <div class="hero-glow big"></div>
+    <div class="wh-hud" data-seg="seg26">◢ AUTOMATION · ONLINE — Robotics · PLC/SCADA · Industry 4.0</div>
+    <div class="inner wh-inner">
+      <div class="wh-text">
+        <div class="wh-kicker" data-seg="seg26">04 · Automate — Robotics &amp; Industry 4.0</div>
+        <div class="wh-namerow">
+          <img class="wh-logo" src="assets/images/logos/BGRNEO.png" alt="BGR NEO" data-seg="seg26"/>
+          <h2 class="hero-name name" data-seg="seg26">BGR&nbsp;NEO</h2>
         </div>
-        <div class="right">
-          <p class="purpose" data-seg="seg27">And then it <b>comes alive</b> — BGR NEO builds the robots, the special-purpose machines
-            and the automation: assembly lines, machine-tending, palletizing, vision and PLC/SCADA, wired into one <b>Industry-4.0</b> plant.</p>
-          <div class="chips" data-seg="seg27">
-            <span class="chip on">ABB · 13-robot line</span><span class="chip on">Caterpillar</span><span class="chip on">Lockheed Martin · F-16 wing drilling</span>
-            <span class="chip">JSW</span><span class="chip">KONE</span><span class="chip">Coca-Cola</span><span class="chip">Schneider</span>
-            <span class="chip">Reliance</span><span class="chip">Danfoss</span><span class="chip">Amara Raja</span><span class="chip">ISO 9001:2015</span>
-          </div>
+        <div class="hero-tag" data-seg="seg26">It Comes Alive</div>
+        <p class="wh-purpose" data-seg="seg27">And then it <b>comes alive</b> — BGR NEO builds the robots, special-purpose machines and automation: assembly lines, machine-tending, palletizing, vision and PLC/SCADA, wired into one <b>Industry-4.0</b> plant.</p>
+        <div class="chips" data-seg="seg27">
+          <span class="chip on">ABB · 13-robot line</span><span class="chip on">Caterpillar</span><span class="chip on">Lockheed Martin · F-16</span><span class="chip">JSW · KONE · Reliance</span><span class="chip">ISO 9001:2015</span>
         </div>
       </div>
     </div>
   </section>
 
   <!-- ========== CLOSE ========== -->
-  <section class="scene" id="sc-close" data-grade="warm">
+  <section class="scene fin" id="sc-close" data-grade="warm">
+    <div class="fin-core"></div>
     <div class="inner">
-      <div class="lockup" data-seg="seg28"><span><b>ANITA</b></span><span><b>NIKITHA</b></span><span><b>ENEXIO</b></span><span><b>BGR&nbsp;NEO</b></span></div>
-      <div class="recap" data-seg="seg28">From bare land — to a living factory. One ecosystem.</div>
-      <div class="closer">
-        <span data-seg="seg29">Our path is no longer found.</span>
-        <span class="big" data-seg="seg30">It is made.</span>
+      <div class="fin-pipe">
+        <div class="fin-cap l">From<br/>bare&nbsp;land</div>
+        <div class="fin-rail"><div class="fin-fill"></div><div class="fin-pulse"></div>
+          <div class="fin-stops">
+            <div class="fin-stop"><div class="fin-nm">ANITA</div><div class="fin-d"></div></div>
+            <div class="fin-stop"><div class="fin-nm">NIKITHA</div><div class="fin-d"></div></div>
+            <div class="fin-stop"><div class="fin-nm">ENEXIO</div><div class="fin-d"></div></div>
+            <div class="fin-stop"><div class="fin-nm">BGR&nbsp;NEO</div><div class="fin-d"></div></div>
+          </div>
+        </div>
+        <div class="fin-cap r">A&nbsp;running<br/>factory</div>
       </div>
-      <div class="endtag endreveal">From the land that makes products — to the land that makes the makers.</div>
-      <div class="contact endreveal"><b>BGR&nbsp;NEO</b> · Reimagining Human Values with Machines<br/>+91&nbsp;44&nbsp;69&nbsp;250&nbsp;250 · info@bgrneo.com · www.bgrneo.com</div>
+      <div class="fin-brand"><span class="fin-one">ONE</span><span class="fin-eco">Ecosystem</span></div>
+      <div class="fin-tagline">From the land that makes <span class="dim">products</span><br/>to the land that makes <span class="hl">the makers</span></div>
+      <div class="fin-final"><span class="a">Our path is no longer found.</span><span class="b">It is made.</span></div>
+      <div class="fin-mark">BGR&nbsp;NEO</div>
     </div>
   </section>
 
@@ -435,20 +553,22 @@ img{display:block;max-width:100%}
 </div>
 
 <!-- HUD -->
-<div id="brand"><b>THE&nbsp;BGR&nbsp;ECOSYSTEM</b></div>
+<div id="brand"><b>THE&nbsp;NEO&nbsp;ECOSYSTEM</b></div>
 <div id="progress"></div>
 <div id="sound" class="muted"><span class="ico"><i></i><i></i><i></i><i></i></span><span id="sLbl">Sound&nbsp;Off</span></div>
 <button id="replay" class="btn">↻ &nbsp;Replay</button>
+<div id="devnav"></div>
 
 <!-- GATE -->
 <div id="gate">
-  <div class="mk">A&nbsp;CINEMATIC&nbsp;PROPOSAL&nbsp;FOR&nbsp;TAMIL&nbsp;NADU</div>
-  <h1>The BGR Ecosystem</h1>
-  <p>A two-minute film — from bare greenfield land to a living, automated factory. Best with sound, in fullscreen.</p>
+  <h1>THE&nbsp;NEO&nbsp;ECOSYSTEM</h1>
+  <div class="gsub">for&nbsp;Industries</div>
+  <p>From bare greenfield land to a living, automated factory — built end to end by one ecosystem.</p>
   <button id="beginBtn" class="btn pulse">▶ &nbsp;Begin&nbsp; — &nbsp;press F for fullscreen</button>
 </div>
 
 <script src="assets/vendor/gsap.min.js"></script>
+<script src="assets/vendor/three.min.js"></script>
 <script>
 /* =====================================================================
    THE BGR ECOSYSTEM — self-playing cinematic engine
@@ -478,7 +598,7 @@ const TL = [
   ['seg22','nikitha'],['seg23','nikitha'],
   ['seg24','enexio'],['seg25','enexio'],
   ['seg26','bgrneo'],['seg27','bgrneo'],
-  ['seg28','close'],['seg29','close'],['seg30','close'],
+  ['seg28','close'],['seg31','close'],['seg32','close'],['seg29','close'],['seg30','close'],
 ];
 const GRADES = {
   grey :'radial-gradient(120% 90% at 50% 32%,#0c0f13,#06080b 60%,#030406)',
@@ -488,6 +608,117 @@ const GRADES = {
   green:'radial-gradient(120% 90% at 50% 36%,#08150a,#05090c 60%,#030406)',
   warm :'radial-gradient(120% 95% at 50% 42%,#1a120a,#0a0a0c 55%,#050507)',
 };
+
+/* ===================== SFX — Web Audio, synthesized (no files) ===================== */
+const SFX=(()=>{ let ac=null,muted=false;
+  const C=()=>{ if(!ac){const A=window.AudioContext||window.webkitAudioContext; ac=A?new A():null;} return ac; };
+  function tone(freq,type,g,a,d){ const c=C(); if(!c)return; const o=c.createOscillator(),gn=c.createGain(),t=c.currentTime;
+    o.type=type;o.frequency.value=freq; gn.gain.setValueAtTime(0,t); gn.gain.linearRampToValueAtTime(g,t+a);
+    gn.gain.exponentialRampToValueAtTime(1e-4,t+a+d); o.connect(gn); gn.connect(c.destination); o.start(); o.stop(t+a+d+0.03); }
+  function noise(dur,g,type,f0,f1){ const c=C(); if(!c)return; const n=Math.floor(c.sampleRate*dur);
+    const b=c.createBuffer(1,n,c.sampleRate),ch=b.getChannelData(0); for(let i=0;i<n;i++)ch[i]=Math.random()*2-1;
+    const s=c.createBufferSource();s.buffer=b; const f=c.createBiquadFilter();f.type=type; const t=c.currentTime;
+    f.frequency.setValueAtTime(f0,t); f.frequency.exponentialRampToValueAtTime(f1,t+dur);
+    const gn=c.createGain(); gn.gain.setValueAtTime(g,t); gn.gain.exponentialRampToValueAtTime(1e-4,t+dur);
+    s.connect(f);f.connect(gn);gn.connect(c.destination); s.start(); s.stop(t+dur+0.03); }
+  return {
+    init(){ const c=C(); if(c&&c.state==='suspended')c.resume(); },
+    setMuted(m){ muted=m; },
+    tick(){ if(muted)return; tone(1250+Math.random()*300,'square',0.020,0.001,0.033); },
+    reveal(){ if(muted)return; tone(430,'sine',0.05,0.005,0.16); tone(880,'triangle',0.015,0.002,0.07); },
+    swish(){ if(muted)return; noise(0.55,0.045,'bandpass',280,3200); },
+    bloom(){ if(muted)return; noise(1.2,0.06,'lowpass',180,3800); tone(150,'sine',0.1,0.02,1.1); },
+    fan(){ if(muted)return; noise(5.4,0.17,'bandpass',760,160); tone(56,'sawtooth',0.06,0.12,4.8); tone(150,'sine',0.04,0.2,4.2); },
+    clink(){ if(muted)return; tone(2100,'sine',0.05,0.001,0.22); tone(3160,'triangle',0.022,0.001,0.15); },
+    glow(){ if(muted)return; tone(160,'sine',0.07,0.3,1.5); noise(1.1,0.03,'lowpass',300,2600); },
+    swivel(){ if(muted)return; noise(0.45,0.06,'bandpass',500,2600); },
+    chime(){ if(muted)return; tone(880,'sine',0.07,0.01,1.6); tone(1320,'sine',0.04,0.02,1.3); },
+  };
+})();
+const GLYPH='ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789#%&/<>*';
+function scramble(el){
+  const final=el.dataset.final||el.textContent; el.dataset.final=final;
+  const ch=final.split(''); let f=0; const steps=12;
+  const id=setInterval(()=>{ const p=f/steps;
+    el.textContent=ch.map((c,i)=> (c===' '||c===' ')?c : (i<p*ch.length||!c.trim()? c : GLYPH[Math.floor(Math.random()*GLYPH.length)])).join('');
+    if(++f>steps){ clearInterval(id); el.textContent=final; }
+  },42);
+}
+
+function typeOut(el){
+  const final=el.dataset.final||el.textContent; el.dataset.final=final;
+  el.textContent=''; let i=0;
+  const id=setInterval(()=>{ el.textContent=final.slice(0,++i); if(i%2===0) SFX.tick(); if(i>=final.length) clearInterval(id); },36);
+}
+
+/* ===================== FINALE choreography (drives the close beats) ===================== */
+const FIN={};
+function finBloom(color){            // shift the backlight to a company colour + pop
+  document.documentElement.style.setProperty('--bloom', color);
+  gsap.killTweensOf('#backlight');
+  gsap.timeline()
+    .fromTo('#backlight',{opacity:.35,scale:.9},{opacity:.95,scale:1.07,duration:.5,ease:'power2.out'})
+    .to('#backlight',{opacity:.78,scale:1,duration:.9,ease:'sine.inOut'});
+}
+function finReset(){
+  if(FIN._tl){ FIN._tl.kill(); FIN._tl=null; }
+  const one=document.querySelector('.fin-one'); if(one) one.textContent='ONE';
+  gsap.set('.fin-one',{rotationY:0,x:0,opacity:0});
+  gsap.set(['.fin-cap','.fin-rail','.fin-nm','.fin-d','.fin-brand','.fin-eco','.fin-tagline','.fin-final','.fin-final .a','.fin-final .b','.fin-mark','.fin-core'],{opacity:0,clearProps:'transform'});
+  gsap.set('.fin-pipe',{opacity:1});
+  gsap.set('.fin-stops',{clearProps:'all'});   // reset swivel (rotation/scale) so replay starts clean
+  gsap.set('.fin-fill',{scaleX:0,transformOrigin:'left center'});
+  gsap.set('.fin-d',{scale:0}); gsap.set('.fin-eco',{maxWidth:0});
+}
+FIN.seg28=function(){ finReset(); SFX.swish();
+  const COL=['#19D3DA','#E8A24C','#4fb0f0','#5cc15a'];  // ANITA cyan · NIKITHA gold · ENEXIO blue · BGR NEO green
+  const stops=gsap.utils.toArray('.fin-stop');
+  const names=stops.map(s=>s.querySelector('.fin-nm')), dots=stops.map(s=>s.querySelector('.fin-d'));
+  // all names pre-exist pushed BACK + blurred + hidden; each comes forward in turn (focus pull)
+  gsap.set(names,{xPercent:-50,z:-150,transformPerspective:1100,filter:'blur(6px)',opacity:0});
+  gsap.set(dots,{opacity:0,scale:0});
+  gsap.set('.fin-pulse',{left:'0%',opacity:0});
+  gsap.set('.fin-pipe',{xPercent:-50,yPercent:-50,rotationX:12,rotationY:-6,transformPerspective:1500,transformOrigin:'50% 50%'}); // isometric tilt
+  const tl=FIN._tl=gsap.timeline();
+  tl.to(['.fin-cap.l','.fin-rail'],{opacity:1,duration:.6},0);
+  tl.to('.fin-pulse',{opacity:1,duration:.3},0.4);                         // a glowing energy pulse...
+  tl.to('.fin-fill',{scaleX:1,duration:4.6,ease:'none'},0.4);
+  tl.to('.fin-pulse',{left:'100%',duration:4.6,ease:'none'},0.4);          // ...travels the line, igniting each company
+  stops.forEach((s,i)=>{ const t=0.95+i*1.05;
+    tl.call(()=>{ SFX.clink(); finBloom(COL[i]); }, null, t);                                  // backlight -> this colour
+    tl.to(dots[i],{opacity:1,scale:1,duration:.4,ease:'back.out(2.5)'}, t);
+    tl.to(names[i],{z:165,opacity:1,filter:'blur(0px)',duration:.72,ease:'power3.out'}, t);     // FORWARD, sharp, bright
+    if(i>0) tl.to(names[i-1],{z:-150,opacity:.32,filter:'blur(5px)',duration:.72,ease:'power2.in'}, t); // prev recedes + blurs
+  });
+  const tr=5.0;
+  tl.call(()=>{ SFX.clink(); }, null, tr);
+  tl.to('.fin-cap.r',{opacity:1,duration:.6}, tr);
+  tl.to('.fin-pulse',{opacity:0,duration:.5}, tr);
+  tl.to(names,{z:0,opacity:1,filter:'blur(0px)',duration:.8,ease:'power2.out'}, tr);            // all settle level + sharp
+};
+FIN.seg31=function(){ if(FIN._tl){ FIN._tl.kill(); FIN._tl=null; } SFX.glow(); finBloom('#19D3DA');
+  gsap.to('.fin-pipe',{rotationX:0,rotationY:0,duration:.5,ease:'power2.inOut'});             // level the isometric tilt
+  gsap.set('.fin-stops',{yPercent:-50,transformOrigin:'50% 50%'});
+  gsap.to('.fin-stops',{rotation:210,scale:0.05,opacity:0,duration:1.3,ease:'power2.in'});    // names swivel around into the glow
+  gsap.to(['.fin-cap','.fin-rail','.fin-fill'],{opacity:0,duration:.7,delay:.15});
+  gsap.fromTo('.fin-core',{opacity:0,scale:.2},{opacity:1,scale:1.3,duration:1,ease:'power2.out'});
+  gsap.to('.fin-core',{opacity:.45,duration:1.4,delay:1});
+  const one=document.querySelector('.fin-one');
+  gsap.to('.fin-brand',{opacity:1,duration:.4,delay:1.0});
+  gsap.fromTo(one,{scale:1.5,opacity:0,z:280},{scale:1,opacity:1,z:0,duration:.8,delay:1.0,ease:'back.out(1.4)'});
+  gsap.delayedCall(2.2,()=>{ SFX.swivel(); gsap.to('.fin-eco',{maxWidth:1000,opacity:1,duration:.7,ease:'power2.out'}); });
+  gsap.delayedCall(3.2,()=>{ SFX.swivel();
+    gsap.to(one,{rotationY:90,duration:.35,ease:'power1.in',onComplete:()=>{ one.textContent='NEO'; SFX.glow();
+      gsap.fromTo(one,{rotationY:-90},{rotationY:0,duration:.45,ease:'power2.out'}); }}); });
+};
+FIN.seg32=function(){ SFX.reveal(); gsap.fromTo('.fin-tagline',{opacity:0,y:16},{opacity:1,y:0,duration:1.1,ease:'power3.out'}); };
+FIN.seg29=function(){ SFX.swivel();
+  gsap.to(['.fin-brand','.fin-tagline','.fin-core'],{opacity:0,duration:.7});
+  gsap.to('.fin-final',{opacity:1,duration:.1,delay:.6});
+  gsap.fromTo('.fin-final .a',{opacity:0,y:18,filter:'blur(8px)'},{opacity:1,y:0,filter:'blur(0px)',duration:1,delay:.6,ease:'power3.out'}); };
+FIN.seg30=function(){ SFX.chime();
+  gsap.fromTo('.fin-final .b',{opacity:0,y:18,scale:.94,filter:'blur(10px)'},{opacity:1,y:0,scale:1,filter:'blur(0px)',duration:1.2,ease:'power3.out'});
+  gsap.fromTo('.fin-mark',{opacity:0,y:14},{opacity:1,y:0,duration:1,delay:1.3}); };
 
 const tint = document.getElementById('tint');
 const progressEl = document.getElementById('progress');
@@ -504,24 +735,39 @@ Object.entries(SCENE_VIDEO).forEach(([sc,src])=>{
   const img=bg.querySelector('img'); if(img) img.style.display='none';
 });
 
+function setBloom(scene){
+  const accent=getComputedStyle(scene).getPropertyValue('--accent').trim()||'#19D3DA';
+  const bare = scene.dataset.grade==='grey';
+  document.documentElement.style.setProperty('--bloom', accent);
+  const peak = bare ? 0.0 : 0.55;         // bare ground stays colourless; company colour blooms
+  gsap.killTweensOf('#backlight');
+  gsap.timeline()
+    .fromTo('#backlight',{opacity:0,scale:.72},{opacity:peak*1.3,scale:1.08,duration:.9,ease:'power2.out'})
+    .to('#backlight',{opacity:peak,scale:1,duration:1.3,ease:'sine.inOut'});
+}
 function setScene(sc){
   if(curScene===sc) return;
+  SFX.swish();
   const next=document.getElementById('sc-'+sc);
   const prev=curScene?document.getElementById('sc-'+curScene):null;
   // reset reveals so they animate fresh
   next.querySelectorAll('[data-seg]').forEach(e=>{e.style.opacity=0;e.style.transform='translateY(26px)';});
   tint.style.background = GRADES[next.dataset.grade] || GRADES.grey;
+  setBloom(next);
   next.classList.add('active'); void next.offsetWidth; next.classList.add('kb');
   gsap.fromTo(next,{opacity:0},{opacity:1,duration:1.1,ease:'power2.out'});
   if(prev){ gsap.to(prev,{opacity:0,duration:.9,ease:'power2.in',
     onComplete:()=>{prev.classList.remove('active','kb');}}); }
   if(sc==='bloom') runBloom();
+  if(sc==='close') finReset();          // hide finale elements on enter — kills the stale "It is made" flash
+  if(sc==='enexio') SFX.fan();
   // restart any bg video
   const v=next.querySelector('video'); if(v){ try{v.currentTime=0;v.play();}catch(e){} }
   curScene=sc;
 }
 
 function runBloom(){
+  SFX.bloom();
   const b=document.getElementById('bloom');
   gsap.fromTo(b,{scale:0,opacity:0},{scale:170,opacity:1,duration:1.6,ease:'power2.in'});
   gsap.to(b,{opacity:0,duration:1.2,delay:1.4,ease:'power1.out'});
@@ -530,19 +776,29 @@ function runBloom(){
 function countUp(el){
   const end=+el.dataset.count, suf=el.dataset.suffix||'';
   const fmt=v=> (end>=1000?Math.round(v).toLocaleString('en-IN'):Math.round(v));
-  const o={v:0}; gsap.to(o,{v:end,duration:1.5,ease:'power2.out',onUpdate:()=>el.textContent=fmt(o.v)+suf});
+  const o={v:0}; let f=0;
+  gsap.to(o,{v:end,duration:1.5,ease:'power2.out',onUpdate:()=>{ el.textContent=fmt(o.v)+suf; if((f++%3)===0) SFX.tick(); }});
 }
 
 function reveal(seg){
+  if(FIN[seg]){ FIN[seg](); return; }
   const els=document.querySelectorAll(`[data-seg="${seg}"]`);
-  gsap.to(els,{opacity:1,y:0,duration:.9,ease:'power3.out',stagger:.16});
-  els.forEach(el=>{
+  if(els.length) SFX.reveal();
+  els.forEach((el,i)=>{
+    gsap.fromTo(el,{opacity:0,y:26,filter:'blur(12px)'},
+      {opacity:1,y:0,filter:'blur(0px)',duration:.9,ease:'power3.out',delay:i*0.14});
+    if(el.classList.contains('name')||el.classList.contains('bigtitle')) scramble(el);
+    if(el.classList.contains('typeout')) typeOut(el);
     if(el.dataset.count!=null) countUp(el);
     el.querySelectorAll&&el.querySelectorAll('[data-count]').forEach(countUp);
   });
 }
 
-function advance(){ clearTimeout(safety); vo.onended=null; gsap.delayedCall(.32, step); }
+function advance(){ clearTimeout(safety); vo.onended=null;
+  const cur=TL[idx], nxt=TL[idx+1];
+  const HOLD={seg28:4.2};   // hold the converge until the bare-land -> running-factory pipeline finishes
+  const gap=(cur&&HOLD[cur[0]]) || ((nxt&&cur&&nxt[1]!==cur[1])?2.2:0.32);
+  gsap.delayedCall(gap, step); }
 
 function playClip(seg){
   clearTimeout(safety);
@@ -550,7 +806,7 @@ function playClip(seg){
   vo.onerror=()=>{ clearTimeout(safety); safety=setTimeout(advance,2600); };
   vo.onloadedmetadata=()=>{ clearTimeout(safety);
     safety=setTimeout(advance,(isFinite(vo.duration)?vo.duration*1000:2600)+2500); };
-  vo.src=`assets/audio/vo/${seg}.mp3`;
+  vo.src=`assets/audio/vo/${seg}.mp3?v=2`;
   vo.muted=muted; vo.currentTime=0;
   vo.play().catch(()=>{ clearTimeout(safety); safety=setTimeout(advance,2800); });
   safety=setTimeout(advance,9000); // hard backstop
@@ -582,14 +838,14 @@ function start(){
 
 /* sound toggle */
 const soundBtn=document.getElementById('sound'), sLbl=document.getElementById('sLbl');
-function setSound(on){ muted=!on; vo.muted=muted; soundBtn.classList.toggle('muted',!on); sLbl.textContent=on?'Sound On':'Sound Off'; }
+function setSound(on){ muted=!on; vo.muted=muted; SFX.setMuted(!on); soundBtn.classList.toggle('muted',!on); sLbl.textContent=on?'Sound On':'Sound Off'; }
 soundBtn.addEventListener('click',()=>setSound(muted));
 
 /* gate */
 const gate=document.getElementById('gate');
 document.getElementById('beginBtn').addEventListener('click',()=>{
   gate.classList.add('hidden'); setTimeout(()=>gate.remove(),1100);
-  setSound(true); start();
+  SFX.init(); setSound(true); start();
 });
 document.getElementById('replay').addEventListener('click',start);
 
@@ -607,9 +863,32 @@ window.__cinema={
     if(scId==='close') gsap.to('.endreveal',{opacity:1,y:0,duration:.6,stagger:.1}); },
   end:finish };
 
+/* ===== DEV scene-jump (only with ?dev in URL) ===== */
+const DEV = new URLSearchParams(location.search).has('dev');
+function jumpToScene(scId){
+  clearTimeout(safety); vo.pause(); vo.onended=null;
+  document.querySelectorAll('.scene').forEach(s=>s.classList.remove('active','kb'));
+  document.querySelectorAll('[data-seg],.endreveal').forEach(e=>{e.style.opacity=0;e.style.transform='translateY(26px)';});
+  document.getElementById('replay').classList.remove('show');
+  curScene=null; const i=TL.findIndex(t=>t[1]===scId); idx=(i<0?0:i)-1; playing=true; step();
+}
+(function devNav(){
+  if(!DEV) return;
+  const nav=document.getElementById('devnav'); nav.classList.add('on');
+  const order=[...new Set(TL.map(t=>t[1]))];
+  const lab={banner:'Title',problem:'Problem',question:'Question',bloom:'Turn',onewindow:'1-Window',partnership:'Partners',anita:'ANITA',nikitha:'NIKITHA',enexio:'ENEXIO',bgrneo:'BGR NEO',close:'Close'};
+  const tag=document.createElement('span'); tag.className='lbl'; tag.textContent='DEV ›'; nav.appendChild(tag);
+  function start(){ const g=document.getElementById('gate'); if(g){ g.classList.add('hidden'); setTimeout(()=>{const x=document.getElementById('gate'); x&&x.remove();},200); SFX.init(); setSound(true); } }
+  order.forEach(sc=>{ const b=document.createElement('button'); b.textContent=lab[sc]||sc;
+    b.onclick=()=>{ start(); jumpToScene(sc); }; nav.appendChild(b); });
+  addEventListener('keydown',e=>{ if(e.key!=='ArrowRight'&&e.key!=='ArrowLeft')return;
+    const order2=[...new Set(TL.map(t=>t[1]))]; let k=order2.indexOf(curScene||order2[0]);
+    k=Math.max(0,Math.min(order2.length-1,k+(e.key==='ArrowRight'?1:-1))); start(); jumpToScene(order2[k]); });
+})();
+
 /* ===== BGM-LIVE-START — music bed (BGM_choice1), ducks 66% under narration, tied to the sound toggle ===== */
 (function(){
-  const BASE=0.14, DUCKED=BASE*(1-0.66);
+  const BASE=0.30, DUCKED=BASE*(1-0.55);
   const bgm=new Audio('assets/audio/BGM_choice1.mp3'); bgm.loop=true; bgm.preload='auto';
   let ducked=false, unduckT=null, fadeT=null, kicked=false;
   const ramp=(t,d)=>gsap.to(bgm,{volume:Math.max(0,Math.min(1,t)),duration:d||0.5,overwrite:true});
@@ -623,6 +902,238 @@ window.__cinema={
   const sb=document.getElementById('sound'); sb&&sb.addEventListener('click',()=>{ bgm.muted=vo.muted; if(!vo.muted&&kicked&&bgm.paused) go(); });
 })();
 /* ===== BGM-LIVE-END ===== */
+
+/* ===================== ANITA — 3D neural field (Three.js) ===================== */
+(function anitaField(){
+  const canvas=document.getElementById('anita-canvas');
+  if(!canvas||!window.THREE) return;
+  const renderer=new THREE.WebGLRenderer({canvas,alpha:true,antialias:true});
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio,2));
+  const scene=new THREE.Scene(), cam=new THREE.PerspectiveCamera(55,1,0.1,100); cam.position.z=7.2;
+  const grp=new THREE.Group(); scene.add(grp);
+  const N=92, pos=[];
+  for(let i=0;i<N;i++) pos.push(new THREE.Vector3((Math.random()-.5)*9,(Math.random()-.5)*5.6,(Math.random()-.5)*5));
+  grp.add(new THREE.Points(new THREE.BufferGeometry().setFromPoints(pos),
+    new THREE.PointsMaterial({color:0x7fe9ee,size:0.075,transparent:true,opacity:.95})));
+  const lp=[]; for(let i=0;i<N;i++)for(let j=i+1;j<N;j++){ if(pos[i].distanceTo(pos[j])<2.05){ lp.push(pos[i].x,pos[i].y,pos[i].z,pos[j].x,pos[j].y,pos[j].z); } }
+  const lines=new THREE.LineSegments(new THREE.BufferGeometry().setAttribute('position',new THREE.Float32BufferAttribute(lp,3)),
+    new THREE.LineBasicMaterial({color:0x19D3DA,transparent:true,opacity:.16}));
+  grp.add(lines);
+  const pulse=new THREE.Points(new THREE.BufferGeometry().setFromPoints(pos.filter((_,i)=>i%9===0)),
+    new THREE.PointsMaterial({color:0xffffff,size:0.13,transparent:true,opacity:.9}));
+  grp.add(pulse);
+  function size(){ const s=document.getElementById('sc-anita'); const w=s.clientWidth||innerWidth,h=s.clientHeight||innerHeight;
+    renderer.setSize(w,h,false); cam.aspect=w/h; cam.updateProjectionMatrix(); }
+  size(); window.addEventListener('resize',size);
+  let t=0;
+  (function loop(){ requestAnimationFrame(loop);
+    if(curScene!=='anita') return;
+    t+=0.004; grp.rotation.y=t*0.55; grp.rotation.x=Math.sin(t*0.5)*0.12;
+    lines.material.opacity=0.10+Math.sin(t*3)*0.06;
+    pulse.material.opacity=0.5+Math.sin(t*6)*0.4;
+    renderer.render(scene,cam);
+  })();
+})();
+
+/* ===================== ANITA — live cyan-wireframe robotic warehouse twin (Three.js) ===================== */
+(function dtwin(){
+  const canvas=document.getElementById('anita-dt'); if(!canvas||!window.THREE) return;
+  const R=new THREE.WebGLRenderer({canvas,alpha:true,antialias:true});
+  R.setPixelRatio(Math.min(window.devicePixelRatio,2));
+  const scene=new THREE.Scene(), cam=new THREE.PerspectiveCamera(48,1.7,0.1,400);
+  const root=new THREE.Group(); scene.add(root);
+  const CY=0x19D3DA, CB=0x7fe9ee;
+  const mat=new THREE.LineBasicMaterial({color:CY,transparent:true,opacity:.42});
+  const matB=new THREE.LineBasicMaterial({color:CB,transparent:true,opacity:.85});
+  const matD=new THREE.LineBasicMaterial({color:CY,transparent:true,opacity:.16});
+  const E=(g,m)=>new THREE.LineSegments(new THREE.EdgesGeometry(g),m||mat);
+  const W=(g,m)=>new THREE.LineSegments(new THREE.WireframeGeometry(g),m||mat);
+  const grid=new THREE.GridHelper(160,80,CY,CY); grid.material.opacity=.10; grid.material.transparent=true; root.add(grid);
+  function shed(x,z){ const g=new THREE.Group(); g.position.set(x,0,z);
+    g.add(E(new THREE.BoxGeometry(11,4.5,15)).translateY(2.25));
+    for(let i=0;i<5;i++){ const rl=E(new THREE.BoxGeometry(0.07,1.1,15),matD); rl.position.set(-4.5+i*2.2,5.0,0); rl.rotation.z=0.42; g.add(rl); }
+    root.add(g); }
+  const convs=[]; function conv(x,z,len){ const g=new THREE.Group(); g.position.set(x,0.6,z); root.add(g);
+    g.add(E(new THREE.BoxGeometry(len,0.25,1.0)));
+    const bx=[]; for(let i=0;i<Math.floor(len/1.5);i++){ const b=E(new THREE.BoxGeometry(0.5,0.5,0.5),matB); b.position.set(-len/2+i*1.5,0.4,0); g.add(b); bx.push(b); }
+    convs.push({bx,len}); }
+  const arms=[]; function arm(x,z){ const base=new THREE.Group(); base.position.set(x,0.6,z); root.add(base);
+    base.add(W(new THREE.CylinderGeometry(0.35,0.45,0.35,10),mat));
+    const j1=new THREE.Group(); j1.position.y=0.25; base.add(j1); j1.add(E(new THREE.BoxGeometry(0.22,1.4,0.22),matB).translateY(0.7));
+    const j2=new THREE.Group(); j2.position.y=1.4; j1.add(j2); j2.add(E(new THREE.BoxGeometry(0.18,1.0,0.18),matB).translateY(0.5));
+    arms.push({j1,j2}); }
+  function rack(x,z){ const g=new THREE.Group(); g.position.set(x,0,z);
+    for(let y=0;y<3;y++) for(let c=0;c<3;c++) g.add(E(new THREE.BoxGeometry(1.1,0.95,1.6),matD).translateX(-1.2+c*1.2).translateY(0.55+y*1.0));
+    root.add(g); }
+  for(let r=0;r<3;r++){ const z=-r*24;
+    shed(-15,z); shed(15,z);
+    conv(0,z+5,13); conv(0,z-5,13);
+    arm(-3.5,z+5); arm(3.5,z-5);
+    rack(-24,z); rack(24,z); }
+  const AG=40, ap=new Float32Array(AG*3);
+  for(let i=0;i<AG;i++){ ap[i*3]=(Math.random()-.5)*10; ap[i*3+1]=0.35; ap[i*3+2]=-Math.random()*70; }
+  const agvG=new THREE.BufferGeometry(); agvG.setAttribute('position',new THREE.BufferAttribute(ap,3));
+  const agv=new THREE.Points(agvG,new THREE.PointsMaterial({color:CB,size:0.32,transparent:true,opacity:.9})); root.add(agv);
+  const A=new THREE.Vector3(4,1.0,7.5), B=new THREE.Vector3(-2,12,28), TA=new THREE.Vector3(3.5,0.6,5), TB=new THREE.Vector3(0,2,-26);
+  function size(){ const w=canvas.clientWidth||720,h=canvas.clientHeight||400; R.setSize(w,h,false); cam.aspect=w/h; cam.updateProjectionMatrix(); }
+  let sized=false, age=0, t=0; const tmp=new THREE.Vector3(); window.addEventListener('resize',()=>sized=false);
+  (function loop(){ requestAnimationFrame(loop); if(curScene!=='anita'){ age=0; return; } if(!sized){size();sized=true;}
+    age++; t+=0.013;
+    convs.forEach(c=>c.bx.forEach(b=>{ b.position.x+=0.022; if(b.position.x>c.len/2) b.position.x=-c.len/2; }));
+    arms.forEach((a,i)=>{ a.j1.rotation.z=Math.sin(t+i)*0.4-0.05; a.j2.rotation.z=Math.sin(t+i+1)*0.5-0.3; });
+    const pa=agv.geometry.attributes.position; for(let i=0;i<AG;i++){ pa.array[i*3+2]+=0.07; if(pa.array[i*3+2]>6) pa.array[i*3+2]=-70; } pa.needsUpdate=true;
+    const p=Math.min(1,age/220), e=1-Math.pow(1-p,3);
+    cam.position.lerpVectors(A,B,e); cam.position.x+=Math.sin(t*0.16)*0.9*e;
+    tmp.lerpVectors(TA,TB,e); cam.lookAt(tmp);
+    R.render(scene,cam); })();
+})();
+
+/* ===================== NIKITHA — steel-frame building that erects (Three.js) ===================== */
+(function steelBuild(){
+  const canvas=document.getElementById('nikitha-dt'); if(!canvas||!window.THREE) return;
+  const R=new THREE.WebGLRenderer({canvas,alpha:true,antialias:true});
+  R.setPixelRatio(Math.min(window.devicePixelRatio,2));
+  const scene=new THREE.Scene(), cam=new THREE.PerspectiveCamera(46,1.7,0.1,400);
+  const root=new THREE.Group(); scene.add(root);
+  const ST=0xe8b070, STB=0xffd28a;
+  const mat=new THREE.LineBasicMaterial({color:ST,transparent:true,opacity:.85});
+  const matP=new THREE.LineBasicMaterial({color:STB,transparent:true,opacity:0});
+  const E=(g,m)=>new THREE.LineSegments(new THREE.EdgesGeometry(g),m||mat);
+  const grid=new THREE.GridHelper(120,60,ST,ST); grid.material.opacity=.09;grid.material.transparent=true; root.add(grid);
+  const BW=17,H=7,RIDGE=10,NF=11,SP=3.0;
+  const Z=-(NF-1)*SP;
+  const rlen=Math.hypot(BW/2,RIDGE-H), rang=Math.atan2(RIDGE-H,BW/2);
+  const frames=[];
+  for(let f=0;f<NF;f++){ const g=new THREE.Group(); g.position.z=-f*SP; root.add(g); frames.push(g);
+    g.add(E(new THREE.BoxGeometry(0.32,H,0.32)).translateX(-BW/2).translateY(H/2));
+    g.add(E(new THREE.BoxGeometry(0.32,H,0.32)).translateX(BW/2).translateY(H/2));
+    const rl=E(new THREE.BoxGeometry(0.26,rlen,0.26)); rl.position.set(-BW/4,(H+RIDGE)/2,0); rl.rotation.z=rang-Math.PI/2; g.add(rl);
+    const rr=E(new THREE.BoxGeometry(0.26,rlen,0.26)); rr.position.set(BW/4,(H+RIDGE)/2,0); rr.rotation.z=Math.PI/2-rang; g.add(rr); }
+  // purlins + girts (fade in after erection)
+  const pg=new THREE.Group(); root.add(pg);
+  function lw(x,y){ const e=E(new THREE.BoxGeometry(0.1,0.1,Math.abs(Z)),matP); e.position.set(x,y,Z/2); pg.add(e); }
+  for(let k=0;k<=5;k++){ const fx=(BW/2)*(1-k/5), fy=H+(RIDGE-H)*(k/5); lw(fx,fy); lw(-fx,fy); }
+  for(const gy of [1.8,3.6]){ lw(BW/2,gy); lw(-BW/2,gy); }
+  function size(){ const w=canvas.clientWidth||720,h=canvas.clientHeight||400; R.setSize(w,h,false); cam.aspect=w/h; cam.updateProjectionMatrix(); }
+  let sized=false,age=0,t=0; window.addEventListener('resize',()=>sized=false);
+  (function loop(){ requestAnimationFrame(loop); if(curScene!=='nikitha'){ age=0; matP.opacity=0; return; } if(!sized){size();sized=true;}
+    age++; t+=0.01;
+    frames.forEach((g,i)=>{ const fp=Math.max(0,Math.min(1,(age-i*6)/34)); g.scale.y=Math.max(0.0001,fp); });
+    matP.opacity=Math.max(0,Math.min(.34,(age-NF*6)/60*0.34));
+    cam.position.x=5+Math.sin(t*0.13)*3; cam.position.y=8+Math.sin(t*0.1)*1.2; cam.position.z=12.5+Math.sin(t*0.08)*1.6;
+    cam.lookAt(0,4.6,Z/2);
+    R.render(scene,cam); })();
+})();
+
+/* ===================== BGR NEO — articulating robot arm (Three.js) ===================== */
+(function bgrRobot(){
+  const canvas=document.getElementById('bgrneo-dt'); if(!canvas||!window.THREE) return;
+  const R=new THREE.WebGLRenderer({canvas,alpha:true,antialias:true});
+  R.setPixelRatio(Math.min(window.devicePixelRatio,2));
+  const scene=new THREE.Scene(), cam=new THREE.PerspectiveCamera(46,1.7,0.1,400);
+  const root=new THREE.Group(); scene.add(root);
+  const GR=0x6cd96a, GRB=0xc0f7b0;
+  const mat=new THREE.LineBasicMaterial({color:GR,transparent:true,opacity:.55});
+  const matB=new THREE.LineBasicMaterial({color:GRB,transparent:true,opacity:.9});
+  const E=(g,m)=>new THREE.LineSegments(new THREE.EdgesGeometry(g),m||mat);
+  const W=(g,m)=>new THREE.LineSegments(new THREE.WireframeGeometry(g),m||mat);
+  const grid=new THREE.GridHelper(60,30,GR,GR); grid.material.opacity=.1;grid.material.transparent=true; root.add(grid);
+  const BELT=1.0, LEN=36, X0=-LEN/2, X1=LEN/2;
+  const boxes=[], gates=[];
+  const cube=(s,m)=>E(new THREE.BoxGeometry(s,s,s),m||matB);
+  for(let L=0;L<5;L++){ const z=-10+L*5;
+    root.add(E(new THREE.BoxGeometry(LEN,0.35,1.7)).translateY(BELT).translateZ(z));
+    for(let r=0;r<=17;r++){ const rl=W(new THREE.CylinderGeometry(0.26,0.26,1.7,8),mat); rl.rotation.x=Math.PI/2; rl.position.set(X0+r*2,BELT+0.2,z); root.add(rl); }
+    for(let lx=X0+2;lx<X1;lx+=6) root.add(E(new THREE.BoxGeometry(0.2,BELT,0.2)).translateX(lx).translateY(BELT/2).translateZ(z));
+    const sp=0.035+L*0.005;
+    for(let b=0;b<11;b++){ const m=cube(0.9); m.position.set(X0+b*3.2,BELT+0.62,z); root.add(m); boxes.push({m,axis:'x',z,sp}); }
+    const gx=-3+L*0.7, g=new THREE.Group(); g.position.set(gx,0,z);
+    g.add(E(new THREE.BoxGeometry(0.16,3,0.16)).translateX(-1.15).translateY(1.5));
+    g.add(E(new THREE.BoxGeometry(0.16,3,0.16)).translateX(1.15).translateY(1.5));
+    g.add(E(new THREE.BoxGeometry(2.5,0.16,0.16)).translateY(3));
+    const beam=E(new THREE.BoxGeometry(2.2,0.06,0.06),matB); beam.position.set(0,2.4,0); g.add(beam);
+    root.add(g); gates.push({gx,z,beam});
+  }
+  for(const cx of [-9,7]){ root.add(E(new THREE.BoxGeometry(1.7,0.35,24)).translateY(BELT+1.5).translateX(cx).translateZ(0));
+    for(let b=0;b<8;b++){ const m=cube(0.78); m.position.set(cx,BELT+2.15,-11+b*3.0); root.add(m); boxes.push({m,axis:'z',sp:0.03,z0:-12,z1:12}); } }
+  for(const gz of [-9,1,11]){ const gt=new THREE.Group(); gt.position.set(0,6.2,gz);
+    gt.add(E(new THREE.BoxGeometry(LEN,0.3,0.3))); gt.add(E(new THREE.BoxGeometry(LEN,0.3,0.3)).translateZ(1.4));
+    for(let x=X0+2;x<X1;x+=3.2) gt.add(E(new THREE.BoxGeometry(0.14,0.7,1.4)).translateX(x).translateZ(0.7));
+    gt.add(E(new THREE.BoxGeometry(0.28,6.2,0.28)).translateX(X0+1).translateY(-3.1)); gt.add(E(new THREE.BoxGeometry(0.28,6.2,0.28)).translateX(X1-1).translateY(-3.1)); root.add(gt); }
+  for(const pp of [[-15,-13],[15,-13],[-15,13],[15,13]]) for(let y=0;y<4;y++) root.add(cube(1.3,mat).translateX(pp[0]+(y%2?0.12:-0.12)).translateY(0.7+y*1.35).translateZ(pp[1]));
+  const amrs=[]; for(let i=0;i<7;i++){ const a=new THREE.Group(); a.add(E(new THREE.BoxGeometry(1.5,0.5,1.0))); a.add(cube(0.8).translateY(0.5)); a.position.set(-17+i*4.6,0.3,14+(i%2)*2.6); root.add(a); amrs.push(a); }
+  const CA=new THREE.Vector3(-16,4,10), CB=new THREE.Vector3(-3,17,27), CTA=new THREE.Vector3(-8,2,-2), CTB=new THREE.Vector3(0,2,-2);
+  function size(){ const w=canvas.clientWidth||720,h=canvas.clientHeight||400; R.setSize(w,h,false); cam.aspect=w/h; cam.updateProjectionMatrix(); }
+  let sized=false,age=0,t=0; const tmp=new THREE.Vector3(); window.addEventListener('resize',()=>sized=false);
+  (function loop(){ requestAnimationFrame(loop); if(curScene!=='bgrneo'){ age=0; return; } if(!sized){size();sized=true;}
+    age++; t+=0.016;
+    boxes.forEach(o=>{ if(o.axis==='x'){ o.m.position.x+=o.sp; if(o.m.position.x>X1) o.m.position.x=X0; } else { o.m.position.z+=o.sp; if(o.m.position.z>o.z1) o.m.position.z=o.z0; } });
+    gates.forEach(g=>{ const near=boxes.some(o=>o.axis==='x'&&o.z===g.z && Math.abs(o.m.position.x-g.gx)<0.9); g.beam.material=near?matB:mat; });
+    amrs.forEach(a=>{ a.position.x+=0.028; if(a.position.x>18) a.position.x=-18; });
+    const p=Math.min(1,age/240), e=p<0.5?4*p*p*p:1-Math.pow(-2*p+2,3)/2;
+    cam.position.lerpVectors(CA,CB,e); cam.position.x+=Math.sin(t*0.06)*1.4;
+    tmp.lerpVectors(CTA,CTB,e); cam.lookAt(tmp);
+    R.render(scene,cam); })();
+})();
+
+/* ===================== ENEXIO — air-cooled condenser, fans turning (Three.js) ===================== */
+(function enexioCool(){
+  const canvas=document.getElementById('enexio-dt'); if(!canvas||!window.THREE) return;
+  const R=new THREE.WebGLRenderer({canvas,alpha:true,antialias:true});
+  R.setPixelRatio(Math.min(window.devicePixelRatio,2));
+  const scene=new THREE.Scene(), cam=new THREE.PerspectiveCamera(46,1.7,0.1,400);
+  const root=new THREE.Group(); scene.add(root);
+  const TE=0x4fb0f0, TEB=0xa9dcff;
+  const mat=new THREE.LineBasicMaterial({color:TE,transparent:true,opacity:.55});
+  const matB=new THREE.LineBasicMaterial({color:TEB,transparent:true,opacity:.85});
+  const E=(g,m)=>new THREE.LineSegments(new THREE.EdgesGeometry(g),m||mat);
+  const W=(g,m)=>new THREE.LineSegments(new THREE.WireframeGeometry(g),m||mat);
+  const grid=new THREE.GridHelper(150,75,TE,TE); grid.material.opacity=.08;grid.material.transparent=true; root.add(grid);
+  const DY=6;
+  function makeFan(r,nb){ const g=new THREE.Group(); // faces up (axis Y), spins around Y
+    g.add(W(new THREE.CylinderGeometry(r,r,0.35,24),mat));
+    g.add(W(new THREE.CylinderGeometry(r*0.14,r*0.14,0.5,8),matB));
+    const spin=new THREE.Group(); g.add(spin); g.userData.spin=spin;
+    for(let b=0;b<nb;b++){ const wrap=new THREE.Group(); const bl=E(new THREE.BoxGeometry(r*0.86,0.05,r*0.3),matB); bl.position.x=r*0.5; wrap.add(bl); wrap.rotation.y=b/nb*6.283; spin.add(wrap); }
+    return g; }
+  const GX=4, GZ=3, PITCH=4.4, DW=GX*PITCH, DD=GZ*PITCH;
+  root.add(E(new THREE.BoxGeometry(DW+1,0.5,DD+1)).translateY(DY));
+  for(const lx of [-DW/2,DW/2]) for(const lz of [-DD/2,DD/2]) root.add(E(new THREE.BoxGeometry(0.3,DY,0.3)).translateX(lx).translateY(DY/2).translateZ(lz));
+  const fans=[];
+  for(let i=0;i<GX;i++) for(let j=0;j<GZ;j++){ const f=makeFan(1.85,9); f.position.set(-DW/2+PITCH/2+i*PITCH, DY+0.4, -DD/2+PITCH/2+j*PITCH); root.add(f); fans.push(f); }
+  const hero=fans[5], hx=hero.position.x, hz=hero.position.z;
+  const A=new THREE.Vector3(hx,DY+2.5,hz+0.4), B=new THREE.Vector3(hx+11,DY+15,hz+18), TA=new THREE.Vector3(hx,DY,hz), TB=new THREE.Vector3(0,DY,0);
+  function size(){ const w=canvas.clientWidth||720,h=canvas.clientHeight||400; R.setSize(w,h,false); cam.aspect=w/h; cam.updateProjectionMatrix(); }
+  let sized=false,age=0,t=0; const tmp=new THREE.Vector3(); window.addEventListener('resize',()=>sized=false);
+  (function loop(){ requestAnimationFrame(loop); if(curScene!=='enexio'){ age=0; return; } if(!sized){size();sized=true;}
+    age++; t+=0.013;
+    fans.forEach((f,k)=>{ f.userData.spin.rotation.y+=0.13-k*0.003; });
+    const p=Math.min(1,age/460), e=p<0.5?4*p*p*p:1-Math.pow(-2*p+2,3)/2;
+    cam.position.lerpVectors(A,B,e);
+    tmp.lerpVectors(TA,TB,e); cam.lookAt(tmp);
+    R.render(scene,cam); })();
+})();
+
+/* ===================== ANITA — white-dot holographic sphere (Three.js) ===================== */
+(function dotSphere(){
+  const canvas=document.getElementById('anita-dots'); if(!canvas||!window.THREE) return;
+  const renderer=new THREE.WebGLRenderer({canvas,alpha:true,antialias:true});
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio,2));
+  const scene=new THREE.Scene(), cam=new THREE.PerspectiveCamera(50,1,0.1,100); cam.position.z=3.5;
+  const grp=new THREE.Group(); scene.add(grp);
+  const N=2600, pts=[], off=2/N, inc=Math.PI*(3-Math.sqrt(5));
+  for(let i=0;i<N;i++){ const y=i*off-1+off/2, r=Math.sqrt(Math.max(0,1-y*y)), phi=i*inc;
+    pts.push(new THREE.Vector3(Math.cos(phi)*r,y,Math.sin(phi)*r).multiplyScalar(1.4)); }
+  grp.add(new THREE.Points(new THREE.BufferGeometry().setFromPoints(pts),
+    new THREE.PointsMaterial({color:0xffffff,size:0.02,transparent:true,opacity:0.92,depthWrite:false,blending:THREE.AdditiveBlending})));
+  function size(){ const w=canvas.clientWidth||500,h=canvas.clientHeight||400; renderer.setSize(w,h,false); cam.aspect=w/h; cam.updateProjectionMatrix(); }
+  let sized=false, t=0;
+  window.addEventListener('resize',()=>{sized=false;});
+  (function loop(){ requestAnimationFrame(loop); if(curScene!=='anita') return;
+    if(!sized){ size(); sized=true; }
+    t+=0.0035; grp.rotation.y=t; grp.rotation.x=Math.sin(t*0.4)*0.16;
+    renderer.render(scene,cam); })();
+})();
 
 /* ===================== ambient particle field ===================== */
 (function fx(){
