@@ -259,6 +259,7 @@ img{display:block;max-width:100%}
 .ap-pv{background:rgba(25,211,218,.15);border:1px solid rgba(25,211,218,.3);color:var(--cyan);border-radius:4px;cursor:pointer;font-size:.52rem;padding:2px 6px}
 .ap-b{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12);color:var(--ink-dim);border-radius:5px;cursor:pointer;font-size:.54rem;padding:3px 7px;letter-spacing:.02em}
 .ap-b.on{background:var(--cyan);border-color:var(--cyan);color:#04121a;font-weight:600}
+.ap-scn{font-size:.5rem;padding:2px 5px;text-transform:lowercase;letter-spacing:0}
 .ap-foot{padding:10px 12px}
 .ap-rev{width:100%;background:rgba(255,90,40,.14);border:1px solid rgba(255,90,40,.4);color:#ff8c5a;border-radius:6px;cursor:pointer;font-size:.58rem;padding:7px;letter-spacing:.08em}
 /* ===== FINALE ===== */
@@ -826,6 +827,7 @@ function setScene(sc){
   if(sc==='bloom') runBloom();
   if(sc==='close') finReset();          // hide finale elements on enter — kills the stale "It is made" flash
   if(next.classList.contains('wh')) next.classList.remove('split','loaded');   // reset zoom->split so it replays each entry
+  if(window.__bgm) window.__bgm.section(sc);   // swap to the finale BGM from the close scene (audio test panel)
   if(sc==='enexio') SFX.fan();
   // restart any bg video
   const v=next.querySelector('video'); if(v){ try{v.currentTime=0;v.play();}catch(e){} }
@@ -987,21 +989,39 @@ function jumpToScene(scId){
   const bb=document.getElementById('beginBtn'); bb&&bb.addEventListener('click',()=>setTimeout(go,160));
   const rp=document.getElementById('replay'); rp&&rp.addEventListener('click',()=>{ bgm.currentTime=0; ducked=false; go(); });
   const sb=document.getElementById('sound'); sb&&sb.addEventListener('click',()=>{ bgm.muted=vo.muted; if(!vo.muted&&kicked&&bgm.paused) go(); });
-  window.__bgm={ swap(url){ const wasOn=!bgm.paused||kicked; bgm.pause(); bgm.src=url; bgm.load(); bgm.currentTime=0; bgm.muted=vo.muted; if(wasOn){ bgm.volume=0; bgm.play().then(()=>ramp(tgt(),0.6)).catch(()=>{}); } } };   // live BGM swap for the audio test panel
+  window.__bgmMain='assets/audio/BGM_choice1.mp3'; window.__bgmFinale=null;
+  window.__bgm={ _cur:'assets/audio/BGM_choice1.mp3',
+    swap(url){ this._cur=url; const wasOn=!bgm.paused||kicked; bgm.pause(); bgm.src=url; bgm.load(); bgm.currentTime=0; bgm.muted=vo.muted; if(wasOn){ bgm.volume=0; bgm.play().then(()=>ramp(tgt(),0.6)).catch(()=>{}); } },
+    section(sc){ const want=(sc==='close'&&window.__bgmFinale)?window.__bgmFinale:window.__bgmMain; if(this._cur!==want) this.swap(want); } };   // live swap + per-section (finale) BGM for the audio test panel
 })();
 /* ===== BGM-LIVE-END ===== */
 
 /* ===== AUDIO TEST PANEL (open with ?audio=1) ===== */
 (function audioPanel(){
   if(!/[?&]audio/.test(location.search)) return;
+  const A='assets/audio/';
   const BGM=[['BGM_choice1.mp3','★ Orig'],['endchoice1.mp3','End 1'],['endchoice2.mp3','End 2'],['endchoice3.mp3','End 3'],['trailer2.mp3','Trailer'],['soundreality-cinematic-percussion-kick-474176.mp3','Percuss']];
+  const SCENES=['banner','problem','question','bloom','onewindow','partnership','anita','nikitha','enexio','bgrneo','close'];
   const wrap=document.createElement('div'); wrap.id='audiopanel';
-  wrap.innerHTML='<div class="ap-h">♪ AUDIO TEST<span class="ap-x">▾</span></div><div class="ap-sec"><div class="ap-lbl">Music bed</div><div class="ap-row" id="ap-bgm"></div></div><div class="ap-sec"><div class="ap-lbl">Sound effects</div><div id="ap-sfx"></div></div><div class="ap-foot"><button class="ap-rev">↺ Revert all to Original</button></div>';
+  wrap.innerHTML='<div class="ap-h">♪ AUDIO TEST<span class="ap-x">▾</span></div>'
+   +'<div class="ap-sec"><div class="ap-lbl">Scenes — click to jump</div><div class="ap-row" id="ap-scn"></div></div>'
+   +'<div class="ap-sec"><div class="ap-lbl">Music bed</div><div class="ap-row" id="ap-bgm"></div>'
+   +'<div class="ap-lbl" style="margin-top:11px">Finale BGM · from BGR NEO →</div><div class="ap-row" id="ap-bgmf"></div></div>'
+   +'<div class="ap-sec"><div class="ap-lbl">Sound effects</div><div id="ap-sfx"></div></div>'
+   +'<div class="ap-foot"><button class="ap-rev">↺ Revert all to Original</button></div>';
   document.body.appendChild(wrap);
+  const scn=wrap.querySelector('#ap-scn');
+  SCENES.forEach(sc=>{ const b=document.createElement('button'); b.className='ap-b ap-scn'; b.dataset.sc=sc; b.textContent=sc;
+    b.onclick=()=>{ window.__cinema&&window.__cinema.scene(sc); }; scn.appendChild(b); });
+  setInterval(()=>{ try{ scn.querySelectorAll('.ap-scn').forEach(b=>b.classList.toggle('on', b.dataset.sc===curScene)); }catch(e){} },400);
   const bgmRow=wrap.querySelector('#ap-bgm');
   BGM.forEach((o,i)=>{ const b=document.createElement('button'); b.className='ap-b'+(i===0?' on':''); b.textContent=o[1];
-    b.onclick=()=>{ window.__bgm&&window.__bgm.swap('assets/audio/'+o[0]); bgmRow.querySelectorAll('.ap-b').forEach(x=>x.classList.remove('on')); b.classList.add('on'); };
+    b.onclick=()=>{ window.__bgmMain=A+o[0]; if(window.__bgm&&!(curScene==='close'&&window.__bgmFinale)) window.__bgm.swap(A+o[0]); bgmRow.querySelectorAll('.ap-b').forEach(x=>x.classList.remove('on')); b.classList.add('on'); };
     bgmRow.appendChild(b); });
+  const bgmf=wrap.querySelector('#ap-bgmf');
+  [['','— none —']].concat(BGM).forEach((o,i)=>{ const b=document.createElement('button'); b.className='ap-b'+(i===0?' on':''); b.textContent=o[1].replace('★ ','');
+    b.onclick=()=>{ window.__bgmFinale=o[0]?(A+o[0]):null; if(window.__bgm&&curScene==='close') window.__bgm.section('close'); bgmf.querySelectorAll('.ap-b').forEach(x=>x.classList.remove('on')); b.classList.add('on'); };
+    bgmf.appendChild(b); });
   const sfxBox=wrap.querySelector('#ap-sfx');
   SFX.sfxNames().forEach(name=>{ const row=document.createElement('div'); row.className='ap-srow';
     row.innerHTML='<span class="ap-sn">'+name+'</span><button class="ap-pv">▶</button>';
@@ -1010,8 +1030,9 @@ function jumpToScene(scId){
       b.onclick=()=>{ SFX.setSfx(name,i); SFX.preview(name); row.querySelectorAll('.ap-b').forEach(x=>x.classList.remove('on')); b.classList.add('on'); };
       row.appendChild(b); }
     sfxBox.appendChild(row); });
-  wrap.querySelector('.ap-rev').onclick=()=>{ SFX.sfxNames().forEach(n=>SFX.setSfx(n,0)); window.__bgm&&window.__bgm.swap('assets/audio/BGM_choice1.mp3');
-    wrap.querySelectorAll('.ap-row, .ap-srow').forEach(row=>row.querySelectorAll('.ap-b').forEach((x,k)=>x.classList.toggle('on',k===0))); };
+  wrap.querySelector('.ap-rev').onclick=()=>{ SFX.sfxNames().forEach(n=>SFX.setSfx(n,0)); window.__bgmMain=A+'BGM_choice1.mp3'; window.__bgmFinale=null; window.__bgm&&window.__bgm.swap(A+'BGM_choice1.mp3');
+    [bgmRow,bgmf].forEach(r=>r.querySelectorAll('.ap-b').forEach((x,k)=>x.classList.toggle('on',k===0)));
+    sfxBox.querySelectorAll('.ap-srow').forEach(row=>row.querySelectorAll('.ap-b').forEach((x,k)=>x.classList.toggle('on',k===0))); };
   wrap.querySelector('.ap-x').onclick=()=>wrap.classList.toggle('min');
 })();
 
