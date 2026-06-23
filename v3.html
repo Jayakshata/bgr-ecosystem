@@ -684,20 +684,22 @@ FIN.seg28=function(){ finReset(); SFX.swish();
   gsap.set('.fin-pipe',{xPercent:-50,yPercent:-50,rotationX:12,rotationY:-6,transformPerspective:1500,transformOrigin:'50% 50%'}); // isometric tilt
   const tl=FIN._tl=gsap.timeline();
   tl.to(['.fin-cap.l','.fin-rail'],{opacity:1,duration:.6},0);
-  tl.to('.fin-pulse',{opacity:1,duration:.3},0.4);                         // a glowing energy pulse...
-  tl.to('.fin-fill',{scaleX:1,duration:4.6,ease:'none'},0.4);
-  tl.to('.fin-pulse',{left:'100%',duration:4.6,ease:'none'},0.4);          // ...travels the line, igniting each company
-  stops.forEach((s,i)=>{ const t=0.95+i*1.05;
+  tl.to('.fin-pulse',{opacity:1,duration:.25},0.3);                        // a glowing energy pulse...
+  tl.to('.fin-fill',{scaleX:1,duration:2.7,ease:'none'},0.3);
+  tl.to('.fin-pulse',{left:'100%',duration:2.7,ease:'none'},0.3);          // ...races the line, igniting each company FAST
+  stops.forEach((s,i)=>{ const t=0.5+i*0.62;
     tl.call(()=>{ SFX.clink(); finBloom(COL[i]); }, null, t);                                  // backlight -> this colour
     tl.to(dots[i],{opacity:1,scale:1,duration:.4,ease:'back.out(2.5)'}, t);
     tl.to(names[i],{z:165,opacity:1,filter:'blur(0px)',duration:.72,ease:'power3.out'}, t);     // FORWARD, sharp, bright
     if(i>0) tl.to(names[i-1],{z:-150,opacity:.32,filter:'blur(5px)',duration:.72,ease:'power2.in'}, t); // prev recedes + blurs
   });
-  const tr=5.0;
-  tl.call(()=>{ SFX.clink(); }, null, tr);
-  tl.to('.fin-cap.r',{opacity:1,duration:.6}, tr);
-  tl.to('.fin-pulse',{opacity:0,duration:.5}, tr);
-  tl.to(names,{z:0,opacity:1,filter:'blur(0px)',duration:.8,ease:'power2.out'}, tr);            // all settle level + sharp
+  const tr=3.0;
+  tl.call(()=>{ SFX.glow(); finBloom('#19D3DA'); }, null, tr);                                    // RUNNING FACTORY = the achievement
+  tl.fromTo('.fin-cap.r',{opacity:0,scale:.85},{opacity:1,scale:1.08,duration:.55,ease:'back.out(2.2)'}, tr);
+  tl.to('.fin-cap.r',{scale:1,duration:.5,ease:'power2.out'}, tr+0.55);
+  tl.to('.fin-cap.r',{textShadow:'0 0 36px rgba(25,211,218,.95),0 0 72px rgba(25,211,218,.55)',duration:.5}, tr);   // it GLOWS
+  tl.to('.fin-pulse',{opacity:0,duration:.4}, tr);
+  tl.to(names,{z:0,opacity:1,filter:'blur(0px)',duration:.7,ease:'power2.out'}, tr);            // all settle level + sharp
 };
 FIN.seg31=function(){ if(FIN._tl){ FIN._tl.kill(); FIN._tl=null; } SFX.glow(); finBloom('#19D3DA');
   gsap.to('.fin-pipe',{rotationX:0,rotationY:0,duration:.5,ease:'power2.inOut'});             // level the isometric tilt
@@ -833,7 +835,7 @@ function reveal(seg){
 
 function advance(){ clearTimeout(safety); vo.onended=null;
   const cur=TL[idx], nxt=TL[idx+1];
-  const HOLD={seg28:4.2};   // hold the converge until the bare-land -> running-factory pipeline finishes
+  const HOLD={seg28:1.3};   // brief hold: let the fast pipeline finish + RUNNING FACTORY glow, then converge (no dead gap)
   const gap=(cur&&HOLD[cur[0]]) || ((nxt&&cur&&nxt[1]!==cur[1])?2.2:0.32);
   gsap.delayedCall(gap, step); }
 
@@ -1010,9 +1012,10 @@ function jumpToScene(scId){
   const agvs=[];                       // AGVs — automated guided vehicles trundling down the aisles
   for(let i=0;i<14;i++){ const a=new THREE.Group(); const base=E(new THREE.BoxGeometry(1.1,0.4,1.7),matB); a.add(base);
     const top=E(new THREE.BoxGeometry(0.7,0.5,0.7)); top.position.y=0.42; a.add(top);
-    a.position.set((Math.random()-.5)*9,0.25,-Math.random()*70); root.add(a); agvs.push(a); }
-  const A=new THREE.Vector3(2,2,-12), B=new THREE.Vector3(2,13,33), TA=new THREE.Vector3(-1,2,-30), TB=new THREE.Vector3(-9,2,-18);
-  const lk=new THREE.Vector3(); let tp=0;
+    a.position.set((Math.random()<0.5?-1:1)*(8+Math.random()*4),0.25,-Math.random()*70); root.add(a); agvs.push(a); }   // in the AISLES, clear of conveyors
+  const A1=new THREE.Vector3(5,3,2), A2=new THREE.Vector3(-3,3.5,-28), B=new THREE.Vector3(2,13,33),
+        L1=new THREE.Vector3(0,2,-14), L2=new THREE.Vector3(2,2,-48), TB=new THREE.Vector3(-9,2,-18);
+  const v1=new THREE.Vector3(), v2=new THREE.Vector3(); let tp=0;
   function size(){ const w=canvas.clientWidth||720,h=canvas.clientHeight||400; R.setSize(w,h,false); cam.aspect=w/h; cam.updateProjectionMatrix(); }
   let sized=false, age=0, t=0; const tmp=new THREE.Vector3(); window.addEventListener('resize',()=>sized=false);
   (function loop(){ requestAnimationFrame(loop); if(curScene!=='anita'){ age=0; return; } if(!sized){size();sized=true;}
@@ -1021,9 +1024,10 @@ function jumpToScene(scId){
     arms.forEach((a,i)=>{ a.j1.rotation.z=Math.sin(t+i)*0.4-0.05; a.j2.rotation.z=Math.sin(t+i+1)*0.5-0.3; });
     agvs.forEach(a=>{ a.position.z+=0.12; if(a.position.z>7) a.position.z=-70; });
     const split=document.getElementById('sc-anita').classList.contains('split');
-    tp=Math.max(0,Math.min(1,tp+(split?1:-1)*0.01)); const e=tp*tp*(3-2*tp);   // smooth eased dolly-out
-    cam.position.lerpVectors(A,B,e); cam.position.x+=Math.sin(t*0.16)*0.7;
-    lk.lerpVectors(TA,TB,e); cam.lookAt(lk);
+    tp=Math.max(0,Math.min(1,tp+(split?1:-1)*0.01)); const e=tp*tp*(3-2*tp);   // drone traverse -> dolly out
+    const d=(Math.sin(t*1.1)+1)/2;
+    v1.lerpVectors(A1,A2,d).lerp(B,e); v2.lerpVectors(L1,L2,d).lerp(TB,e);
+    cam.position.copy(v1); cam.lookAt(v2);
     R.render(scene,cam); })();
 })();
 
@@ -1057,27 +1061,25 @@ function jumpToScene(scId){
   // ---- extended structure: eave/ridge beams, crane runway + bridge, mezzanine, end-bay bracing ----
   for(const bb of [[-BW/2,H],[BW/2,H],[0,RIDGE]]) root.add(E(new THREE.BoxGeometry(0.26,0.26,Math.abs(Z))).translateX(bb[0]).translateY(bb[1]).translateZ(Z/2));
   for(const bx of [-BW/2+1.6,BW/2-1.6]) root.add(E(new THREE.BoxGeometry(0.42,0.55,Math.abs(Z))).translateX(bx).translateY(H-1.3).translateZ(Z/2));
-  const crane=new THREE.Group(); root.add(crane);
-  crane.add(E(new THREE.BoxGeometry(BW-2.6,0.45,0.8),matB).translateY(H-1.05));
-  crane.add(E(new THREE.BoxGeometry(1.0,1.3,1.0),matB).translateY(H-1.7));
-  let crz=-SP*2, crd=1;
+  root.add(E(new THREE.BoxGeometry(BW-2.6,0.4,0.7),matB).translateY(H-1.0).translateZ(Z*0.35));   // static crane bridge (no moving block)
   const mz=new THREE.Group(); root.add(mz);
   mz.add(E(new THREE.BoxGeometry(BW-1,0.2,Math.abs(Z)*0.42)).translateY(3.3).translateZ(Z*0.74));
   for(let mx=-BW/2+2;mx<BW/2-1;mx+=3.5) for(let mz2=Z*0.55;mz2>Z+1;mz2-=4) mz.add(E(new THREE.BoxGeometry(0.18,3.3,0.18)).translateX(mx).translateY(1.65).translateZ(mz2));
   for(const wx of [-BW/2,BW/2]) for(const s of [1,-1]){ const br=E(new THREE.BoxGeometry(0.12,Math.hypot(SP*2,H),0.12),matP); br.position.set(wx,H/2,-SP); br.rotation.x=s*Math.atan2(SP*2,H); root.add(br); }
-  const NA=new THREE.Vector3(1,3.5,-8), NB=new THREE.Vector3(13,11,27), NTA=new THREE.Vector3(-1,5,-24), NTB=new THREE.Vector3(-7,5,-12);
-  const nl=new THREE.Vector3(); let tp=0;
+  const A1=new THREE.Vector3(4,4.5,2), A2=new THREE.Vector3(-3,5,-22), NB=new THREE.Vector3(13,11,27),
+        L1=new THREE.Vector3(0,5,-12), L2=new THREE.Vector3(0,5,-30), NTB=new THREE.Vector3(-7,5,-12);
+  const v1=new THREE.Vector3(), v2=new THREE.Vector3(); let tp=0;
   function size(){ const w=canvas.clientWidth||720,h=canvas.clientHeight||400; R.setSize(w,h,false); cam.aspect=w/h; cam.updateProjectionMatrix(); }
   let sized=false,age=0,t=0; window.addEventListener('resize',()=>sized=false);
   (function loop(){ requestAnimationFrame(loop); if(curScene!=='nikitha'){ age=0; matP.opacity=0; return; } if(!sized){size();sized=true;}
     age++; t+=0.01;
     frames.forEach((g,i)=>{ const fp=Math.max(0,Math.min(1,(age-i*6)/34)); g.scale.y=Math.max(0.0001,fp); });
     matP.opacity=Math.max(0,Math.min(.34,(age-NF*6)/60*0.34));
-    crz+=crd*0.05; if(crz>-SP*0.5||crz<Z+SP) crd*=-1; crane.position.z=crz;
     const split=document.getElementById('sc-nikitha').classList.contains('split');
     tp=Math.max(0,Math.min(1,tp+(split?1:-1)*0.01)); const e=tp*tp*(3-2*tp);
-    cam.position.lerpVectors(NA,NB,e); cam.position.x+=Math.sin(t*0.12)*1.2; cam.position.y+=Math.sin(t*0.1)*0.6;
-    nl.lerpVectors(NTA,NTB,e); cam.lookAt(nl);
+    const d=(Math.sin(t*1.0)+1)/2;
+    v1.lerpVectors(A1,A2,d).lerp(NB,e); v2.lerpVectors(L1,L2,d).lerp(NTB,e);
+    cam.position.copy(v1); cam.lookAt(v2);
     R.render(scene,cam); })();
 })();
 
@@ -1123,8 +1125,9 @@ function jumpToScene(scId){
     for(let x=X0+2;x<X1;x+=4) gt.add(E(new THREE.BoxGeometry(0.12,0.8,0.12)).translateX(x).translateY(0.5));
     gt.add(E(new THREE.BoxGeometry(0.3,7.2,0.3)).translateX(X0+1).translateY(-3.6)); gt.add(E(new THREE.BoxGeometry(0.3,7.2,0.3)).translateX(X1-1).translateY(-3.6)); root.add(gt); }
   for(const pp of [[-17,-12],[17,-12],[-17,13],[17,13]]) for(let y=0;y<4;y++) root.add(cube(1.3).translateX(pp[0]+(y%2?0.12:-0.12)).translateY(0.7+y*1.35).translateZ(pp[1]));
-  const BA=new THREE.Vector3(-2,2,-6), BB=new THREE.Vector3(2,14,33), BTA=new THREE.Vector3(2,1.8,-22), BTB=new THREE.Vector3(-12,2.5,-5);
-  const bl=new THREE.Vector3(); let tp=0;
+  const A1=new THREE.Vector3(-15,4.5,13), A2=new THREE.Vector3(15,5,13), BB=new THREE.Vector3(2,14,33),
+        L1=new THREE.Vector3(-8,1.5,0), L2=new THREE.Vector3(8,1.5,0), BTB=new THREE.Vector3(-12,2.5,-5);
+  const v1=new THREE.Vector3(), v2=new THREE.Vector3(); let tp=0;
   function size(){ const w=canvas.clientWidth||720,h=canvas.clientHeight||400; R.setSize(w,h,false); cam.aspect=w/h; cam.updateProjectionMatrix(); }
   let sized=false,age=0,t=0; window.addEventListener('resize',()=>sized=false);
   (function loop(){ requestAnimationFrame(loop); if(curScene!=='bgrneo'){ age=0; return; } if(!sized){size();sized=true;}
@@ -1134,8 +1137,9 @@ function jumpToScene(scId){
     arms.forEach(a=>{ const c=Math.sin(t*1.7+a.ph); a.j1.rotation.x=0.35+c*0.32; a.j2.rotation.x=-0.7-c*0.4; });
     const split=document.getElementById('sc-bgrneo').classList.contains('split');
     tp=Math.max(0,Math.min(1,tp+(split?1:-1)*0.0095)); const e=tp*tp*(3-2*tp);
-    cam.position.lerpVectors(BA,BB,e); cam.position.x+=Math.sin(t*0.07)*1.4;
-    bl.lerpVectors(BTA,BTB,e); cam.lookAt(bl);
+    const d=(Math.sin(t*0.85)+1)/2;
+    v1.lerpVectors(A1,A2,d).lerp(BB,e); v2.lerpVectors(L1,L2,d).lerp(BTB,e);
+    cam.position.copy(v1); cam.lookAt(v2);
     R.render(scene,cam); })();
 })();
 
@@ -1174,8 +1178,9 @@ function jumpToScene(scId){
   for(let i=0;i<SN;i++){ sp[i*3]=(Math.random()-.5)*DW; sp[i*3+1]=DY+RIDGE+Math.random()*9; sp[i*3+2]=(Math.random()-.5)*DD; }
   const sg=new THREE.BufferGeometry(); sg.setAttribute('position',new THREE.BufferAttribute(sp,3));
   const steam=new THREE.Points(sg,new THREE.PointsMaterial({color:TEB,size:0.55,transparent:true,opacity:.34})); root.add(steam);
-  const EA=new THREE.Vector3(0,DY-4,2), EB=new THREE.Vector3(DW*0.42,DY+12,40), ETA=new THREE.Vector3(0,DY+2,-3), ETB=new THREE.Vector3(-9,DY,-2);
-  const el=new THREE.Vector3(); let tp=0;
+  const A1=new THREE.Vector3(-DW*0.36,DY+2.5,10), A2=new THREE.Vector3(DW*0.36,DY+3,10), EB=new THREE.Vector3(DW*0.42,DY+12,40),
+        L1=new THREE.Vector3(-DW*0.3,DY+0.5,-2), L2=new THREE.Vector3(DW*0.3,DY+0.5,-2), ETB=new THREE.Vector3(-9,DY,-2);
+  const v1=new THREE.Vector3(), v2=new THREE.Vector3(); let tp=0;
   function size(){ const w=canvas.clientWidth||720,h=canvas.clientHeight||400; R.setSize(w,h,false); cam.aspect=w/h; cam.updateProjectionMatrix(); }
   let sized=false,age=0,t=0; window.addEventListener('resize',()=>sized=false);
   (function loop(){ requestAnimationFrame(loop); if(curScene!=='enexio'){ age=0; return; } if(!sized){size();sized=true;}
@@ -1184,8 +1189,9 @@ function jumpToScene(scId){
     const pa=steam.geometry.attributes.position; for(let i=0;i<SN;i++){ pa.array[i*3+1]+=0.05; if(pa.array[i*3+1]>DY+RIDGE+10) pa.array[i*3+1]=DY+RIDGE; } pa.needsUpdate=true;
     const split=document.getElementById('sc-enexio').classList.contains('split');
     tp=Math.max(0,Math.min(1,tp+(split?1:-1)*0.0095)); const e=tp*tp*(3-2*tp);
-    cam.position.lerpVectors(EA,EB,e); cam.position.x+=Math.sin(t*0.1)*1.1;
-    el.lerpVectors(ETA,ETB,e); cam.lookAt(el);
+    const d=(Math.sin(t*0.9)+1)/2;
+    v1.lerpVectors(A1,A2,d).lerp(EB,e); v2.lerpVectors(L1,L2,d).lerp(ETB,e);
+    cam.position.copy(v1); cam.lookAt(v2);
     R.render(scene,cam); })();
 })();
 
