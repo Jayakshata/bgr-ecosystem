@@ -43,4 +43,11 @@ assets/audio/bgm/
 
 # --- local reference / WIP assets (never publish) ---
 assets/images/COMPANYINSPO/
+assets/images/FIN/
 assets/images/logos/*.jpg
+
+# --- internal notes + v3 dev tooling (local only) ---
+REFINEMENTS.md
+_audit_v3.mjs
+
+# --- v3 redesign WIP (now TRACKED for off-disk backup; promote to index.html when ready) ---
