@@ -246,18 +246,6 @@ img{display:block;max-width:100%}
 #sc-nikitha{--accent:#E8A24C;--accent-glow:rgba(232,162,76,.42)}
 #sc-enexio{--accent:#4fb0f0;--accent-glow:rgba(79,176,240,.42)}
 #sc-bgrneo{--accent:#FF5A1F;--accent-glow:rgba(255,90,31,.42)}
-/* ===== REQUIREMENTS — error/dialog swarm (the overwhelm) ===== */
-#sc-problem .req-grid,#sc-problem .req-approvals{display:none}
-.req-swarm{position:absolute;inset:0;z-index:7;pointer-events:none;overflow:hidden}
-.errbox{position:absolute;min-width:188px;max-width:236px;background:rgba(22,15,13,.95);border:1px solid rgba(255,90,40,.55);border-radius:7px;
-  box-shadow:0 10px 34px rgba(0,0,0,.6),0 0 22px rgba(255,90,40,.18);font-family:var(--font-mono);overflow:hidden}
-.errbox .bar{display:flex;align-items:center;justify-content:space-between;background:linear-gradient(90deg,#c0381a,#6e2110);padding:5px 9px}
-.errbox .bar .t{font-size:.55rem;letter-spacing:.08em;color:#ffd9cc;text-transform:uppercase}
-.errbox .bar .x{font-size:.6rem;color:#ffb9a6}
-.errbox .body{padding:11px 12px;display:flex;align-items:center;gap:11px}
-.errbox .ic{font-size:1.4rem;line-height:1}
-.errbox .msg{font-size:.72rem;letter-spacing:.03em;color:#f0ddd2}
-.errbox .msg b{color:#ff8c5a;font-weight:600}
 /* ===== FINALE ===== */
 #sc-close{--accent:#19D3DA;--accent-glow:rgba(25,211,218,.4)}
 #sc-close.fin{justify-content:center;text-align:center;overflow:hidden;padding:0}
@@ -384,7 +372,6 @@ img{display:block;max-width:100%}
       </div>
       <div class="req-approvals" data-seg="seg13">…and a thousand approvals.</div>
     </div>
-    <div class="req-swarm"></div>
   </section>
 
   <!-- ========== QUESTION ========== -->
@@ -793,8 +780,6 @@ function setScene(sc){
   if(sc==='bloom') runBloom();
   if(sc==='close') finReset();          // hide finale elements on enter — kills the stale "It is made" flash
   if(next.classList.contains('wh')) next.classList.remove('split','loaded');   // reset zoom->split so it replays each entry
-  if(sc==='question') clearSwarm();                                            // wipe the requirement swarm -> reveal the question
-  if(sc==='problem'){ const sw=document.querySelector('#sc-problem .req-swarm'); if(sw) sw.innerHTML=''; }
   if(sc==='enexio') SFX.fan();
   // restart any bg video
   const v=next.querySelector('video'); if(v){ try{v.currentTime=0;v.play();}catch(e){} }
@@ -831,26 +816,11 @@ function runCompany(scene){
     });
   });
 }
-const REQ={seg06:['LAND',2],seg07:['FACTORY&nbsp;DESIGN',2],seg08:['WATER',3],seg09:['COOLING',3],seg10:['STEEL',4],seg11:['POWER',5],seg12:['MACHINES',6],seg13:['1,000+ APPROVALS',14]};
-function spawnErr(text,count){
-  const sw=document.querySelector('#sc-problem .req-swarm'); if(!sw) return;
-  for(let i=0;i<count;i++){
-    const b=document.createElement('div'); b.className='errbox';
-    b.innerHTML='<div class="bar"><span class="t">⚠ System · Requirement</span><span class="x">✕</span></div><div class="body"><span class="ic">⚠</span><span class="msg">Missing: <b>'+text+'</b></span></div>';
-    b.style.left=(7+Math.random()*82)+'%'; b.style.top=(13+Math.random()*66)+'%';
-    sw.appendChild(b);
-    gsap.delayedCall(i*0.06,()=>{ SFX.tick(); gsap.fromTo(b,{opacity:0,xPercent:-50,yPercent:-50,scale:.5,rotation:(Math.random()-.5)*11},{opacity:1,xPercent:-50,yPercent:-50,scale:1,rotation:(Math.random()-.5)*5,duration:.28,ease:'back.out(2.2)'}); });
-  }
-}
-function clearSwarm(){
-  const sw=document.querySelector('#sc-problem .req-swarm'); if(!sw) return;
-  const kids=[...sw.children]; if(!kids.length) return; SFX.swish();
-  kids.forEach((b,i)=>gsap.to(b,{opacity:0,scale:.6,y:-12,duration:.3,delay:i*0.012,ease:'power2.in',onComplete:()=>b.remove()}));
-}
+const REQ={seg06:1,seg07:1,seg08:1,seg09:1,seg10:1,seg11:1,seg12:1,seg13:1};   // requirement chips — fast snappy pop + clink each
 function reveal(seg){
   if(FIN[seg]){ FIN[seg](); return; }
   if(PART[seg]){ PART[seg](); return; }
-  if(REQ[seg]){ spawnErr(REQ[seg][0],REQ[seg][1]); return; }
+  if(REQ[seg]){ SFX.clink(); document.querySelectorAll('[data-seg="'+seg+'"]').forEach(el=>gsap.fromTo(el,{opacity:0,scale:.72,y:8},{opacity:1,scale:1,y:0,duration:.32,ease:'back.out(2.4)'})); return; }
   if(HOVER[seg]){ SFX.swish(); return; }
   if(COMP[seg]){ runCompany(COMP[seg]); return; }
   const els=document.querySelectorAll(`[data-seg="${seg}"]`);
@@ -868,7 +838,8 @@ function reveal(seg){
 function advance(){ clearTimeout(safety); vo.onended=null;
   const cur=TL[idx], nxt=TL[idx+1];
   const HOLD={seg28:1.3};   // brief hold: let the fast pipeline finish + RUNNING FACTORY glow, then converge (no dead gap)
-  const gap=(cur&&HOLD[cur[0]]) || ((nxt&&cur&&nxt[1]!==cur[1])?2.2:0.32);
+  const RAPID={seg05:1,seg06:1,seg07:1,seg08:1,seg09:1,seg10:1,seg11:1,seg12:1};   // requirements fire back-to-back, no gaps
+  const gap=(cur&&HOLD[cur[0]]) || (cur&&RAPID[cur[0]]?0.06:((nxt&&cur&&nxt[1]!==cur[1])?2.2:0.32));
   gsap.delayedCall(gap, step); }
 
 function playClip(seg){
