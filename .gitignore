@@ -62,3 +62,6 @@ _cocap.mjs
 _co_*.png
 _reqcap.mjs
 _req_*.png
+_ap*.png
+_apcap.mjs
+_ap.png
