@@ -446,7 +446,6 @@ img{display:block;max-width:100%}
         <div class="pnode pn-enexio"  style="left:20%;top:77%;--pc:#4fb0f0" data-seg="seg19"><div class="lg"><img src="assets/images/logos/ENEXIO.png" alt="ENEXIO"/></div><div class="nm">ENEXIO</div><div class="rl">Power · Cooling</div></div>
         <div class="pnode pn-bgrneo"  style="left:80%;top:77%;--pc:#FF5A1F" data-seg="seg19"><div class="lg"><img src="assets/images/logos/BGRNEO.png" alt="BGR NEO"/></div><div class="nm">BGR&nbsp;NEO</div><div class="rl">Automation</div></div>
       </div>
-      <div class="backed" data-seg="seg19">Backed by the <b>$500M BGR Group</b> · since 1985</div>
     </div>
   </section>
 
@@ -782,7 +781,6 @@ PART.seg19=function(){
   gsap.delayedCall(0.35+4*0.5+0.55,()=>{                              // unified: hub bursts, "backed by" in
     gsap.fromTo(ctr,{scale:1},{scale:1.7,duration:.35,yoyo:true,repeat:1,ease:'power2.inOut'});
     finBloom('#19D3DA'); SFX.glow();
-    gsap.fromTo('.backed',{opacity:0,y:10},{opacity:1,y:0,duration:.6,ease:'power2.out'});
   });
 };
 
